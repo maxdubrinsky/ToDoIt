@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 
 
 
-public class Main extends Application {
+public class GUI extends Application {
 
 
 	@Override
