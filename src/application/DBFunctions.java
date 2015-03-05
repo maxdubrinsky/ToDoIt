@@ -66,16 +66,16 @@ public class DBFunctions {
 		
 		try {
 			// Initialize prepareStatment and insert variables
-			add = conn.prepareStatement("INSERT INTO TABLE task(task_desc, "
-					+ "end_date, end_time, task_title, start_date, start_time) "
+			add = conn.prepareStatement("INSERT INTO TABLE task(task_title, "
+					+ "task_desc, start_date, start_time, end_date, end_time) "
 					+ "VALUES (?, ?, ?, ?, ?, ?);");
 			
-			add.setString(1, desc);
-			add.setDate(2, endDate);
-			add.setTime(3, endTime);
-			add.setString(4, title);
-			add.setDate(5, startDate);
-			add.setTime(6, startTime);
+			add.setString(1, title);
+			add.setString(2, desc);
+			add.setDate(3, startDate);
+			add.setTime(4, startTime);
+			add.setDate(5, endDate);
+			add.setTime(6, endTime);
 			
 			// executes the update and determines the number of rows modified
 			count = add.executeUpdate();
@@ -115,16 +115,16 @@ public class DBFunctions {
 		try {
 			
 			// Initializes prepareStatement and inserts variables
-			modify = conn.prepareStatement("UPDATE task SET task_desc = ?,"
-					+ " end_date = ?, end_time = ?, task_title = ?, "
-					+ "start_date = ?, start_time = ? WHERE task_id = ? ;");
+			modify = conn.prepareStatement("UPDATE task SET task_title = ?,"
+					+ " task_desc = ?, start_date = ?, start_time = ?, "
+					+ "end_date = ?, end_time = ? WHERE task_id = ? ;");
 			
-			modify.setString(1, desc);
-			modify.setDate(2, endDate);
-			modify.setTime(3, endTime);
-			modify.setString(4, title);
-			modify.setDate(5, startDate);
-			modify.setTime(6, startTime);
+			modify.setString(1, title);
+			modify.setString(2, desc);
+			modify.setDate(3, startDate);
+			modify.setTime(4, startTime);
+			modify.setDate(5, endDate);
+			modify.setTime(6, endTime);
 			modify.setInt(7, taskId);
 			
 			// executes the update and counts the rows affected
@@ -155,19 +155,16 @@ public class DBFunctions {
 	 * @param startDate
 	 * @param startTime
 	 */
-	public void deleteTask(String title, java.sql.Date startDate, Time startTime) {
+	public void deleteTask(Integer taskID) {
 		
 		int count;
 		
 		try {
 			
 			// initializes prepareStatement and inserts variables
-			delete = conn.prepareStatement("DELETE FROM task WHERE (task_title "
-					+ "= ? AND start_date = ? AND start_time = ?);");
+			delete = conn.prepareStatement("DELETE FROM task WHERE task_id = ?;");
 			
-			delete.setString(1, title);
-			delete.setDate(2, startDate);
-			delete.setTime(3, startTime);
+			delete.setInt(1, taskID);
 			
 			// Executes table update and counts affected rows
 			count = delete.executeUpdate();
