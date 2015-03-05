@@ -81,6 +81,83 @@ public class GUI extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	public void startRemoveTask(Stage addRemoveStage){
+		try {
+			// Sets up the add task manager frame
+			BorderPane gui = new BorderPane();
+			Scene scene = new Scene(gui, 500, 400);
+		
+
+			// Makes the frame use the css sheet
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			// Sets the scene for the frame
+			addRemoveStage.setScene(scene);
+			addRemoveStage.setTitle("Remove Task Manager");
+			addRemoveStage.setWidth(500);
+			addRemoveStage.setHeight(400);
+			addRemoveStage.setResizable(false);
+			addRemoveStage.show();
+
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void startEditTask(Stage addEditStage){
+		try {
+			// Sets up the add task manager frame
+			BorderPane gui = new BorderPane();
+			Scene scene = new Scene(gui, 500, 400);
+			
+			
+
+			// Makes the frame use the css sheet
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			// Sets the scene for the frame
+			addEditStage.setScene(scene);
+			addEditStage.setTitle("Edit Task Manager");
+			addEditStage.setWidth(500);
+			addEditStage.setHeight(400);
+			addEditStage.setResizable(false);
+			addEditStage.show();
+
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void startViewTask(Stage addViewStage){
+		try {
+			// Sets up the add task manager frame
+			BorderPane gui = new BorderPane();
+			Scene scene = new Scene(gui, 500, 400);
+			
+		
+
+			// Makes the frame use the css sheet
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			// Sets the scene for the frame
+			addViewStage.setScene(scene);
+			addViewStage.setTitle("View Task Manager");
+			addViewStage.setWidth(500);
+			addViewStage.setHeight(400);
+			addViewStage.setResizable(false);
+			addViewStage.show();
+
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 
 
 	public VBox addVBoxAddTask() {
@@ -203,6 +280,8 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Remove Task Event");
+				Stage addRemoveStage = new Stage();
+				startRemoveTask(addRemoveStage);
 			}
 		});
 
@@ -210,6 +289,8 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Edit Task Event");
+				Stage addEditStage = new Stage();
+				startEditTask(addEditStage);
 			}
 		});
 
@@ -217,6 +298,8 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("View Task Event");
+				Stage addViewStage = new Stage();
+				startViewTask(addViewStage);
 			}
 		});
 
