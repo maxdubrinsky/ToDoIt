@@ -115,7 +115,7 @@ public class GUI extends Application {
 			            System.out.println(taskName.getText().toString());
 			            //TODO put controller in this
 			            
-			            
+			       
 			            // First arg being title of task, task disc, start date, start time, end date, end time
 			            //control.addTask(taskName.getText(), );
 			            
