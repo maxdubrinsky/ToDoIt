@@ -172,15 +172,6 @@ public class GUI extends Application {
 			}
 		});
 
-
-		// Loads images maybe down the road
-		/*ImageView pages[] = new ImageView[4];
-	    for (int i=0 ; i<4 ; i++) {
-	        pages[i] = new ImageView();
-	        flow.getChildren().add(pages[i]);
-	    }
-		 */
-
 		return flow;
 	}
 
