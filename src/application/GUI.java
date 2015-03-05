@@ -1,5 +1,7 @@
 package application;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 import javafx.*;
@@ -156,11 +158,13 @@ public class GUI extends Application {
 		}
 	}
 	
-	
-	
-
-
+	/**
+	 * This method is used to add a VBox in the Add Task GUI
+	 * 
+	 * @return VBox required for VBox
+	 */
 	public VBox addVBoxAddTask() {
+		
 		
 		VBox vbox = new VBox();
 		
@@ -317,10 +321,13 @@ public class GUI extends Application {
 		// Make HBOX use CSS
 		hbox.getStyleClass().addAll("pane", "hbox");
 
-		// Rough Time stamp
-		Calendar calendar = new GregorianCalendar();		
-
-		hbox.getChildren().add(new Label(calendar.getTime().toString()));
+		LocalDate currentDate = LocalDate.now();
+		
+		Month theMonth = currentDate.getMonth();
+		int theYear = currentDate.getYear();
+		int theDay = currentDate.getDayOfMonth();
+		
+		hbox.getChildren().add(new Label(theMonth.toString() + " " + theDay + " " + theYear));
 
 
 		return hbox;
