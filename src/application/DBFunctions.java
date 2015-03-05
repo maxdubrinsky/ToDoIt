@@ -240,7 +240,7 @@ public class DBFunctions {
 	 * default constructor
 	 */
 	public DBFunctions() {
-		
+	
 	}
 	
 	public static void Main(String[] args) {
