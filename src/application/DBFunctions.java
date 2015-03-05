@@ -18,10 +18,13 @@ public class DBFunctions {
 	 */
 	public int connect() {
 		try {
+			
+			String username = "greg";
+			String pass = "horseboxfrog";
+			
 			conn = DriverManager.getConnection(
-					"jdbc:mysql://carbon.dubrinksy.com/todoit", "greg",
-					"horseboxfrog");
-
+					"jdbc:mysql://Carbon.dubrinksy.com/todoit:1000", username,
+					pass);
 			System.out.println("connection successful");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -244,7 +247,7 @@ public class DBFunctions {
 	}
 	
 	public static void Main(String[] args) {
-
+		
 	}
 
 }
