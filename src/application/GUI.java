@@ -114,8 +114,6 @@ public class GUI extends Application {
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
 			
-			
-
 			// Makes the frame use the css sheet
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -139,8 +137,7 @@ public class GUI extends Application {
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
 			
-		
-
+	
 			// Makes the frame use the css sheet
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -321,6 +318,8 @@ public class GUI extends Application {
 		// Make HBOX use CSS
 		hbox.getStyleClass().addAll("pane", "hbox");
 
+		
+		// Get a rough date stamp for GUI
 		LocalDate currentDate = LocalDate.now();
 		
 		Month theMonth = currentDate.getMonth();
