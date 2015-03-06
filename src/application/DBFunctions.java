@@ -23,7 +23,7 @@ public class DBFunctions {
 			String pass = "horseboxfrog";
 			
 			conn = DriverManager.getConnection(
-					"jdbc:mysql://Carbon.dubrinksy.com/todoit:1000", username,
+					"jdbc:mysql://Carbon.dubrinksy.com/todoit:80", username,
 					pass);
 			System.out.println("connection successful");
 		} catch (SQLException e) {
