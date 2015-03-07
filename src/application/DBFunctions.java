@@ -38,7 +38,7 @@ public class DBFunctions {
 	/**
 	 * closes connection with database
 	 */
-	public void disconnect() {
+	public int disconnect() {
 		try {
 			conn.close();
 
@@ -47,8 +47,11 @@ public class DBFunctions {
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
 			System.out.println("VendorError: " + e.getErrorCode());
+			
+			return 0;
 		}
-
+		
+		return 1;
 	}
 
 	/**
@@ -62,7 +65,7 @@ public class DBFunctions {
 	 * @param endTime
 	 * @param desc
 	 */
-	public void addTask(String title, java.sql.Date startDate, Time startTime,
+	public int addTask(String title, java.sql.Date startDate, Time startTime,
 			java.sql.Date endDate, Time endTime, String desc) {
 		
 		int count;
@@ -88,16 +91,21 @@ public class DBFunctions {
 			if (count !=1){
 				System.out.println("Trying to modify " + count + " rows.");
 				conn.rollback();
+				return 2;
 			}
 			else{
 				conn.commit();
+				return count;
 			}
 
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
 			System.out.println("VendorError: " + e.getErrorCode());
+			
+			return 0;
 		}
+		
 	}
  /**
   * Changes the properties of a Task
@@ -110,7 +118,7 @@ public class DBFunctions {
   * @param endTime
   * @param desc
   */
-	public void modifyTask(Integer taskId, String title, java.sql.Date startDate,
+	public int modifyTask(Integer taskId, String title, java.sql.Date startDate,
 			Time startTime, java.sql.Date endDate, Time endTime, String desc) {
 		
 		int count;
@@ -138,15 +146,21 @@ public class DBFunctions {
 			if(count != 1) {
 				System.out.println("trying to modify " + count + "lines");
 				conn.rollback();
+				
+				return 2;
 			}
 			else{
 				conn.commit();
+				
+				return count;
 			}
 
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
 			System.out.println("VendorError: " + e.getErrorCode());
+			
+			return 0;
 		}
 
 	}
@@ -158,7 +172,7 @@ public class DBFunctions {
 	 * @param startDate
 	 * @param startTime
 	 */
-	public void deleteTask(Integer taskID) {
+	public int deleteTask(Integer taskID) {
 		
 		int count;
 		
@@ -177,15 +191,20 @@ public class DBFunctions {
 			if (count != 1) {
 				System.out.println("trying to modify " + count + "lines");
 				conn.rollback();
+				
+				return 2;
 			}
 			else{
 				conn.commit();
+				return count;
 			}
 
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
 			System.out.println("VendorError: " + e.getErrorCode());
+			
+			return 0;
 		}
 
 	}
