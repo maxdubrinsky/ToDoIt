@@ -2,10 +2,18 @@ package application;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.*;
 
-import javafx.*;
+
+
+
+
+
+
+
+
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,18 +23,23 @@ import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 
 
 
 public class GUI extends Application {
+	
+	
 
 
 	@Override
@@ -74,7 +87,7 @@ public class GUI extends Application {
 			addTaskStage.setScene(scene);
 			addTaskStage.setTitle("Add Task Manager");
 			addTaskStage.setWidth(500);
-			addTaskStage.setHeight(400);
+			addTaskStage.setHeight(500);
 			addTaskStage.setResizable(false);
 			addTaskStage.show();
 
@@ -157,40 +170,130 @@ public class GUI extends Application {
 	
 	/**
 	 * This method is used to add a VBox in the Add Task GUI
-	 * 
 	 * @return VBox required for VBox
 	 */
 	public VBox addVBoxAddTask() {
 		
 		
-		VBox vbox = new VBox();
+		VBox vbox = new VBox(8);
+		vbox.setPadding(new Insets(6));
+		vbox.setSpacing(4);
 		
 		vbox.getStyleClass().addAll("pane", "vboxaddtask");
 		
-		Label title = new Label("Task Title");
-		
-		TextField taskName = new TextField();
-		taskName.setMaxWidth(325);
-		taskName.setMinWidth(150);
+		Label taskTitle = new Label("Task Title");
+		Label textAreaTitle = new Label("Task Discription");
+		Label hboxStartDateTitle = new Label("Start Date");
 
+		// Add a text field for the title
+		TextField taskTitleBox = new TextField();
+		taskTitleBox.setMaxWidth(300);
+		taskTitleBox.setMinWidth(150);
+		addTextLimiter(taskTitleBox, 50);
+		
+		// Add a text box for description
+		TextArea textArea = new TextArea();
+		textArea.setPrefRowCount(5);    
+		
+		
+		
+		// This is all HBox for the buttons submit and clear
+		HBox hboxButtons = new HBox();
+		hboxButtons.setAlignment(Pos.CENTER);
+		hboxButtons.setSpacing(12);
+		
 		
 		Button submit = new Button("Submit");
+		Button clear = new Button("Clear");
 		
+		hboxButtons.getChildren().addAll(submit,clear);
+		
+		
+		// This is the HBox for the start time
+		HBox hboxStartDate = new HBox();
+		hboxStartDate.setAlignment(Pos.BASELINE_LEFT);
+		hboxStartDate.setSpacing(12);
+		
+		ComboBox<String> startTimeMonthComboBox = new ComboBox();
+		startTimeMonthComboBox.getItems().addAll(
+				"Jan",
+				"Feb",
+				"Mar",
+				"Apr",
+				"May",
+				"Jun",
+				"Jul",
+				"Aug",
+				"Sep",
+				"Oct",
+				"Nov",
+				"Dec"
+				);
+		
+		TextField taskStartTimeDate = new TextField();
+		taskStartTimeDate.setMaxWidth(40);
+		taskStartTimeDate.setMinWidth(40);
+		addTextLimiter(taskStartTimeDate, 2);
+		
+		TextField taskStartTimeYear = new TextField();
+		taskStartTimeYear.setMaxWidth(80);
+		taskStartTimeYear.setMinWidth(80);
+		addTextLimiter(taskStartTimeYear, 4);
+		
+		
+		
+		hboxStartDate.getChildren().addAll(startTimeMonthComboBox, taskStartTimeDate, taskStartTimeYear);
+		
+		Label hboxStartTimeTitle = new Label("Start Time");
+		
+		// HBOX for Start time 
+		HBox hboxStartTime = new HBox();
+		hboxStartTime.setAlignment(Pos.BASELINE_LEFT);
+		hboxStartTime.setSpacing(12);
+		
+		TextField taskStartTimeHour = new TextField();
+		taskStartTimeHour.setMaxWidth(64);
+		taskStartTimeHour.setMinWidth(64);
+		addTextLimiter(taskStartTimeHour, 2);
+		
+		TextField taskStartTimeMin = new TextField();
+		taskStartTimeMin.setMaxWidth(64);
+		taskStartTimeMin.setMinWidth(64);
+		addTextLimiter(taskStartTimeMin, 2);
+		
+		ComboBox<String> startTimeAmPmComboBox = new ComboBox();
+		startTimeAmPmComboBox.getItems().addAll(
+				"AM",
+				"PM"
+				);
+		
+		
+		hboxStartTime.getChildren().addAll(taskStartTimeHour, taskStartTimeMin, startTimeAmPmComboBox);
+		
+		
+		// Make a new label for the 
 		Label status = new Label();
 		
-		vbox.getChildren().add(title);
-		vbox.getChildren().add(taskName);
-		vbox.getChildren().add(submit);
+		vbox.getChildren().add(taskTitle);
+		vbox.getChildren().add(taskTitleBox);
+		vbox.getChildren().add(textAreaTitle);
+		vbox.getChildren().add(textArea);
+		vbox.getChildren().add(hboxStartDateTitle);
+		vbox.getChildren().add(hboxStartDate);
+		vbox.getChildren().add(hboxStartTimeTitle);
+		vbox.getChildren().add(hboxStartTime);
 		vbox.getChildren().add(status);
+		vbox.getChildren().add(hboxButtons);
+	
 		
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			    public void handle(ActionEvent e) {
-			        if ((taskName.getText() != null && !taskName.getText().isEmpty())) {
+			        if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())) {
 			            status.setText("Worked");
 			            System.out.println("I has text!");
-			            System.out.println(taskName.getText().toString());
+			            System.out.println(taskTitleBox.getText().toString());
 			            //TODO put controller in this
 			            
 			       
@@ -233,9 +336,6 @@ public class GUI extends Application {
 		// Add to Vbox
 		vbox.getChildren().add(list);
 		
-		
-
-
 		return vbox;
 	}
 
@@ -331,8 +431,25 @@ public class GUI extends Application {
 
 		return hbox;
 	}
+	
+	
+	public static void addTextLimiter (final TextField textField, final int maxLength) {
+		textField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> oldval,
+					String oldValue, String newValue) {
+				if (textField.getText().length() > maxLength) {
+					String aString = textField.getText().substring(0, maxLength);
+					textField.setText(aString);
+				}
+				
+			}
+
+		});
+	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
+
