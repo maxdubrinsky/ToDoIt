@@ -2,13 +2,17 @@ package application;
 
 import java.util.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.json.*;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+
 
 
 public class DBFunctions {
@@ -22,7 +26,7 @@ public class DBFunctions {
 	 * @param endTime
 	 * @param desc
 	 */
-	public static void addTask(String title, long startTime, long endTime,
+	public void addTask(String title, long startTime, long endTime,
 			String desc) {
 
 		try {
@@ -30,12 +34,18 @@ public class DBFunctions {
 			HttpClient client = HttpClientBuilder.create().build();
 
 			// Create url
-			String url = "carbon.dubrinsky.com/add_task.php?title=" + title
-					+ "&desc=" + desc + "&start=" + startTime + "&end="
-					+ endTime;
+			java.net.URI uri = new URIBuilder()
+					.setScheme("http")
+					.setHost("carbon.dubrinsky.com")
+					.setPath("/add_task.php")
+					.setParameter("title", title)
+					.setParameter("desc", desc)
+					.addParameter("start", String.valueOf(startTime))
+					.setParameter("end", String.valueOf(startTime))
+					.build();
 
 			// Create Get Request
-			HttpGet get = new HttpGet(url);
+			HttpGet get = new HttpGet(uri);
 
 			// Execute request and capture response
 			client.execute(get);
@@ -48,6 +58,9 @@ public class DBFunctions {
 		} catch (IOException e) {
 
 			// If exception, print stack trace
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -72,12 +85,20 @@ public class DBFunctions {
 			HttpClient client = HttpClientBuilder.create().build();
 
 			// Create url
-			String url = "carbon.dubrinsky.com/update_task.php?title=" + title
-					+ "&desc=" + desc + "&start=" + startTime + "&end="
-					+ endTime + "&taskID=" + taskId;
+			java.net.URI uri = new URIBuilder()
+			.setScheme("http")
+			.setHost("carbon.dubrinsky.com")
+			.setPath("/update_task.php")
+			.setParameter("title", title)
+			.setParameter("desc", desc)
+			.addParameter("start", String.valueOf(startTime))
+			.setParameter("end", String.valueOf(startTime))
+			.setParameter("taskID", String.valueOf(taskId))
+			.build();
+			
 
 			// Create Get Request
-			HttpGet get = new HttpGet(url);
+			HttpGet get = new HttpGet(uri);
 
 			// Execute request and capture response
 			client.execute(get);
@@ -90,6 +111,9 @@ public class DBFunctions {
 		} catch (IOException e) {
 
 			// If exception, print stack trace
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -108,10 +132,15 @@ public class DBFunctions {
 			HttpClient client = HttpClientBuilder.create().build();
 
 			// Create url
-			String url = "carbon.dubrinsky.com/delete_task.php?taskID="
-					+ taskID;
+			java.net.URI uri = new URIBuilder()
+			.setScheme("http")
+			.setHost("carbon.dubrinsky.com")
+			.setPath("/delete_task.php")
+			.setParameter("taskID", String.valueOf(taskID))
+			.build();
+			
 			// Create Get Request
-			HttpGet get = new HttpGet(url);
+			HttpGet get = new HttpGet(uri);
 
 			// Execute request and capture response
 			client.execute(get);
@@ -125,6 +154,9 @@ public class DBFunctions {
 
 			// If exception, print stack trace
 			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
@@ -134,43 +166,54 @@ public class DBFunctions {
 	 * 
 	 * @return List<List<String>>
 	 */
-	public List<List<Object>> viewUpcoming() {
+	public ArrayList<Task> viewUpcoming() {
 		
 		try {
 			// Create http client
 			HttpClient client = HttpClientBuilder.create().build();
 
 			// Create url
-			String url = "carbon.dubrinsky.com/read.php";
+			java.net.URI uri = new URIBuilder()
+			.setScheme("http")
+			.setHost("carbon.dubrinsky.com")
+			.setPath("/read.php")
+			.build();
 					
 			// Create Get Request
-			HttpGet get = new HttpGet(url);
+			HttpGet get = new HttpGet(uri);
 
 			// Execute request and capture response
 			HttpResponse result = client.execute(get);
 			
-			ArrayList<ArrayList<Object>> tasks = new ArrayList<ArrayList<Object>>();
+			ArrayList<Task> tasks = new ArrayList<Task>();
 			
-			JSONArray data = new JSONArray(result);
+			String json = EntityUtils.toString(result.getEntity());
+			
+			JSONArray data = new JSONArray(json);
 			JSONObject element;
+			Task tsk;
 			
 			for(int i = 0; i < data.length(); i++) {
 				element = data.getJSONObject(i);
 				String title = element.getString("task_title");
 				String desc = element.getString("task_desc");
-				long start = element.getLong("start_time");
-				long end = element.getLong("end_time");
+				Object start = element.get("start_time");
+				Object end = element.get("end_time");
 				int id = element.getInt("task_id");
 				
-				ArrayList<Object> ele = new ArrayList<Object>();
-				ele.add(title);
-				ele.add(desc);
-				ele.add(start);
-				ele.add(end);
-				ele.add(id);
 				
-				tasks.add(ele);
+				tsk = new Task();		
+				
+				tsk.setID(id);
+				tsk.setTitle(title);
+				tsk.setDesc(desc);
+				tsk.setStart(start);
+				tsk.setEnd(end);
+				
+				tasks.add(tsk);
 			}
+			
+			return tasks;
 
 		} catch (ClientProtocolException e) {
 
@@ -182,6 +225,9 @@ public class DBFunctions {
 			// If exception, print stack trace
 			e.printStackTrace();
 		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

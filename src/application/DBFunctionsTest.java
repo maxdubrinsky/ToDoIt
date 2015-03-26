@@ -2,102 +2,59 @@ package application;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import java.util.ArrayList;
 
+import org.junit.Test;
 
 public class DBFunctionsTest {
 
 	@Test
-	public void connectTest() {
-		DBFunctions dbf = new DBFunctions();
-		
-		int test = dbf.connect();
-		
-		if (test != 0){
-			fail("Connection unsuccessful");
-		}
-		
-		dbf.disconnect();
-		
-	}
-	
-	@Test
-	public void disconnectTest() {
-		DBFunctions dbf = new DBFunctions();
-		
-		dbf.connect();
-		int test = dbf.disconnect();
-		
-		if (test != 0){
-			fail("Disconnection unsuccessful");
-		}
-	}
-	
-	@Test
 	public void addTaskTest() {
 		DBFunctions dbf = new DBFunctions();
-		dbf.connect();
-		
-		String title = "Hello";
-		String desc = "This is a salutation";
-		java.sql.Date startDate = null;
-		java.sql.Time startTime = null;
-		java.sql.Date endDate = null;
-		java.sql.Time endTime = null;
-		
-		
-		int test = dbf.addTask(title, startDate, startTime, endDate, endTime, desc);
-		
-		if (test != 1) {
-			fail("Add did not succeed");
+
+		ArrayList<Task> tasks = dbf.viewUpcoming();
+
+		int size = tasks.size();
+
+		dbf.addTask("hello, world", 20150326034200l, 20150326044200l,
+				"something clever");
+
+		if (dbf.viewUpcoming().size() != (size + 1)) {
+			fail("did not add task correctly");
 		}
-		if (test == 2) {
-			fail("Add is trying to modify an incorrect number of rows");
-		}
-		
-		dbf.disconnect();
 	}
-	
+
 	@Test
 	public void deleteTaskTest() {
+
 		DBFunctions dbf = new DBFunctions();
-		dbf.connect();
-		
-		int taskID = 1;
-		
-		int test = dbf.deleteTask(taskID);
-		
-		if (test != 1) {
-			fail("Delete did not succeed");
+
+		ArrayList<Task> tasks = dbf.viewUpcoming();
+		int id = tasks.get(0).getID();
+		int size = tasks.size();
+
+		dbf.deleteTask(id);
+
+		if (dbf.viewUpcoming().size() != (size - 1)) {
+			fail("did not delete task");
 		}
-		
-		if (test == 2) {
-			fail("Delete is trying to modify an incorrect number of lines");
-		}
-		dbf.disconnect();
+
 	}
-	
+
 	@Test
 	public void modifyTaskTest() {
+
 		DBFunctions dbf = new DBFunctions();
-		dbf.connect();
-		
-		String title = "Hello";
-		String desc = "This is a salutation";
-		java.sql.Date startDate = null;
-		java.sql.Time startTime = null;
-		java.sql.Date endDate = null;
-		java.sql.Time endTime = null;
-		int taskId = 1;
-		
-		int test = dbf.modifyTask(taskId, title, startDate, startTime, endDate, endTime, desc);
-		
-		if (test != 1) {
-			fail("Modify did not succeed");
-		}
-		
-		if (test == 2) {
-			fail("Modify is trying to modify an incorrect number of lines");
+
+		ArrayList<Task> tasks = dbf.viewUpcoming();
+		int id = tasks.get(0).getID();
+		int size = tasks.size();
+
+		dbf.modifyTask(id, "oof-dah", 20150101010101l,
+				20150202020202l, "this is weird");
+
+		if (tasks.size() != size){
+			fail("something got added or deleted that wasn't supposed to");
 		}
 	}
 
