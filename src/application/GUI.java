@@ -94,6 +94,7 @@ public class GUI extends Application {
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
 
+			gui.setCenter(addVBoxRemoveTask());
 
 			// Makes the frame use the css sheet
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -158,6 +159,7 @@ public class GUI extends Application {
 			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * This method is used to add a VBox in the Add Task GUI
@@ -230,7 +232,7 @@ public class GUI extends Application {
 		taskStartTimeYear.setMaxWidth(80);
 		taskStartTimeYear.setMinWidth(80);
 		addTextLimiter(taskStartTimeYear, 4);
-		
+
 		ComboBox<String> endTimeMonthComboBox = new ComboBox();
 		endTimeMonthComboBox.getItems().addAll(
 				"Jan",
@@ -338,6 +340,46 @@ public class GUI extends Application {
 				}
 			}
 		});
+
+		return vbox;
+	}
+
+	public VBox addVBoxRemoveTask() {
+		// Set up Vbox
+		VBox vbox = new VBox();
+		vbox.setPadding(new Insets(12));
+		vbox.setSpacing(8);
+
+		// Make Vbox use the Css sheet
+		vbox.getStyleClass().addAll("pane", "vboxremovetask");
+		
+		Label removeTask = new Label("Remove Task:");
+		
+		// This is the list view with filler tasks
+		ListView<String> list = new ListView<String>();
+
+		list.getStyleClass().addAll("pane", "listview");
+
+		// This is the populated lists.
+		ObservableList<String> items =FXCollections.observableArrayList (
+				"Task One", "Task Two", "Task Three", "Task Four");
+
+		list.setItems(items);
+		
+		// This is all HBox for the buttons submit and clear
+		HBox hboxButtons = new HBox();
+		hboxButtons.setAlignment(Pos.CENTER);
+		hboxButtons.setSpacing(12);
+
+
+		Button remove = new Button("Remove Task");
+		Button deselect = new Button("Deselect");
+
+		hboxButtons.getChildren().addAll(remove,deselect);
+
+		vbox.getChildren().add(removeTask);
+		vbox.getChildren().add(list);
+		vbox.getChildren().add(hboxButtons);
 
 		return vbox;
 	}
