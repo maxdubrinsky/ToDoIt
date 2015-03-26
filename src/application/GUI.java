@@ -119,6 +119,8 @@ public class GUI extends Application {
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
 
+			gui.setCenter(addVBoxEditTask());
+
 			// Makes the frame use the css sheet
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -126,7 +128,7 @@ public class GUI extends Application {
 			addEditStage.setScene(scene);
 			addEditStage.setTitle("Edit Task Manager");
 			addEditStage.setWidth(500);
-			addEditStage.setHeight(400);
+			addEditStage.setHeight(700);
 			addEditStage.setResizable(false);
 			addEditStage.show();
 
@@ -352,9 +354,9 @@ public class GUI extends Application {
 
 		// Make Vbox use the Css sheet
 		vbox.getStyleClass().addAll("pane", "vboxremovetask");
-		
+
 		Label removeTask = new Label("Remove Task:");
-		
+
 		// This is the list view with filler tasks
 		ListView<String> list = new ListView<String>();
 
@@ -365,8 +367,8 @@ public class GUI extends Application {
 				"Task One", "Task Two", "Task Three", "Task Four");
 
 		list.setItems(items);
-		
-		// This is all HBox for the buttons submit and clear
+
+		// This is all HBox for the buttons remove task and deselect
 		HBox hboxButtons = new HBox();
 		hboxButtons.setAlignment(Pos.CENTER);
 		hboxButtons.setSpacing(12);
@@ -382,6 +384,179 @@ public class GUI extends Application {
 		vbox.getChildren().add(hboxButtons);
 
 		return vbox;
+	}
+
+
+	public VBox addVBoxEditTask() {
+		// Set up Vbox
+		VBox vbox = new VBox();
+		vbox.setPadding(new Insets(12));
+		vbox.setSpacing(8);
+
+		// Make Vbox use the Css sheet
+		vbox.getStyleClass().addAll("pane", "vboxedittask");
+
+		Label editTask = new Label("Edit Task:");
+
+		// This is the list view with filler tasks
+		ListView<String> list = new ListView<String>();
+
+		list.getStyleClass().addAll("pane", "listview");
+
+		// This is the populated lists.
+		ObservableList<String> items =FXCollections.observableArrayList (
+				"Task One", "Task Two", "Task Three", "Task Four");
+
+		list.setItems(items);
+		list.setMinHeight(200);
+		list.setMaxHeight(200);
+		
+		Label taskTitle = new Label("Task Title");
+		Label textAreaTitle = new Label("Task Discription");
+		
+		// Add a text field for the title
+		TextField taskTitleBox = new TextField();
+		taskTitleBox.setMaxWidth(300);
+		taskTitleBox.setMinWidth(150);
+		addTextLimiter(taskTitleBox, 50);
+
+		// Add a text box for description
+		TextArea textArea = new TextArea();
+		textArea.setPrefRowCount(5);    
+		
+
+		// This is the HBox for the start time
+		HBox hboxStartAndEndDate = new HBox();
+		hboxStartAndEndDate.setAlignment(Pos.BASELINE_LEFT);
+		hboxStartAndEndDate.setSpacing(12);
+		
+		Label hboxStartAndEndDateTitle = new Label("Start Date                                     End Date");
+
+		ComboBox<String> startTimeMonthComboBox = new ComboBox();
+		startTimeMonthComboBox.getItems().addAll(
+				"Jan",
+				"Feb",
+				"Mar",
+				"Apr",
+				"May",
+				"Jun",
+				"Jul",
+				"Aug",
+				"Sep",
+				"Oct",
+				"Nov",
+				"Dec"
+				);
+
+		TextField taskStartTimeDate = new TextField();
+		taskStartTimeDate.setMaxWidth(40);
+		taskStartTimeDate.setMinWidth(40);
+		addTextLimiter(taskStartTimeDate, 2);
+
+		TextField taskStartTimeYear = new TextField();
+		taskStartTimeYear.setMaxWidth(80);
+		taskStartTimeYear.setMinWidth(80);
+		addTextLimiter(taskStartTimeYear, 4);
+
+		ComboBox<String> endTimeMonthComboBox = new ComboBox();
+		endTimeMonthComboBox.getItems().addAll(
+				"Jan",
+				"Feb",
+				"Mar",
+				"Apr",
+				"May",
+				"Jun",
+				"Jul",
+				"Aug",
+				"Sep",
+				"Oct",
+				"Nov",
+				"Dec"
+				);
+
+		TextField taskEndTimeDate = new TextField();
+		taskEndTimeDate.setMaxWidth(40);
+		taskEndTimeDate.setMinWidth(40);
+		addTextLimiter(taskEndTimeDate, 2);
+
+		TextField taskEndTimeYear = new TextField();
+		taskEndTimeYear.setMaxWidth(80);
+		taskEndTimeYear.setMinWidth(80);
+		addTextLimiter(taskEndTimeYear, 4);
+
+
+
+		hboxStartAndEndDate.getChildren().addAll(startTimeMonthComboBox, taskStartTimeDate, taskStartTimeYear,endTimeMonthComboBox,taskEndTimeDate,taskEndTimeYear);
+
+		Label hboxStartAndEndTimeTitle = new Label("Start Time                                     End Time");
+
+		// HBOX for Start Time and End Time
+		HBox hboxStartAndEndTime = new HBox();
+		hboxStartAndEndTime.setAlignment(Pos.BASELINE_LEFT);
+		hboxStartAndEndTime.setSpacing(12);
+
+		TextField taskStartTimeHour = new TextField();
+		taskStartTimeHour.setMaxWidth(64);
+		taskStartTimeHour.setMinWidth(64);
+		addTextLimiter(taskStartTimeHour, 2);
+
+		TextField taskStartTimeMin = new TextField();
+		taskStartTimeMin.setMaxWidth(64);
+		taskStartTimeMin.setMinWidth(64);
+		addTextLimiter(taskStartTimeMin, 2);
+
+		ComboBox<String> startTimeAmPmComboBox = new ComboBox();
+		startTimeAmPmComboBox.getItems().addAll(
+				"AM",
+				"PM"
+				);
+
+		TextField taskEndTimeHour = new TextField();
+		taskEndTimeHour.setMaxWidth(64);
+		taskEndTimeHour.setMinWidth(64);
+		addTextLimiter(taskEndTimeHour, 2);
+
+		TextField taskEndTimeMin = new TextField();
+		taskEndTimeMin.setMaxWidth(64);
+		taskEndTimeMin.setMinWidth(64);
+		addTextLimiter(taskEndTimeMin, 2);
+
+		ComboBox<String> endTimeAmPmComboBox = new ComboBox();
+		endTimeAmPmComboBox.getItems().addAll(
+				"AM",
+				"PM"
+				);
+
+
+		hboxStartAndEndTime.getChildren().addAll(taskStartTimeHour, taskStartTimeMin, startTimeAmPmComboBox,taskEndTimeHour,taskEndTimeMin,endTimeAmPmComboBox);
+
+
+		// This is all HBox for the buttons update and clear
+		HBox hboxButtons = new HBox();
+		hboxButtons.setAlignment(Pos.CENTER);
+		hboxButtons.setSpacing(12);
+
+
+		Button update = new Button("Update Task");
+		Button clear = new Button("Clear");
+
+		hboxButtons.getChildren().addAll(update,clear);
+
+		vbox.getChildren().add(editTask);
+		vbox.getChildren().add(list);
+		vbox.getChildren().add(taskTitle);
+		vbox.getChildren().add(taskTitleBox);
+		vbox.getChildren().add(textAreaTitle);
+		vbox.getChildren().add(textArea);
+		vbox.getChildren().add(hboxStartAndEndDateTitle);
+		vbox.getChildren().add(hboxStartAndEndDate);
+		vbox.getChildren().add(hboxStartAndEndTimeTitle);
+		vbox.getChildren().add(hboxStartAndEndTime);
+		vbox.getChildren().add(hboxButtons);
+
+
+		return vbox;
+
 	}
 
 
