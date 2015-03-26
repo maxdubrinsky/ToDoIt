@@ -144,7 +144,8 @@ public class GUI extends Application {
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
 
-
+			gui.setCenter(addVBoxViewTask());
+			
 			// Makes the frame use the css sheet
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -152,7 +153,7 @@ public class GUI extends Application {
 			addViewStage.setScene(scene);
 			addViewStage.setTitle("View Task Manager");
 			addViewStage.setWidth(500);
-			addViewStage.setHeight(400);
+			addViewStage.setHeight(500);
 			addViewStage.setResizable(false);
 			addViewStage.show();
 
@@ -410,10 +411,10 @@ public class GUI extends Application {
 		list.setItems(items);
 		list.setMinHeight(200);
 		list.setMaxHeight(200);
-		
+
 		Label taskTitle = new Label("Task Title");
 		Label textAreaTitle = new Label("Task Discription");
-		
+
 		// Add a text field for the title
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
@@ -423,13 +424,13 @@ public class GUI extends Application {
 		// Add a text box for description
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);    
-		
+
 
 		// This is the HBox for the start time
 		HBox hboxStartAndEndDate = new HBox();
 		hboxStartAndEndDate.setAlignment(Pos.BASELINE_LEFT);
 		hboxStartAndEndDate.setSpacing(12);
-		
+
 		Label hboxStartAndEndDateTitle = new Label("Start Date                                     End Date");
 
 		ComboBox<String> startTimeMonthComboBox = new ComboBox();
@@ -559,7 +560,46 @@ public class GUI extends Application {
 
 	}
 
+	public VBox addVBoxViewTask() {
 
+		// Set up Vbox
+		VBox vbox = new VBox();
+		vbox.setPadding(new Insets(12));
+		vbox.setSpacing(8);
+
+		// Make Vbox use the Css sheet
+		vbox.getStyleClass().addAll("pane", "vboxviewtask");
+
+		Label viewTaskTitle = new Label("View Task:");
+
+		// This is the list view with filler tasks
+		ListView<String> list = new ListView<String>();
+
+		list.getStyleClass().addAll("pane", "listview");
+
+		// This is the populated lists.
+		ObservableList<String> items =FXCollections.observableArrayList (
+				"Task One", "Task Two", "Task Three", "Task Four");
+
+		list.setItems(items);
+		list.setMinHeight(250);
+		list.setMaxHeight(250);
+		
+		Label viewTaskDiscTitle = new Label("Task Discription:");
+
+		// Add a text box for description
+		TextArea textArea = new TextArea();
+		textArea.setPrefRowCount(5);    
+
+		// The upcoming task label at top
+		vbox.getChildren().add(viewTaskTitle);
+		vbox.getChildren().add(list);
+		vbox.getChildren().add(viewTaskDiscTitle);
+		vbox.getChildren().add(textArea);
+
+
+		return vbox;
+	}
 	public VBox addVBoxPrimary() {
 
 		// Set up Vbox
