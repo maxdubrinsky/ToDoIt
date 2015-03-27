@@ -2,6 +2,7 @@ package application;
 
 import java.time.LocalDate;
 import java.time.Month;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -24,15 +27,26 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-
-
-
+/**
+ * This class is the GUI of the TODOIT application. It uses javafx to make a working GUI.
+ * 
+ * @author Bryan Ehrke
+ * Spring 2015
+ *
+ */
 public class GUI extends Application {
 
+	boolean isAddTaskOpen = false;
+	boolean isEditTaskOpen = false;
+	boolean isViewTaskOpen = false;
+	boolean isRemoveTaskOpen = false;
 
 
-
+	/**
+	 * This is the start method that starts the primary stage for the GUI to use. AKA the main window.
+	 * 
+	 * @param primaryStage is the primary stage being used to start.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -62,13 +76,19 @@ public class GUI extends Application {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * This starts another scene that is triggered by a button in the main scene. 
+	 * This controls the AddTask Window.
+	 * 
+	 * @param addTaskStage is the scene to be started.
+	 */
 	public void startAddTask(Stage addTaskStage){
 		try {
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
 
+			// Use the center of this window for adding a vbox
 			gui.setCenter(addVBoxAddTask());
 
 			// Makes the frame use the css sheet
@@ -80,14 +100,27 @@ public class GUI extends Application {
 			addTaskStage.setWidth(500);
 			addTaskStage.setHeight(500);
 			addTaskStage.setResizable(false);
-			addTaskStage.show();
+			addTaskStage.show();   
+			
+			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					isAddTaskOpen = false;
+				}
+			});  
 
 
-		} catch(Exception e) {
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * This starts another scene that is triggered by a button in the main scene. 
+	 * This controls the RemoveTask Window.
+	 * 
+	 * @param addRemoveStage is the scene to be started.
+	 */
 	public void startRemoveTask(Stage addRemoveStage){
 		try {
 			// Sets up the add task manager frame
@@ -106,6 +139,12 @@ public class GUI extends Application {
 			addRemoveStage.setHeight(400);
 			addRemoveStage.setResizable(false);
 			addRemoveStage.show();
+			
+			addRemoveStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					isRemoveTaskOpen = false;
+				}
+			});  
 
 
 		} catch(Exception e) {
@@ -113,6 +152,12 @@ public class GUI extends Application {
 		}
 	}
 
+	/**
+	 * This starts another scene that is triggered by a button in the main scene. 
+	 * This controls the EditTask Window.
+	 * 
+	 * @param addEditStage is the Stage to be started.
+	 */
 	public void startEditTask(Stage addEditStage){
 		try {
 			// Sets up the add task manager frame
@@ -132,12 +177,22 @@ public class GUI extends Application {
 			addEditStage.setResizable(false);
 			addEditStage.show();
 
+			addEditStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					isEditTaskOpen = false;
+				}
+			});  
+
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * 
+	 * @param addViewStage is the stage to be started.
+	 */
 	public void startViewTask(Stage addViewStage){
 		try {
 			// Sets up the add task manager frame
@@ -145,7 +200,7 @@ public class GUI extends Application {
 			Scene scene = new Scene(gui, 500, 400);
 
 			gui.setCenter(addVBoxViewTask());
-			
+
 			// Makes the frame use the css sheet
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -156,6 +211,13 @@ public class GUI extends Application {
 			addViewStage.setHeight(500);
 			addViewStage.setResizable(false);
 			addViewStage.show();
+			
+			addViewStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					isViewTaskOpen = false;
+				}
+			});  
+
 
 
 		} catch(Exception e) {
@@ -584,7 +646,7 @@ public class GUI extends Application {
 		list.setItems(items);
 		list.setMinHeight(250);
 		list.setMaxHeight(250);
-		
+
 		Label viewTaskDiscTitle = new Label("Task Discription:");
 
 		// Add a text box for description
@@ -661,18 +723,25 @@ public class GUI extends Application {
 		addTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				if (isAddTaskOpen == false) {
+					Stage addTaskStage = new Stage();
+					startAddTask(addTaskStage);
+					isAddTaskOpen = true;
+				}
 				System.out.println("Add Task Event");
-				Stage addTaskStage = new Stage();
-				startAddTask(addTaskStage);
 			}
 		});
 
 		removeTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				if (isRemoveTaskOpen == false) {
+					Stage addRemoveStage = new Stage();
+					startRemoveTask(addRemoveStage);
+					isRemoveTaskOpen = true;
+				}
 				System.out.println("Remove Task Event");
-				Stage addRemoveStage = new Stage();
-				startRemoveTask(addRemoveStage);
+
 			}
 		});
 
@@ -680,8 +749,11 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Edit Task Event");
-				Stage addEditStage = new Stage();
-				startEditTask(addEditStage);
+				if (isEditTaskOpen == false) {
+					Stage addEditStage = new Stage();
+					startEditTask(addEditStage);
+					isEditTaskOpen = true;
+				}
 			}
 		});
 
@@ -689,8 +761,11 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("View Task Event");
-				Stage addViewStage = new Stage();
-				startViewTask(addViewStage);
+				if (isViewTaskOpen == false) {
+					Stage addViewStage = new Stage();
+					startViewTask(addViewStage);
+					isViewTaskOpen = true;
+				}
 			}
 		});
 
