@@ -67,4 +67,9 @@ public class Task {
 		
 		return out;
 	}
+	
+	// Form of Title 10, then the Date then the Time.
+	public String toString() {
+		return null;
+	}
 }

@@ -3,16 +3,19 @@ package application;
 import java.util.*;
 
 public class Controller {
-    private DBFunctions db;
+    private static DBFunctions db;
     
     public Controller(){
         db = new DBFunctions();
     }
     
-    public void addTask(String title, String desc, String startDate, int sH, int sM, String sapm,
+    public static void addTask(String title, String desc, String startDate, int sH, int sM, String sapm,
             String endDate, int eH, int eM, String eapm) {
         long startT;
         long endT;
+        
+        System.out.println("The Info."  + title + desc + startDate + sH + sM + sapm + endDate + eH + eM + eapm);
+        
         startT = 	(Long.parseLong(startDate.substring(6, 10)) * ((long)Math.pow(10, 10))) + //year
         			(Long.parseLong(startDate.substring(0, 2)) * ((long)Math.pow(10, 8))) + //month
         			(Long.parseLong(startDate.substring(3, 5)) * ((long)Math.pow(10, 6))); //day

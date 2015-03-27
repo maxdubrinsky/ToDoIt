@@ -272,20 +272,20 @@ public class GUI extends Application {
 		hboxStartAndEndDate.setAlignment(Pos.BASELINE_LEFT);
 		hboxStartAndEndDate.setSpacing(12);
 
-		ComboBox<String> startTimeMonthComboBox = new ComboBox();
+		ComboBox<String> startTimeMonthComboBox = new ComboBox<String>();
 		startTimeMonthComboBox.getItems().addAll(
-				"Jan",
-				"Feb",
-				"Mar",
-				"Apr",
-				"May",
-				"Jun",
-				"Jul",
-				"Aug",
-				"Sep",
-				"Oct",
-				"Nov",
-				"Dec"
+				"01",
+				"02",
+				"03",
+				"04",
+				"05",
+				"06",
+				"07",
+				"08",
+				"09",
+				"10",
+				"11",
+				"12"
 				);
 
 		TextField taskStartTimeDate = new TextField();
@@ -298,20 +298,20 @@ public class GUI extends Application {
 		taskStartTimeYear.setMinWidth(80);
 		addTextLimiter(taskStartTimeYear, 4);
 
-		ComboBox<String> endTimeMonthComboBox = new ComboBox();
+		ComboBox<String> endTimeMonthComboBox = new ComboBox<String>();
 		endTimeMonthComboBox.getItems().addAll(
-				"Jan",
-				"Feb",
-				"Mar",
-				"Apr",
-				"May",
-				"Jun",
-				"Jul",
-				"Aug",
-				"Sep",
-				"Oct",
-				"Nov",
-				"Dec"
+				"01",
+				"02",
+				"03",
+				"04",
+				"05",
+				"06",
+				"07",
+				"08",
+				"09",
+				"10",
+				"11",
+				"12"
 				);
 
 		TextField taskEndTimeDate = new TextField();
@@ -391,14 +391,11 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())) {
-					status.setText("Worked");
-					System.out.println("I has text!");
-					System.out.println(taskTitleBox.getText().toString());
-					//TODO put controller in this
-
-
-					// First arg being title of task, task disc, start date, start time, end date, end time
-					//control.addTask(taskName.getText(), );
+					
+					System.out.println("We have added a task");
+					
+					Controller.addTask(taskTitleBox.getText(), textArea.getText(), startTimeMonthComboBox.getValue() +"/"+ taskStartTimeDate.getText() + "/" + taskStartTimeYear.getText(), Integer.parseInt(taskStartTimeHour.getText()), Integer.parseInt(taskStartTimeMin.getText()), startTimeAmPmComboBox.getValue(), 
+							endTimeMonthComboBox.getValue() +"/"+ taskEndTimeDate.getText() +"/"+ taskEndTimeYear.getText(), Integer.parseInt(taskEndTimeHour.getText()), Integer.parseInt(taskEndTimeMin.getText()), endTimeAmPmComboBox.getValue());
 
 				} else {
 					status.setText("You have not left a title.");
