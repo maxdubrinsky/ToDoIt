@@ -1,7 +1,5 @@
 package application;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.*;
 
 public class Controller {
@@ -9,53 +7,92 @@ public class Controller {
     
     public Controller(){
         db = new DBFunctions();
-        db.connect();
     }
     
-    @SuppressWarnings("deprecation")
     public void addTask(String title, String desc, String startDate, int sH, int sM, String sapm,
             String endDate, int eH, int eM, String eapm) {
+        long startT;
+        long endT;
+        startT = 	(Long.parseLong(startDate.substring(6, 10)) * ((long)Math.pow(10, 10))) + //year
+        			(Long.parseLong(startDate.substring(0, 2)) * ((long)Math.pow(10, 8))) + //month
+        			(Long.parseLong(startDate.substring(3, 5)) * ((long)Math.pow(10, 6))); //day
         
-        //assume dates passed in are in format mm/dd/yyyy
-        Date startD = new Date(    Integer.parseInt(startDate.substring(6, 9)), //year
-                                Integer.parseInt(startDate.substring(0, 1)), //month
-                                Integer.parseInt(startDate.substring(3, 4))); //day
-        
-        Date endD = new Date(    Integer.parseInt(endDate.substring(6, 9)), //year
-                                Integer.parseInt(endDate.substring(0, 1)), //month
-                                Integer.parseInt(endDate.substring(3, 4))); //day
-        
-        Time startTime;
+        endT = 		(Long.parseLong(endDate.substring(6, 10)) * ((long)Math.pow(10, 10))) + //year
+    				(Long.parseLong(endDate.substring(0, 2)) * ((long)Math.pow(10, 8))) + //month
+    				(Long.parseLong(endDate.substring(3, 5)) * ((long)Math.pow(10, 6))); //day
+  
+ 
         if (sapm.equals("PM") && sH != 12) {
-            startTime = new Time(sH + 12, sM, 0);
+            startT += ((sH + 12) * 10000) + (sM * 100);
         } else if (sapm.equals("AM") && sH == 12) {
-            startTime = new Time(sH - 12, sM, 0);
+            startT += ((sH - 12) * 10000) + (sM * 100);
         } else {
-            startTime = new Time(sH, sM, 0);
+            startT += (sH * 10000) + (sM * 100);
         }
         
-        Time endTime;
         if (eapm.equals("PM") && eH != 12) {
-            endTime = new Time(eH + 12, eM, 0);
+            endT += ((eH + 12) * 10000) + (eM * 100);
         } else if (eapm.equals("AM") && eH == 12) {
-            endTime = new Time(eH - 12, eM, 0);
+            endT += ((eH - 12) * 10000) + (eM * 100);
         } else {
-            endTime = new Time(eH, eM, 0);
+            endT += (eH * 10000) + (eM * 100);
         }
-        
-        db.addTask(title, startD, startTime, endD, endTime, desc);
+        System.out.println(startT);
+        System.out.println(endT);
+        db.addTask(title,  startT, endT, desc);
     }
     
-    public List<String> upcomingTasks() {
-        List<List<String>> tasklist = db.viewUpcoming();
+    public void deleteTask(Task toDelete) {
+    	db.deleteTask(toDelete.getID());
+    }
+    
+    public void modifyTask(Task toChange, String title, String desc, String startDate, int sH, int sM, String sapm,
+            String endDate, int eH, int eM, String eapm) {
+    	
+    	 long startT;
+         long endT;
+         startT = 	(Long.parseLong(startDate.substring(6, 10)) * ((long)Math.pow(10, 10))) + //year
+         			(Long.parseLong(startDate.substring(0, 2)) * ((long)Math.pow(10, 8))) + //month
+         			(Long.parseLong(startDate.substring(3, 5)) * ((long)Math.pow(10, 6))); //day
+         
+         endT = 		(Long.parseLong(endDate.substring(6, 10)) * ((long)Math.pow(10, 10))) + //year
+     				(Long.parseLong(endDate.substring(0, 2)) * ((long)Math.pow(10, 8))) + //month
+     				(Long.parseLong(endDate.substring(3, 5)) * ((long)Math.pow(10, 6))); //day
+         
+         System.out.println(startT);
+         System.out.println(endT);
+         if (sapm.equals("PM") && sH != 12) {
+             startT += ((sH + 12) * 10000) + (sM * 100);
+         } else if (sapm.equals("AM") && sH == 12) {
+             startT += ((sH - 12) * 10000) + (sM * 100);
+         } else {
+             startT += (sH * 10000) + (sM * 100);
+         }
+         
+         if (eapm.equals("PM") && eH != 12) {
+             endT += ((eH + 12) * 10000) + (eM * 100);
+         } else if (eapm.equals("AM") && eH == 12) {
+             endT += ((eH - 12) * 10000) + (eM * 100);
+         } else {
+             endT += (eH * 10000) + (eM * 100);
+         }
+         
+         db.modifyTask(toChange.getID(), title,  startT, endT, desc);
+    	
+    }
+    
+    
+    public List<Task> upcomingTasks() {
+        List<Task> taskList = db.viewUpcoming();
         
-        List<String> sendTasks = new ArrayList<String>();
+        /*List<String> sendTasks = new ArrayList<String>();
         
         //temporary solution
-        for (List<String> list: tasklist) {
+        for (List<String> list: tasklis) {
             sendTasks.add(list.get(0));
         }
+        */
         
-        return sendTasks;
+        return taskList;
     }
 }

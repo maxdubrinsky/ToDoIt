@@ -51,5 +51,20 @@ public class Task {
 	public Task(){
 		
 	}
-
+	
+	public String getStartDate() {
+		String start = String.valueOf(startTime); //yyyy-mm-dd hh:mm:ss
+		String out = 	start.substring(5, 7)  + " " + start.substring(8, 10) + " " + start.substring(2, 4) +
+						" " + start.substring(11, 13) + " " + start.substring(14, 16); //mm dd yy hh mm
+		
+		return out;
+	}
+	
+	public String getEndDate() {
+		String end = String.valueOf(endTime); //yyyy-mm-dd hh:mm:ss
+		String out = 	end.substring(5, 7)  + " " + end.substring(8, 10) + " " + end.substring(2, 4) +
+						" " + end.substring(11, 13) + " " + end.substring(14, 16); //mm dd yy hh mm
+		
+		return out;
+	}
 }

@@ -41,7 +41,7 @@ public class DBFunctions {
 					.setParameter("title", title)
 					.setParameter("desc", desc)
 					.addParameter("start", String.valueOf(startTime))
-					.setParameter("end", String.valueOf(startTime))
+					.setParameter("end", String.valueOf(endTime))
 					.build();
 
 			// Create Get Request
@@ -92,7 +92,7 @@ public class DBFunctions {
 			.setParameter("title", title)
 			.setParameter("desc", desc)
 			.addParameter("start", String.valueOf(startTime))
-			.setParameter("end", String.valueOf(startTime))
+			.setParameter("end", String.valueOf(endTime))
 			.setParameter("taskID", String.valueOf(taskId))
 			.build();
 			
