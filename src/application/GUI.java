@@ -274,18 +274,7 @@ public class GUI extends Application {
 
 		ComboBox<String> startTimeMonthComboBox = new ComboBox<String>();
 		startTimeMonthComboBox.getItems().addAll(
-				"01",
-				"02",
-				"03",
-				"04",
-				"05",
-				"06",
-				"07",
-				"08",
-				"09",
-				"10",
-				"11",
-				"12"
+				"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
 				);
 
 		TextField taskStartTimeDate = new TextField();
@@ -300,18 +289,7 @@ public class GUI extends Application {
 
 		ComboBox<String> endTimeMonthComboBox = new ComboBox<String>();
 		endTimeMonthComboBox.getItems().addAll(
-				"01",
-				"02",
-				"03",
-				"04",
-				"05",
-				"06",
-				"07",
-				"08",
-				"09",
-				"10",
-				"11",
-				"12"
+				"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
 				);
 
 		TextField taskEndTimeDate = new TextField();
