@@ -365,16 +365,16 @@ public class GUI extends Application {
 
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
-
+			//TODO
 			@Override
 			public void handle(ActionEvent e) {
 				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())) {
 					
-					System.out.println("We have added a task");
-					
-					Controller.addTask(taskTitleBox.getText(), textArea.getText(), startTimeMonthComboBox.getValue() +"/"+ taskStartTimeDate.getText() + "/" + taskStartTimeYear.getText(), Integer.parseInt(taskStartTimeHour.getText()), Integer.parseInt(taskStartTimeMin.getText()), startTimeAmPmComboBox.getValue(), 
-							endTimeMonthComboBox.getValue() +"/"+ taskEndTimeDate.getText() +"/"+ taskEndTimeYear.getText(), Integer.parseInt(taskEndTimeHour.getText()), Integer.parseInt(taskEndTimeMin.getText()), endTimeAmPmComboBox.getValue());
-
+					Controller.addTask(taskTitleBox.getText(), textArea.getText(), taskStartTimeYear.getText(), startTimeMonthComboBox.getValue(),
+							taskStartTimeDate.getText(), taskStartTimeHour.getText(), taskStartTimeMin.getText(), startTimeAmPmComboBox.getValue(), 
+							taskEndTimeYear.getText(), endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
+							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
+							);
 				} else {
 					status.setText("You have not left a title.");
 				}

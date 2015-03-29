@@ -26,7 +26,7 @@ public class DBFunctions {
 	 * @param endTime
 	 * @param desc
 	 */
-	public void addTask(String title, long startTime, long endTime,
+	public static void addTask(String title, long startTime, long endTime,
 			String desc) {
 
 		try {

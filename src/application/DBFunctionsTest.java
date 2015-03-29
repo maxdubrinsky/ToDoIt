@@ -72,10 +72,11 @@ public class DBFunctionsTest {
 			tasks = control.upcomingTasks();
 		}
 		
-		control.addTask("CS3421", "Team software project", "02/27/2014", 3, 05, "PM", "02/27/2014", 3, 55, "PM");
-		control.addTask("Work", "MacDonalds", "02/27/2014", 5, 00, "PM", "02/27/2014", 10,00, "PM");
-		control.addTask("Team Meeting", "Team software project all night programming session", "02/27/2014", 11, 59, "PM", "02/28/2014", 8, 00, "AM");
-		control.addTask("MA3160 exam", "Calc 3 exam", "02/28/2014", 8, 05, "AM", "02/28/2014", 9, 55, "AM");
+//		control.addTask("CS3421", "Team software project", "02/27/2014", 3, 05, "PM", "02/27/2014", 3, 55, "PM");
+//		control.addTask("Work", "MacDonalds", "02/27/2014", 5, 00, "PM", "02/27/2014", 10,00, "PM");
+//		control.addTask("Team Meeting", "Team software project all night programming session", "02/27/2014", 11, 59, "PM", "02/28/2014", 8, 00, "AM");
+//		control.addTask("MA3160 exam", "Calc 3 exam", "02/28/2014", 8, 05, "AM", "02/28/2014", 9, 55, "AM");
+//		
 		tasks = control.upcomingTasks();
 		if (tasks.size() != 4) {
 			fail("Didnt add correctly");
