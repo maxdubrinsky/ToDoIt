@@ -36,10 +36,8 @@ import javafx.scene.text.Text;
  */
 public class GUI extends Application {
 
-	boolean isAddTaskOpen = false;
-	boolean isEditTaskOpen = false;
-	boolean isViewTaskOpen = false;
-	boolean isRemoveTaskOpen = false;
+	boolean isATaskWindowOpen = false;
+	
 
 
 	/**
@@ -104,7 +102,7 @@ public class GUI extends Application {
 			
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
-					isAddTaskOpen = false;
+					isATaskWindowOpen = false;
 				}
 			});  
 
@@ -142,7 +140,7 @@ public class GUI extends Application {
 			
 			addRemoveStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
-					isRemoveTaskOpen = false;
+					isATaskWindowOpen = false;
 				}
 			});  
 
@@ -179,7 +177,7 @@ public class GUI extends Application {
 
 			addEditStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
-					isEditTaskOpen = false;
+					isATaskWindowOpen = false;
 				}
 			});  
 
@@ -214,7 +212,7 @@ public class GUI extends Application {
 			
 			addViewStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
-					isViewTaskOpen = false;
+					isATaskWindowOpen = false;
 				}
 			});  
 
@@ -698,10 +696,10 @@ public class GUI extends Application {
 		addTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (isAddTaskOpen == false) {
+				if (isATaskWindowOpen == false) {
 					Stage addTaskStage = new Stage();
 					startAddTask(addTaskStage);
-					isAddTaskOpen = true;
+					isATaskWindowOpen = true;
 				}
 				System.out.println("Add Task Event");
 			}
@@ -710,10 +708,10 @@ public class GUI extends Application {
 		removeTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (isRemoveTaskOpen == false) {
+				if (isATaskWindowOpen == false) {
 					Stage addRemoveStage = new Stage();
 					startRemoveTask(addRemoveStage);
-					isRemoveTaskOpen = true;
+					isATaskWindowOpen = true;
 				}
 				System.out.println("Remove Task Event");
 
@@ -724,10 +722,10 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("Edit Task Event");
-				if (isEditTaskOpen == false) {
+				if (isATaskWindowOpen == false) {
 					Stage addEditStage = new Stage();
 					startEditTask(addEditStage);
-					isEditTaskOpen = true;
+					isATaskWindowOpen = true;
 				}
 			}
 		});
@@ -736,10 +734,10 @@ public class GUI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("View Task Event");
-				if (isViewTaskOpen == false) {
+				if (isATaskWindowOpen == false) {
 					Stage addViewStage = new Stage();
 					startViewTask(addViewStage);
-					isViewTaskOpen = true;
+					isATaskWindowOpen = true;
 				}
 			}
 		});
