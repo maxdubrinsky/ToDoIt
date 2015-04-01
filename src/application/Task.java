@@ -7,23 +7,45 @@ public class Task {
 	private Object startTime;
 	private Object endTime;
 	private int taskID;
+	private int priority;
 	
+	/**
+	 * returns the ID of the task as an integer
+	 * 
+	 * @return taskID
+	 */
 	public int getID() {
 		return taskID;
 	}
 	
+	/**
+	 * sets the ID for the Task object
+	 * @param id
+	 */
 	public void setID(int id) {
 		taskID = id;
 	}
 	
+	/**
+	 * returns the title of the Task
+	 * @return title
+	 */
 	public String getTitle() {
 		return title;
 	}
 	
+	/**
+	 * sets the title of the task
+	 * @param taskTitle
+	 */
 	public void setTitle(String taskTitle) {
 		title = taskTitle;
 	}
 	
+	/**
+	 * returns the description of the Task
+	 * @return description
+	 */
 	public String getDesc() {
 		return description;
 	}
@@ -46,6 +68,14 @@ public class Task {
 	
 	public void setEnd(Object end) {
 		endTime = end;
+	}
+	
+	public int getPriority() {
+		return priority;
+	}
+	
+	public void setPriority(int pri) {
+		priority = pri;
 	}
 	
 	public Task(){
