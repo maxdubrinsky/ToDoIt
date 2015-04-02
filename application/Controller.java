@@ -221,7 +221,8 @@ public class Controller {
     
     
     public static ArrayList<Task> upcomingTasks() {
-        ArrayList<Task> taskList = db.viewUpcoming();
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        taskList = db.viewUpcoming();
         
         /*List<String> sendTasks = new ArrayList<String>();
         

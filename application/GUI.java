@@ -1,7 +1,9 @@
 package application;
 
+import java.awt.List;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -240,7 +242,7 @@ public class GUI extends Application {
 
 		Label taskTitle = new Label("Task Title");
 		Label textAreaTitle = new Label("Task Discription");
-		Label hboxStartAndEndDateTitle = new Label("Start Date                                     End Date");
+		Label hboxStartAndEndDateTitle = new Label("End Date");
 
 		// Add a text field for the title
 		TextField taskTitleBox = new TextField();
@@ -305,7 +307,7 @@ public class GUI extends Application {
 
 		hboxStartAndEndDate.getChildren().addAll(startTimeMonthComboBox, taskStartTimeDate, taskStartTimeYear,endTimeMonthComboBox,taskEndTimeDate,taskEndTimeYear);
 
-		Label hboxStartAndEndTimeTitle = new Label("Start Time                                     End Time");
+		Label hboxStartAndEndTimeTitle = new Label("End Time");
 
 		// HBOX for Start Time and End Time
 		HBox hboxStartAndEndTime = new HBox();
@@ -416,9 +418,7 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(remove,deselect);
 
-		vbox.getChildren().add(removeTask);
-		vbox.getChildren().add(list);
-		vbox.getChildren().add(hboxButtons);
+		vbox.getChildren().addAll(removeTask, list, hboxButtons);
 
 		return vbox;
 	}
@@ -622,8 +622,10 @@ public class GUI extends Application {
 		list.getStyleClass().addAll("pane", "listview");
 		
 		// Get upcoming task arraylist
-		ArrayList<Task> upcomingTasksList= new ArrayList<Task>();
-	//	upcomingTasksList = Controller.upcomingTasks();
+		ArrayList<Task> upcomingTasksList = new ArrayList<Task>();
+	    upcomingTasksList = Controller.upcomingTasks();
+	    
+	    System.out.println(upcomingTasksList.get(0));
 		
 		ArrayList<String> upcomingTasksListStrings = new ArrayList<String>();
 		
@@ -631,9 +633,10 @@ public class GUI extends Application {
 			upcomingTasksListStrings.add(upcomingTasksList.toString());
 		}
 		
-
-		// This is the populated lists.
-		//ObservableList<String> items = FXCollections.observableArrayList(upcomingTasksList);
+		
+		
+		// This is the populated lists
+		ObservableList<String> items = FXCollections.observableArrayList(upcomingTasksListStrings);
 
 		list.setItems(items);
 		// Add to Vbox

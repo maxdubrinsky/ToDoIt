@@ -100,6 +100,7 @@ public class Task {
 	
 	// Form of Title 10, then the Date then the Time.
 	public String toString() {
-		return null;
+		String output = getEndDate();	
+		return output;
 	}
 }
