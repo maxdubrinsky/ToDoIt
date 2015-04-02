@@ -99,7 +99,7 @@ public class GUI extends Application {
 			addTaskStage.setScene(scene);
 			addTaskStage.setTitle("Add Task Manager");
 			addTaskStage.setWidth(500);
-			addTaskStage.setHeight(500);
+			addTaskStage.setHeight(400);
 			addTaskStage.setResizable(false);
 			addTaskStage.show();   
 			
@@ -174,7 +174,7 @@ public class GUI extends Application {
 			addEditStage.setScene(scene);
 			addEditStage.setTitle("Edit Task Manager");
 			addEditStage.setWidth(500);
-			addEditStage.setHeight(700);
+			addEditStage.setHeight(600);
 			addEditStage.setResizable(false);
 			addEditStage.show();
 
@@ -236,13 +236,13 @@ public class GUI extends Application {
 
 		VBox vbox = new VBox(8);
 		vbox.setPadding(new Insets(6));
-		vbox.setSpacing(4);
+		vbox.setSpacing(8);
 
 		vbox.getStyleClass().addAll("pane", "vboxaddtask");
 
 		Label taskTitle = new Label("Task Title");
 		Label textAreaTitle = new Label("Task Discription");
-		Label hboxStartAndEndDateTitle = new Label("End Date");
+		
 
 		// Add a text field for the title
 		TextField taskTitleBox = new TextField();
@@ -266,27 +266,13 @@ public class GUI extends Application {
 		Button clear = new Button("Clear");
 
 		hboxButtons.getChildren().addAll(submit,clear);
-
-
+		// End
+		
 		// This is the HBox for the start time
-		HBox hboxStartAndEndDate = new HBox();
-		hboxStartAndEndDate.setAlignment(Pos.BASELINE_LEFT);
-		hboxStartAndEndDate.setSpacing(12);
-
-		ComboBox<String> startTimeMonthComboBox = new ComboBox<String>();
-		startTimeMonthComboBox.getItems().addAll(
-				"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
-				);
-
-		TextField taskStartTimeDate = new TextField();
-		taskStartTimeDate.setMaxWidth(40);
-		taskStartTimeDate.setMinWidth(40);
-		addTextLimiter(taskStartTimeDate, 2);
-
-		TextField taskStartTimeYear = new TextField();
-		taskStartTimeYear.setMaxWidth(80);
-		taskStartTimeYear.setMinWidth(80);
-		addTextLimiter(taskStartTimeYear, 4);
+		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
+		HBox hBoxEndDate = new HBox();
+		hBoxEndDate.setAlignment(Pos.BASELINE_LEFT);
+		hBoxEndDate.setSpacing(12);
 
 		ComboBox<String> endTimeMonthComboBox = new ComboBox<String>();
 		endTimeMonthComboBox.getItems().addAll(
@@ -302,34 +288,7 @@ public class GUI extends Application {
 		taskEndTimeYear.setMaxWidth(80);
 		taskEndTimeYear.setMinWidth(80);
 		addTextLimiter(taskEndTimeYear, 4);
-
-
-
-		hboxStartAndEndDate.getChildren().addAll(startTimeMonthComboBox, taskStartTimeDate, taskStartTimeYear,endTimeMonthComboBox,taskEndTimeDate,taskEndTimeYear);
-
-		Label hboxStartAndEndTimeTitle = new Label("End Time");
-
-		// HBOX for Start Time and End Time
-		HBox hboxStartAndEndTime = new HBox();
-		hboxStartAndEndTime.setAlignment(Pos.BASELINE_LEFT);
-		hboxStartAndEndTime.setSpacing(12);
-
-		TextField taskStartTimeHour = new TextField();
-		taskStartTimeHour.setMaxWidth(64);
-		taskStartTimeHour.setMinWidth(64);
-		addTextLimiter(taskStartTimeHour, 2);
-
-		TextField taskStartTimeMin = new TextField();
-		taskStartTimeMin.setMaxWidth(64);
-		taskStartTimeMin.setMinWidth(64);
-		addTextLimiter(taskStartTimeMin, 2);
-
-		ComboBox<String> startTimeAmPmComboBox = new ComboBox();
-		startTimeAmPmComboBox.getItems().addAll(
-				"AM",
-				"PM"
-				);
-
+		
 		TextField taskEndTimeHour = new TextField();
 		taskEndTimeHour.setMaxWidth(64);
 		taskEndTimeHour.setMinWidth(64);
@@ -342,27 +301,17 @@ public class GUI extends Application {
 
 		ComboBox<String> endTimeAmPmComboBox = new ComboBox();
 		endTimeAmPmComboBox.getItems().addAll(
-				"AM",
-				"PM"
+				"AM", "PM"
 				);
 
-
-		hboxStartAndEndTime.getChildren().addAll(taskStartTimeHour, taskStartTimeMin, startTimeAmPmComboBox,taskEndTimeHour,taskEndTimeMin,endTimeAmPmComboBox);
+		hBoxEndDate.getChildren().addAll(endTimeMonthComboBox, taskEndTimeDate, taskEndTimeYear, taskEndTimeHour, taskEndTimeMin, endTimeAmPmComboBox);
 
 
 		// Make a new label for the 
 		Label status = new Label();
 
-		vbox.getChildren().add(taskTitle);
-		vbox.getChildren().add(taskTitleBox);
-		vbox.getChildren().add(textAreaTitle);
-		vbox.getChildren().add(textArea);
-		vbox.getChildren().add(hboxStartAndEndDateTitle);
-		vbox.getChildren().add(hboxStartAndEndDate);
-		vbox.getChildren().add(hboxStartAndEndTimeTitle);
-		vbox.getChildren().add(hboxStartAndEndTime);
-		vbox.getChildren().add(status);
-		vbox.getChildren().add(hboxButtons);
+		vbox.getChildren().addAll(taskTitle, taskTitleBox, textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate, hboxButtons);
+		
 
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
@@ -371,8 +320,8 @@ public class GUI extends Application {
 			public void handle(ActionEvent e) {
 				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())) {
 					
-					Controller.addTask(taskTitleBox.getText(), textArea.getText(), taskStartTimeYear.getText(), startTimeMonthComboBox.getValue(),
-							taskStartTimeDate.getText(), taskStartTimeHour.getText(), taskStartTimeMin.getText(), startTimeAmPmComboBox.getValue(), 
+					Controller.addTask(taskTitleBox.getText(), textArea.getText(), "0000", "00",
+							"00","00", "00", "00", 
 							taskEndTimeYear.getText(), endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
 							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
 							);
@@ -400,7 +349,7 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
-
+		//TODO make this work with up coming tasks
 		// This is the populated lists.
 		ObservableList<String> items =FXCollections.observableArrayList (
 				"Task One", "Task Two", "Task Three", "Task Four");
@@ -439,7 +388,7 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
-
+		//TODO make this work with up coming tasks
 		// This is the populated lists.
 		ObservableList<String> items =FXCollections.observableArrayList (
 				"Task One", "Task Two", "Task Three", "Task Four");
@@ -462,34 +411,14 @@ public class GUI extends Application {
 		textArea.setPrefRowCount(5);    
 
 
-		// This is the HBox for the start time and end time
+		// This is the HBox for the  end time
 		HBox hboxStartAndEndDate = new HBox();
 		hboxStartAndEndDate.setAlignment(Pos.BASELINE_LEFT);
 		hboxStartAndEndDate.setSpacing(12);
 
 		// This is the Label for the Date Input for the user
-		Label hboxStartAndEndDateTitle = new Label("End Date");
+		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
 
-		
-		// This is the text box for start time date and year
-		ComboBox<String> startTimeMonthComboBox = new ComboBox();
-		startTimeMonthComboBox.getItems().addAll(
-				"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-				);
-
-		TextField taskStartTimeDate = new TextField();
-		taskStartTimeDate.setMaxWidth(40);
-		taskStartTimeDate.setMinWidth(40);
-		addTextLimiter(taskStartTimeDate, 2);
-
-		TextField taskStartTimeYear = new TextField();
-		taskStartTimeYear.setMaxWidth(80);
-		taskStartTimeYear.setMinWidth(80);
-		addTextLimiter(taskStartTimeYear, 4);
-
-		// End 
-		
-		
 		
 		ComboBox<String> endTimeMonthComboBox = new ComboBox();
 		endTimeMonthComboBox.getItems().addAll(
@@ -505,32 +434,7 @@ public class GUI extends Application {
 		taskEndTimeYear.setMaxWidth(80);
 		taskEndTimeYear.setMinWidth(80);
 		addTextLimiter(taskEndTimeYear, 4);
-
-
-		hboxStartAndEndDate.getChildren().addAll(startTimeMonthComboBox, taskStartTimeDate, taskStartTimeYear,
-				endTimeMonthComboBox,taskEndTimeDate,taskEndTimeYear);
-
-		Label hboxStartAndEndTimeTitle = new Label("End Time");
-
-		// HBOX for Start Time and End Time
-		HBox hboxStartAndEndTime = new HBox();
-		hboxStartAndEndTime.setAlignment(Pos.BASELINE_LEFT);
-		hboxStartAndEndTime.setSpacing(12);
-
-		TextField taskStartTimeHour = new TextField();
-		taskStartTimeHour.setMaxWidth(64);
-		taskStartTimeHour.setMinWidth(64);
-		addTextLimiter(taskStartTimeHour, 2);
-
-		TextField taskStartTimeMin = new TextField();
-		taskStartTimeMin.setMaxWidth(64);
-		taskStartTimeMin.setMinWidth(64);
-		addTextLimiter(taskStartTimeMin, 2);
-
-		ComboBox<String> startTimeAmPmComboBox = new ComboBox();
-		startTimeAmPmComboBox.getItems().addAll(
-				"AM", "PM"
-				);
+		
 
 		TextField taskEndTimeHour = new TextField();
 		taskEndTimeHour.setMaxWidth(64);
@@ -547,8 +451,8 @@ public class GUI extends Application {
 				"AM", "PM"
 				);
 
-		hboxStartAndEndTime.getChildren().addAll(taskStartTimeHour, taskStartTimeMin, startTimeAmPmComboBox,
-				taskEndTimeHour,taskEndTimeMin,endTimeAmPmComboBox);
+		hboxStartAndEndDate.getChildren().addAll(endTimeMonthComboBox, taskEndTimeDate, taskEndTimeYear, taskEndTimeHour,
+				taskEndTimeMin, endTimeAmPmComboBox);
 
 		// This is all HBox for the buttons update and clear
 		HBox hboxButtons = new HBox();
@@ -558,10 +462,10 @@ public class GUI extends Application {
 		Button update = new Button("Update Task");
 		Button clear = new Button("Clear");
 
-		hboxButtons.getChildren().addAll(update,clear);
+		hboxButtons.getChildren().addAll(update, clear);
 
-		vbox.getChildren().addAll(editTask, list, taskTitle, taskTitleBox, textAreaTitle, textArea, hboxStartAndEndDateTitle, 
-				hboxStartAndEndDate, hboxStartAndEndTimeTitle, hboxStartAndEndTime, hboxButtons);
+		vbox.getChildren().addAll(editTask, list, taskTitle, taskTitleBox, textAreaTitle, textArea, hboxEndDateAndTimeTitle, 
+				hboxStartAndEndDate, hboxButtons);
 
 		return vbox;
 
@@ -585,6 +489,7 @@ public class GUI extends Application {
 		list.getStyleClass().addAll("pane", "listview");
 
 		// This is the populated lists.
+		//TODO make this work with up coming tasks
 		ObservableList<String> items =FXCollections.observableArrayList (
 				"Task One", "Task Two", "Task Three", "Task Four");
 
@@ -623,17 +528,15 @@ public class GUI extends Application {
 		
 		// Get upcoming task arraylist
 		ArrayList<Task> upcomingTasksList = new ArrayList<Task>();
-	    upcomingTasksList = Controller.upcomingTasks();
+	  //  upcomingTasksList = Controller.upcomingTasks();
 	    
-	    System.out.println(upcomingTasksList.get(0));
-		
+	  //  System.out.println(upcomingTasksList.get(0));
+		//TODO make this work with up coming tasks
 		ArrayList<String> upcomingTasksListStrings = new ArrayList<String>();
 		
-		for (Task info : upcomingTasksList ) {
-			upcomingTasksListStrings.add(upcomingTasksList.toString());
-		}
-		
-		
+//		for (Task info : upcomingTasksList ) {
+//			upcomingTasksListStrings.add(upcomingTasksList.toString());
+//		}
 		
 		// This is the populated lists
 		ObservableList<String> items = FXCollections.observableArrayList(upcomingTasksListStrings);
