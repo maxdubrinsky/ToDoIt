@@ -174,7 +174,7 @@ public class Controller {
         System.out.println(endT);
         System.out.println(desc);
         
-        DBFunctions.addTask(title, startT, endT, desc);
+   //     DBFunctions.addTask(title, startT, endT, desc);
         
         System.out.println("Hi");
     }
@@ -215,13 +215,13 @@ public class Controller {
              endT += (eH * 10000) + (eM * 100);
          }
          
-         db.modifyTask(toChange.getID(), title,  startT, endT, desc);
+      //   db.modifyTask(toChange.getID(), title,  startT, endT, desc);
     	
     }
     
     
-    public List<Task> upcomingTasks() {
-        List<Task> taskList = db.viewUpcoming();
+    public static ArrayList<Task> upcomingTasks() {
+        ArrayList<Task> taskList = db.viewUpcoming();
         
         /*List<String> sendTasks = new ArrayList<String>();
         
