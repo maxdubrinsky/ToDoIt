@@ -3,10 +3,10 @@ package application;
 import java.util.*;
 
 public class Controller {
-    private static DBFunctions db;
+    private static DBFunctions db = new DBFunctions();
     
     public Controller(){
-        db = new DBFunctions();
+      
     }
     
     public static void addTask(String title, String desc, int priority, String eYear, String eMonth, String eDate, 
@@ -139,21 +139,13 @@ public class Controller {
     
     public static ArrayList<Task> upcomingTasks() {
         ArrayList<Task> taskList = new ArrayList<Task>();
-        taskList = db.viewUpcoming();
         
-        // If viewUpcoming returns an empty list, i.e. no upcoming tasks,
-        // Create dummy task stating that there are no upcoming tasks and
-        // add it to the taskList
-//        if (taskList.isEmpty) {
-//        	Task t = new Task();
-//        	t.setTitle("No Upcoming Tasks");
-//        	t.setDesc("No Upcoming Tasks");
-//        	t.setID(9999);
-//        	t.setPriority(1);
-//        	        	
-//        	taskList.add(t);
-//        	
-//        }
+        try {
+        taskList = db.viewUpcoming();
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        }
         
         /*List<String> sendTasks = new ArrayList<String>();
         

@@ -216,16 +216,23 @@ public class DBFunctions {
 				tsk.setPriority(priority);
 				
 				tasks.add(tsk);
+				
+				System.out.println(tasks.toString());
 			}
+			
+			
 			
 			if (tasks.isEmpty()) {
 				Task t = new Task();
 				
 				t.setTitle("No Upcoming Tasks");
 				t.setDesc("No Upcoming Tasks");
+				t.setEnd("2024-01-01 01:01:01");
 				
 				tasks.add(t);
 			}
+			
+			System.out.println(tasks.toString());
 			
 			return tasks;
 
@@ -247,7 +254,7 @@ public class DBFunctions {
 		}
 		
 
-		return tasks;
+		return null;
 
 	}
 	
@@ -320,7 +327,7 @@ public ArrayList<Task> viewAll() {
 		}
 		
 
-		return tasks;
+		return null;
 
 	}
 

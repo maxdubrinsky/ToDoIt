@@ -557,12 +557,12 @@ public class GUI extends Application {
 		list.getStyleClass().addAll("pane", "listview");
 		
 		// Get upcoming task arraylist
-	//	updateTasksList();
+		updateTasksList();
 		
 		//TODO make this work with up coming tasks
 		ArrayList<String> taskListString = new ArrayList<String>();
 		
-	//	for (int i = 0; i < 8; i++) taskListString.add(upcommingTasks.get(i).toString());
+		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
 		
 		// This is the populated lists
 		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
