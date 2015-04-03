@@ -50,34 +50,65 @@ public class Task {
 		return description;
 	}
 	
+	/**
+	 * sets the description of the task
+	 * @param desc
+	 */
 	public void setDesc(String desc) {
 		description = desc;
 	}
 	
+	/**
+	 * returns the start(creation) time of the task in the form of an Object
+	 * @return startTime
+	 */
 	public Object getStart() {
 		return startTime;
 	}
 	
+	/**
+	 * sets the start(creation) time of the task in the form of an Object
+	 * @param start
+	 */
 	public void setStart(Object start) {
 		startTime = start;
 	}
 	
+	/**
+	 * returns the end time of a task in the form of an Object
+	 * @return endTime
+	 */
 	public Object getEnd() {
 		return endTime;
 	}
+	/**
+	 * sets the end time of a task in the form of an Object
+	 * @param end
+	 */
 	
 	public void setEnd(Object end) {
 		endTime = end;
 	}
 	
+	/**
+	 * returns the priority value of the task
+	 * @return priority
+	 */
 	public int getPriority() {
 		return priority;
 	}
 	
+	/**
+	 * sets the priority value of the task
+	 * @param pri
+	 */
 	public void setPriority(int pri) {
 		priority = pri;
 	}
 	
+	/**
+	 * generic constructor
+	 */
 	public Task(){
 		
 	}
