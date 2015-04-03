@@ -2,8 +2,6 @@ package application;
 
 import java.util.*;
 
-import com.sun.javafx.tk.Toolkit.Task;
-
 public class Controller {
     private static DBFunctions db;
     
