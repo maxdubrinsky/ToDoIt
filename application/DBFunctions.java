@@ -4,6 +4,8 @@ import java.util.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import javafx.concurrent.Task;
+
 import org.json.*;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
@@ -186,7 +188,7 @@ public class DBFunctions {
 			// Execute request and capture response
 			HttpResponse result = client.execute(get);
 			
-			ArrayList<Task> tasks = new ArrayList<Task>();
+			ArrayList<Task<V>> tasks = new ArrayList<Task>();
 			
 			String json = EntityUtils.toString(result.getEntity());
 			
@@ -215,6 +217,15 @@ public class DBFunctions {
 				tsk.setPriority(priority);
 				
 				tasks.add(tsk);
+			}
+			
+			if (tasks.isEmpty()) {
+				Task t = new Task();
+				
+				t.setTitle("No Upcoming Tasks");
+				t.setDesc("No Upcoming Tasks");
+				
+				tasks.add(t);
 			}
 			
 			return tasks;

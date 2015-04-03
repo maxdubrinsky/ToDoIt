@@ -144,18 +144,16 @@ public class Controller {
         // If viewUpcoming returns an empty list, i.e. no upcoming tasks,
         // Create dummy task stating that there are no upcoming tasks and
         // add it to the taskList
-        if (taskList.size() == 0) {
-        	Task t = new Task();
-        	t.setTitle("No Upcoming Tasks");
-        	t.setDesc("No Upcoming Tasks");
-        	t.setID(9999);
-        	t.setPriority(1);
-        	t.setEnd("2024-01-01 01:01:01");
-        	t.setStart("2024-01-01 01:01:01");
-        	
-        	taskList.add(t);
-        	
-        }
+//        if (taskList.isEmpty) {
+//        	Task t = new Task();
+//        	t.setTitle("No Upcoming Tasks");
+//        	t.setDesc("No Upcoming Tasks");
+//        	t.setID(9999);
+//        	t.setPriority(1);
+//        	        	
+//        	taskList.add(t);
+//        	
+//        }
         
         /*List<String> sendTasks = new ArrayList<String>();
         
