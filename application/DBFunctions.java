@@ -4,7 +4,6 @@ import java.util.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import javafx.concurrent.Task;
 
 import org.json.*;
 import org.apache.http.*;
@@ -188,7 +187,7 @@ public class DBFunctions {
 			// Execute request and capture response
 			HttpResponse result = client.execute(get);
 			
-			ArrayList<Task<V>> tasks = new ArrayList<Task>();
+			ArrayList<Task> tasks = new ArrayList<Task>();
 			
 			String json = EntityUtils.toString(result.getEntity());
 			
@@ -248,7 +247,7 @@ public class DBFunctions {
 		}
 		
 
-		return null;
+		return tasks;
 
 	}
 	
@@ -321,7 +320,7 @@ public ArrayList<Task> viewAll() {
 		}
 		
 
-		return null;
+		return tasks;
 
 	}
 
