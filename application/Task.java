@@ -98,7 +98,7 @@ public class Task {
 		return out;
 	}
 	
-	// Form of Title 10, then the Date then the Time.
+	//TODO Make toString in a proper format that will display nice for the GUI TITLE then DATE then TIME " Walk The Dog To... <10/12/2013> 10:30PM "
 	public String toString() {
 		String output = getEndDate();	
 		return output;

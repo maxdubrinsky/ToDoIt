@@ -9,50 +9,10 @@ public class Controller {
         db = new DBFunctions();
     }
     
-    public static void addTask(String title, String desc, String sYear, String sMonth, String sDate, String sHour, String sMin, String sAMPM,
-            String eYear, String eMonth, String eDate, String eHour, String eMin, String eAMPM) {
-        long startT;
-        long endT;
-        
-        // Convert sMonth to a number
-        switch (sMonth) {
-        case "Jan" :
-        	sMonth = "01";
-        	break;
-        case "Feb" :
-        	sMonth = "02";
-        	break;
-        case "Mar" :
-        	sMonth = "03";
-        	break;
-        case "Apr" :
-        	sMonth = "04";
-        	break;
-        case "May" :
-        	sMonth = "05";
-        	break;
-        case "Jun" :
-        	sMonth = "06";
-        	break;
-        case "Jul" :
-        	sMonth = "07";
-        	break;
-        case "Aug" :
-        	sMonth = "08";
-        	break;
-        case "Sep" :
-        	sMonth = "09";
-        	break;
-        case "Oct" :
-        	sMonth = "10";
-        	break;
-        case "Nov" :
-        	sMonth = "11";
-        	break;
-        case "Dec" :
-        	sMonth = "12";
-        	break;
-        }
+    public static void addTask(String title, String desc, int priority, String eYear, String eMonth, String eDate, 
+    		String eHour, String eMin, String eAMPM) {
+      
+    	long endT;
         
         // Convert eMonth to a number
         switch (eMonth) {
@@ -94,17 +54,11 @@ public class Controller {
         	break;
         }
         
+        //Convert priority to a two digit number
+        //TODO
         
-        // Convert time to 24 Hour format from 12 Hour
-        if (sAMPM.equals("PM") && !sHour.equals("12") ) {
-        	int sH = Integer.parseInt(sHour);
-        	sH = sH + 12;
-        	sHour = String.valueOf(sH);
-        }
-        else if (sAMPM.equals("AM") && sHour.equals("12")) {
-        	sHour = "00";
-        }
         
+        // Convert time to 24 Hour format from 12 Hour        
         if (eAMPM.equals("PM") && !eHour.equals("12") ) {
         	int eH = Integer.parseInt(eHour);
         	eH = eH + 12;
@@ -114,20 +68,6 @@ public class Controller {
         	eHour = "00";
         }
         
-        
-        // Checks to make start values two digits
-        if (sMonth.length() == 1) {
-        	sMonth = "0" + sMonth;
-        }
-        if (sDate.length() == 1) {
-        	sDate = "0" + sDate;
-        }
-        if (sHour.length() == 1) {
-        	sHour = "0" + sHour;
-        }
-        if (sMin.length() == 1) {
-        	sMin = "0" + sMin;
-        }
         // Checks to make end values two digits
         if (eMonth.length() == 1) {
         	eMonth = "0" + eMonth;
@@ -142,39 +82,16 @@ public class Controller {
         	eMin = "0" + eMin;
         }
         
-        
-        String concatStartT = sYear + sMonth + sDate + sHour + sMin + "00";
         String concatEndT = eYear + eMonth + eDate + eHour + eMin + "00";
-        
-        startT = 	Long.parseLong(concatStartT);
         
         endT = 		Long.parseLong(concatEndT);
   
-        /*
-        if (sapm.equals("PM") && sH != 12) {
-            startT += ((sH + 12) * 10000) + (sM * 100);
-        } else if (sapm.equals("AM") && sH == 12) {
-            startT += ((sH - 12) * 10000) + (sM * 100);
-        } else {
-            startT += (sH * 10000) + (sM * 100);
-        }
-        
-        if (eapm.equals("PM") && eH != 12) {
-            endT += ((eH + 12) * 10000) + (eM * 100);
-        } else if (eapm.equals("AM") && eH == 12) {
-            endT += ((eH - 12) * 10000) + (eM * 100);
-        } else {
-            endT += (eH * 10000) + (eM * 100);
-        }
-        */
-        
         System.out.println("Controller Print Statement");
         System.out.println(title);
-        System.out.println(startT);
         System.out.println(endT);
         System.out.println(desc);
-        
-   //     DBFunctions.addTask(title, startT, endT, desc);
+        //TODO Waiting on proper method signature.
+        //DBFunctions.addTask(title, endT, desc);
         
         System.out.println("Hi");
     }

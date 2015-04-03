@@ -41,7 +41,12 @@ public class GUI extends Application {
 
 	boolean isATaskWindowOpen = false;
 	
-
+	private ArrayList<Task> upcommingTasks;
+	
+	private void updateTasksList() {
+		upcommingTasks = Controller.upcomingTasks();
+	}
+	
 
 	/**
 	 * This is the start method that starts the primary stage for the GUI to use. AKA the main window.
@@ -240,16 +245,29 @@ public class GUI extends Application {
 
 		vbox.getStyleClass().addAll("pane", "vboxaddtask");
 
-		Label taskTitle = new Label("Task Title");
+		Label taskTitleAndPriorty = new Label("Task Title                               Task Priorty");
 		Label textAreaTitle = new Label("Task Discription");
 		
 
-		// Add a text field for the title
+		// Add a text field for the title and priorty combo box in a h box
+		HBox hBoxTitleAndPriority = new HBox();
+		hBoxTitleAndPriority.setSpacing(12);
+		
+		
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
 		taskTitleBox.setMinWidth(150);
 		addTextLimiter(taskTitleBox, 50);
-
+		
+		ComboBox<String> priortyComboBox = new ComboBox<String>();
+		priortyComboBox.getItems().addAll(
+				"1","2","3","4","5","6","7","8","9","10"
+				);
+		
+		hBoxTitleAndPriority.getChildren().addAll(taskTitleBox, priortyComboBox);
+		// End Hbox
+	
+		
 		// Add a text box for description
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);    
@@ -310,7 +328,7 @@ public class GUI extends Application {
 		// Make a new label for the 
 		Label status = new Label();
 
-		vbox.getChildren().addAll(taskTitle, taskTitleBox, textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate, hboxButtons);
+		vbox.getChildren().addAll(taskTitleAndPriorty, hBoxTitleAndPriority, textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate, hboxButtons);
 		
 
 
@@ -320,11 +338,10 @@ public class GUI extends Application {
 			public void handle(ActionEvent e) {
 				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())) {
 					
-					Controller.addTask(taskTitleBox.getText(), textArea.getText(), "0000", "00",
-							"00","00", "00", "00", 
-							taskEndTimeYear.getText(), endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
-							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
-							);
+//				Controller.addTask(taskTitleBox.getText(), textArea.getText(), taskEndTimeYear.getText(), 
+//							endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
+//							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
+//							);
 				} else {
 					status.setText("You have not left a title.");
 				}
@@ -397,16 +414,29 @@ public class GUI extends Application {
 		list.setMinHeight(200);
 		list.setMaxHeight(200);
 		
-		Label taskTitle = new Label("Task Title");
-		Label textAreaTitle = new Label("Task Discription");
-
-		// Add a text field for the title
+		// Add a text field for the title and priorty combo box in a h box
+		Label taskTitleAndPriorty = new Label("Task Title                               Task Priorty");
+		HBox hBoxTitleAndPriority = new HBox();
+		hBoxTitleAndPriority.setSpacing(12);
+		
+		
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
 		taskTitleBox.setMinWidth(150);
 		addTextLimiter(taskTitleBox, 50);
+		
+		ComboBox<String> priortyComboBox = new ComboBox<String>();
+		priortyComboBox.getItems().addAll(
+				"1","2","3","4","5","6","7","8","9","10"
+				);
+		
+		hBoxTitleAndPriority.getChildren().addAll(taskTitleBox, priortyComboBox);
+		// End Hbox
+	
+
 
 		// Add a text box for description
+		Label textAreaTitle = new Label("Task Discription");
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);    
 
@@ -464,7 +494,7 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(update, clear);
 
-		vbox.getChildren().addAll(editTask, list, taskTitle, taskTitleBox, textAreaTitle, textArea, hboxEndDateAndTimeTitle, 
+		vbox.getChildren().addAll(editTask, list, taskTitleAndPriorty, hBoxTitleAndPriority, textAreaTitle, textArea, hboxEndDateAndTimeTitle, 
 				hboxStartAndEndDate, hboxButtons);
 
 		return vbox;
@@ -527,19 +557,15 @@ public class GUI extends Application {
 		list.getStyleClass().addAll("pane", "listview");
 		
 		// Get upcoming task arraylist
-		ArrayList<Task> upcomingTasksList = new ArrayList<Task>();
-	  //  upcomingTasksList = Controller.upcomingTasks();
-	    
-	  //  System.out.println(upcomingTasksList.get(0));
-		//TODO make this work with up coming tasks
-		ArrayList<String> upcomingTasksListStrings = new ArrayList<String>();
+	//	updateTasksList();
 		
-//		for (Task info : upcomingTasksList ) {
-//			upcomingTasksListStrings.add(upcomingTasksList.toString());
-//		}
+		//TODO make this work with up coming tasks
+		ArrayList<String> taskListString = new ArrayList<String>();
+		
+	//	for (int i = 0; i < 8; i++) taskListString.add(upcommingTasks.get(i).toString());
 		
 		// This is the populated lists
-		ObservableList<String> items = FXCollections.observableArrayList(upcomingTasksListStrings);
+		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
 
 		list.setItems(items);
 		// Add to Vbox

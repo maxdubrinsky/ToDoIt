@@ -26,6 +26,7 @@ public class DBFunctions {
 	 * @param endTime
 	 * @param desc
 	 */
+	//TODO Remove startTime from the method signature and make start time off that local function we talking about in meeting.
 	public static void addTask(String title, long startTime, long endTime,
 			String desc, int priority) {
 
