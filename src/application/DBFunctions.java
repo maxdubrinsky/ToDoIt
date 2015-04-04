@@ -1,18 +1,16 @@
 package application;
 
-import java.util.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
-
-import org.json.*;
-import org.apache.http.*;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.*;
+import org.apache.http.client.methods.*;
+import org.apache.http.client.utils.*;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.*;
 
 
 
@@ -28,7 +26,7 @@ public class DBFunctions {
 	 * @param desc
 	 */
 	//TODO Remove startTime from the method signature and make start time off that local function we talking about in meeting.
-	public static void addTask(String title, long startTime, long endTime,
+	public static void addTask(String title, long endTime,
 			String desc, int priority) {
 
 		try {
@@ -79,7 +77,7 @@ public class DBFunctions {
 	 * @param endTime
 	 * @param desc
 	 */
-	public void modifyTask(Integer taskId, String title, long startTime,
+	public void modifyTask(Integer taskId, String title,
 			long endTime, String desc, int priority) {
 
 		try {
