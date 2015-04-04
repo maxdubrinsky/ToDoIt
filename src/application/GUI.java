@@ -1,35 +1,19 @@
 package application;
 
-import java.awt.List;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.TemporalAccessor;
+import java.time.*;
 import java.util.ArrayList;
 
-import javafx.application.Application;
+import javafx.application.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+
 /**
  * This class is the GUI of the TODOIT application. It uses javafx to make a working GUI.
  * 
@@ -436,7 +420,7 @@ public class GUI extends Application {
 
 
 		// Add a text box for description
-		Label textAreaTitle = new Label("Task Discription");
+		Label textAreaTitle = new Label("Task Description");
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);    
 
