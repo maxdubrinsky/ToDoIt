@@ -123,15 +123,18 @@ public class Task {
 	
 	public String getEndDate() {
 		String end = String.valueOf(endTime); //yyyy-mm-dd hh:mm:ss
-		String out = 	end.substring(5, 7)  + " " + end.substring(8, 10) + " " + end.substring(2, 4) +
-						" " + end.substring(11, 13) + " " + end.substring(14, 16); //mm dd yy hh mm
+		String out = 	end.substring(5, 7)  + "/" + end.substring(8, 10) + "/" + end.substring(2, 4) +
+						" " + end.substring(11, 13) + ":" + end.substring(14, 16); //mm dd yy hh mm
 		
 		return out;
 	}
 	
 	//TODO Make toString in a proper format that will display nice for the GUI TITLE then DATE then TIME " Walk The Dog To... <10/12/2013> 10:30PM "
 	public String toString() {
-		String output = getEndDate();	
+		String output;
+	
+		output = "["+ title + "] " + getEndDate();
+		
 		return output;
 	}
 }

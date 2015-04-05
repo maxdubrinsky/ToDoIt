@@ -24,13 +24,14 @@ import javafx.stage.*;
 public class GUI extends Application {
 
 	boolean isATaskWindowOpen = false;
-	
+	boolean isTaskCompleted = false;
+
 	private ArrayList<Task> upcommingTasks;
-	
+
 	private void updateTasksList() {
 		upcommingTasks = Controller.upcomingTasks();
 	}
-	
+
 
 	/**
 	 * This is the start method that starts the primary stage for the GUI to use. AKA the main window.
@@ -74,6 +75,7 @@ public class GUI extends Application {
 	 */
 	public void startAddTask(Stage addTaskStage){
 		try {
+			isTaskCompleted = false;
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -91,13 +93,12 @@ public class GUI extends Application {
 			addTaskStage.setHeight(400);
 			addTaskStage.setResizable(false);
 			addTaskStage.show();   
-			
+
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
 				}
 			});  
-
 
 		}
 		catch(Exception e) {
@@ -113,6 +114,7 @@ public class GUI extends Application {
 	 */
 	public void startRemoveTask(Stage addRemoveStage){
 		try {
+			isTaskCompleted = false;
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -129,7 +131,7 @@ public class GUI extends Application {
 			addRemoveStage.setHeight(400);
 			addRemoveStage.setResizable(false);
 			addRemoveStage.show();
-			
+
 			addRemoveStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
@@ -150,6 +152,7 @@ public class GUI extends Application {
 	 */
 	public void startEditTask(Stage addEditStage){
 		try {
+			isTaskCompleted = false;
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -185,6 +188,7 @@ public class GUI extends Application {
 	 */
 	public void startViewTask(Stage addViewStage){
 		try {
+			isTaskCompleted = false;
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -201,7 +205,7 @@ public class GUI extends Application {
 			addViewStage.setHeight(500);
 			addViewStage.setResizable(false);
 			addViewStage.show();
-			
+
 			addViewStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
@@ -231,27 +235,27 @@ public class GUI extends Application {
 
 		Label taskTitleAndPriorty = new Label("Task Title                               Task Priorty");
 		Label textAreaTitle = new Label("Task Discription");
-		
+
 
 		// Add a text field for the title and priorty combo box in a h box
 		HBox hBoxTitleAndPriority = new HBox();
 		hBoxTitleAndPriority.setSpacing(12);
-		
-		
+
+
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
 		taskTitleBox.setMinWidth(150);
 		addTextLimiter(taskTitleBox, 50);
-		
+
 		ComboBox<String> priortyComboBox = new ComboBox<String>();
 		priortyComboBox.getItems().addAll(
 				"1","2","3","4","5","6","7","8","9","10"
 				);
-		
+
 		hBoxTitleAndPriority.getChildren().addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
-	
-		
+
+
 		// Add a text box for description
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);    
@@ -269,7 +273,7 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(submit,clear);
 		// End
-		
+
 		// This is the HBox for the start time
 		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
 		HBox hBoxEndDate = new HBox();
@@ -290,7 +294,7 @@ public class GUI extends Application {
 		taskEndTimeYear.setMaxWidth(80);
 		taskEndTimeYear.setMinWidth(80);
 		addTextLimiter(taskEndTimeYear, 4);
-		
+
 		TextField taskEndTimeHour = new TextField();
 		taskEndTimeHour.setMaxWidth(64);
 		taskEndTimeHour.setMinWidth(64);
@@ -313,21 +317,38 @@ public class GUI extends Application {
 		Label status = new Label();
 
 		vbox.getChildren().addAll(taskTitleAndPriorty, hBoxTitleAndPriority, textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate, hboxButtons);
-		
+
 
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			//TODO
 			@Override
 			public void handle(ActionEvent e) {
-				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())) {
+				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty()) && isTaskCompleted == false) {
+
+					Controller.addTask(taskTitleBox.getText(), textArea.getText(), priortyComboBox.getValue(), taskEndTimeYear.getText(), 
+							endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
+							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
+							);
+
+					isTaskCompleted = true;
+
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+
+					System.out.println("Hi1");
 					
-//				Controller.addTask(taskTitleBox.getText(), textArea.getText(), taskEndTimeYear.getText(), 
-//							endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
-//							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
-//							);
+					Node source = (Node) e.getSource();
+					Stage stage = (Stage) source.getScene().getWindow();
+					stage.close();
+					
+					System.out.println("Hi2");
+
 				} else {
-					status.setText("You have not left a title.");
+					status.setText("Please Fill All Required Inputs!");
 				}
 			}
 		});
@@ -397,26 +418,26 @@ public class GUI extends Application {
 		list.setItems(items);
 		list.setMinHeight(200);
 		list.setMaxHeight(200);
-		
+
 		// Add a text field for the title and priorty combo box in a h box
 		Label taskTitleAndPriorty = new Label("Task Title                               Task Priorty");
 		HBox hBoxTitleAndPriority = new HBox();
 		hBoxTitleAndPriority.setSpacing(12);
-		
-		
+
+
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
 		taskTitleBox.setMinWidth(150);
 		addTextLimiter(taskTitleBox, 50);
-		
+
 		ComboBox<String> priortyComboBox = new ComboBox<String>();
 		priortyComboBox.getItems().addAll(
 				"1","2","3","4","5","6","7","8","9","10"
 				);
-		
+
 		hBoxTitleAndPriority.getChildren().addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
-	
+
 
 
 		// Add a text box for description
@@ -433,7 +454,7 @@ public class GUI extends Application {
 		// This is the Label for the Date Input for the user
 		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
 
-		
+
 		ComboBox<String> endTimeMonthComboBox = new ComboBox();
 		endTimeMonthComboBox.getItems().addAll(
 				"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -448,7 +469,7 @@ public class GUI extends Application {
 		taskEndTimeYear.setMaxWidth(80);
 		taskEndTimeYear.setMinWidth(80);
 		addTextLimiter(taskEndTimeYear, 4);
-		
+
 
 		TextField taskEndTimeHour = new TextField();
 		taskEndTimeHour.setMaxWidth(64);
@@ -539,15 +560,15 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
-		
+
 		// Get upcoming task arraylist
 		updateTasksList();
-		
+
 		//TODO make this work with up coming tasks
 		ArrayList<String> taskListString = new ArrayList<String>();
-		
+
 		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
-		
+
 		// This is the populated lists
 		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
 
@@ -582,7 +603,7 @@ public class GUI extends Application {
 
 		// Add four buttons to the GUI
 		flow.getChildren().addAll(addTaskBut, removeTaskBut, editTaskBut, viewTaskBut);
-		
+
 		// Add the four button listerners 
 		addTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

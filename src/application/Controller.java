@@ -55,12 +55,6 @@ public class Controller {
 			break;
 		}
 
-		// Convert priority to a two digit number
-		// TODO
-		// NO NEED TO CONVERT, METHOD TAKES AN INT
-		// NO NEED TO CONVERT, METHOD TAKES AN INT
-		// NO NEED TO CONVERT, METHOD TAKES AN INT
-
 		// Convert time to 24 Hour format from 12 Hour
 		if (eAMPM.equals("PM") && !eHour.equals("12")) {
 			int eH = Integer.parseInt(eHour);
