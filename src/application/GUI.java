@@ -352,7 +352,24 @@ public class GUI extends Application {
 				}
 			}
 		});
-
+		
+		clear.setOnAction(new EventHandler<ActionEvent>() {
+			//TODO
+			@Override
+			public void handle(ActionEvent e) {
+				taskTitleBox.clear();
+				textArea.clear();
+				priortyComboBox.getSelectionModel().clearSelection();
+				taskEndTimeYear.clear();
+				endTimeMonthComboBox.getSelectionModel().clearSelection();
+				taskEndTimeDate.clear();
+				taskEndTimeHour.clear();
+				taskEndTimeMin.clear();
+				endTimeAmPmComboBox.getSelectionModel().clearSelection();
+			}
+		});
+		
+		
 		return vbox;
 	}
 
@@ -383,7 +400,9 @@ public class GUI extends Application {
 		hboxButtons.setAlignment(Pos.CENTER);
 		hboxButtons.setSpacing(12);
 
-
+		
+		
+		
 		Button remove = new Button("Remove Task");
 		Button deselect = new Button("Deselect");
 
@@ -398,6 +417,7 @@ public class GUI extends Application {
 	public VBox addVBoxEditTask() {
 		// Set up Vbox
 		VBox vbox = new VBox();
+		//BLAZE IT
 		vbox.setPadding(new Insets(12));
 		vbox.setSpacing(8);
 
