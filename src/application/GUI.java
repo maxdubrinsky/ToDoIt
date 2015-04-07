@@ -75,7 +75,7 @@ public class GUI extends Application {
 	 */
 	public void startAddTask(Stage addTaskStage){
 		try {
-			
+
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -114,7 +114,7 @@ public class GUI extends Application {
 	 */
 	public void startRemoveTask(Stage addRemoveStage){
 		try {
-			
+
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -152,7 +152,7 @@ public class GUI extends Application {
 	 */
 	public void startEditTask(Stage addEditStage){
 		try {
-			
+
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -188,7 +188,7 @@ public class GUI extends Application {
 	 */
 	public void startViewTask(Stage addViewStage){
 		try {
-			
+
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -333,7 +333,7 @@ public class GUI extends Application {
 
 					isTaskCompleted = true;
 					isATaskWindowOpen = false;
-					
+
 					// Make a short sleep
 					try {
 						Thread.sleep(1000);
@@ -351,7 +351,7 @@ public class GUI extends Application {
 				}
 			}
 		});
-		
+
 		clear.setOnAction(new EventHandler<ActionEvent>() {
 			//TODO
 			@Override
@@ -367,8 +367,8 @@ public class GUI extends Application {
 				endTimeAmPmComboBox.getSelectionModel().clearSelection();
 			}
 		});
-		
-		
+
+
 		return vbox;
 	}
 
@@ -387,7 +387,7 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
-		
+
 		// Get upcoming task arraylist
 		updateTasksList();
 
@@ -406,21 +406,20 @@ public class GUI extends Application {
 		hboxButtons.setAlignment(Pos.CENTER);
 		hboxButtons.setSpacing(12);
 
-		
+
 		Button remove = new Button("Remove Task");
 		Button deselect = new Button("Deselect");
 
 		hboxButtons.getChildren().addAll(remove,deselect);
-		
+
 		remove.setOnAction(new EventHandler<ActionEvent>() {
 			//TODO
 			@Override
 			public void handle(ActionEvent e) {
-				System.out.println(list.getSelectionModel().getSelectedItem());
-				
+				Controller.deleteTask(findMatchingTask (list.getSelectionModel().getSelectedItem()));
 			}
 		});
-		
+
 		deselect.setOnAction(new EventHandler<ActionEvent>() {
 			//TODO
 			@Override
@@ -428,7 +427,7 @@ public class GUI extends Application {
 				list.getSelectionModel().clearSelection();
 			}
 		});
-		
+
 
 		vbox.getChildren().addAll(removeTask, list, hboxButtons);
 
@@ -646,7 +645,7 @@ public class GUI extends Application {
 		// Add four buttons to the GUI
 		flow.getChildren().addAll(addTaskBut, removeTaskBut, editTaskBut, viewTaskBut);
 
-		// Add the four button listerners 
+		// Add the four button listeners 
 		addTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -728,6 +727,20 @@ public class GUI extends Application {
 		return hbox;
 	}
 
+
+	public Task findMatchingTask (String stringToMatch) {
+
+		Task matchingTask = new Task();
+		updateTasksList();
+
+		for (Task aTask : upcommingTasks) {
+			if (stringToMatch.equals(aTask.toString())){
+				matchingTask = aTask;
+			}
+		}
+
+		return matchingTask;
+	}
 
 	public static void addTextLimiter (final TextField textField, final int maxLength) {
 		textField.textProperty().addListener(new ChangeListener<String>() {

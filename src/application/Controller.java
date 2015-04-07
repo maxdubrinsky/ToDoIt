@@ -92,12 +92,11 @@ public class Controller {
 		System.out.println("Hi");
 	}
 
-	//TODO This will get a toString of a task. You will need to sort through the tasks and get its id.
-	public void deleteTask(String toDelete) {
+	
+	public static void deleteTask(Task toDelete) {
 		
-		//toDelete.equals();
+		db.deleteTask(toDelete.getID());
 		
-		//db.deleteTask(i);
 	}
 
 	public void modifyTask(Task toChange, String title, String desc,
