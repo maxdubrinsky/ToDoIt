@@ -75,7 +75,7 @@ public class GUI extends Application {
 	 */
 	public void startAddTask(Stage addTaskStage){
 		try {
-			isTaskCompleted = false;
+			
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -114,7 +114,7 @@ public class GUI extends Application {
 	 */
 	public void startRemoveTask(Stage addRemoveStage){
 		try {
-			isTaskCompleted = false;
+			
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -152,7 +152,7 @@ public class GUI extends Application {
 	 */
 	public void startEditTask(Stage addEditStage){
 		try {
-			isTaskCompleted = false;
+			
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -188,7 +188,7 @@ public class GUI extends Application {
 	 */
 	public void startViewTask(Stage addViewStage){
 		try {
-			isTaskCompleted = false;
+			
 			// Sets up the add task manager frame
 			BorderPane gui = new BorderPane();
 			Scene scene = new Scene(gui, 500, 400);
@@ -332,22 +332,21 @@ public class GUI extends Application {
 							);
 
 					isTaskCompleted = true;
-
+					isATaskWindowOpen = false;
+					
+					// Make a short sleep
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
-
-					System.out.println("Hi1");
-					
+					// Closes the sub window.
 					Node source = (Node) e.getSource();
 					Stage stage = (Stage) source.getScene().getWindow();
 					stage.close();
-					
-					System.out.println("Hi2");
 
-				} else {
+				} 
+				else {
 					status.setText("Please Fill All Required Inputs!");
 				}
 			}
@@ -388,10 +387,17 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
+		
+		// Get upcoming task arraylist
+		updateTasksList();
+
 		//TODO make this work with up coming tasks
-		// This is the populated lists.
-		ObservableList<String> items =FXCollections.observableArrayList (
-				"Task One", "Task Two", "Task Three", "Task Four");
+		ArrayList<String> taskListString = new ArrayList<String>();
+
+		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+
+		// This is the populated lists
+		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
 
 		list.setItems(items);
 
@@ -401,12 +407,28 @@ public class GUI extends Application {
 		hboxButtons.setSpacing(12);
 
 		
-		
-		
 		Button remove = new Button("Remove Task");
 		Button deselect = new Button("Deselect");
 
 		hboxButtons.getChildren().addAll(remove,deselect);
+		
+		remove.setOnAction(new EventHandler<ActionEvent>() {
+			//TODO
+			@Override
+			public void handle(ActionEvent e) {
+				System.out.println(list.getSelectionModel().getSelectedItem());
+				
+			}
+		});
+		
+		deselect.setOnAction(new EventHandler<ActionEvent>() {
+			//TODO
+			@Override
+			public void handle(ActionEvent e) {
+				list.getSelectionModel().clearSelection();
+			}
+		});
+		
 
 		vbox.getChildren().addAll(removeTask, list, hboxButtons);
 
@@ -632,6 +654,7 @@ public class GUI extends Application {
 					Stage addTaskStage = new Stage();
 					startAddTask(addTaskStage);
 					isATaskWindowOpen = true;
+					isTaskCompleted = false;
 				}
 				System.out.println("Add Task Event");
 			}
@@ -644,6 +667,7 @@ public class GUI extends Application {
 					Stage addRemoveStage = new Stage();
 					startRemoveTask(addRemoveStage);
 					isATaskWindowOpen = true;
+					isTaskCompleted = false;
 				}
 				System.out.println("Remove Task Event");
 
@@ -658,6 +682,7 @@ public class GUI extends Application {
 					Stage addEditStage = new Stage();
 					startEditTask(addEditStage);
 					isATaskWindowOpen = true;
+					isTaskCompleted = false;
 				}
 			}
 		});
@@ -670,6 +695,7 @@ public class GUI extends Application {
 					Stage addViewStage = new Stage();
 					startViewTask(addViewStage);
 					isATaskWindowOpen = true;
+					isTaskCompleted = false;
 				}
 			}
 		});
