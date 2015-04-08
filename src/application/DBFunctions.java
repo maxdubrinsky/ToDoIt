@@ -215,7 +215,7 @@ public class DBFunctions {
 				
 				tasks.add(tsk);
 				
-				System.out.println(tasks.toString());
+				// System.out.println(tasks.toString());
 			}
 			
 			

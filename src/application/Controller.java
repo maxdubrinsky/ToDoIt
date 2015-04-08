@@ -89,7 +89,7 @@ public class Controller {
 		// TODO Waiting on proper method signature.
 		DBFunctions.addTask(title, endT, desc, Integer.parseInt(priority));
 
-		System.out.println("Hi");
+		// System.out.println("Hi");
 	}
 
 	

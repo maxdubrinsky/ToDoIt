@@ -1,5 +1,5 @@
 # ToDoIt
-Welcome to ToDoIt, a comprehensive to-do and list managment application. Currently, functionality is limited due to our in-development state, but we hope to be up and running very soon. Any and all usage information for this application will be posted here for convenience and logistical purposes, so please check here frequently for updates.
+Welcome to ToDoIt, a comprehensive to-do and list management application. Currently, functionality is limited due to our in-development state, but we hope to be up and running very soon. Any and all usage information for this application will be posted here for convenience and logistical purposes, so please check here frequently for updates.
 # Usage
 <b>Task List</b>
 <p>On the left side of the window, you can see a list of tasks currently pending. Although there are tasks there, they are tests as server-client communication has not yet been completed.</p>

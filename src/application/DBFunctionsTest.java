@@ -16,7 +16,7 @@ public class DBFunctionsTest {
 			System.out.println(tasks.get(i).getTitle() + tasks.get(i).getPriority() + tasks.get(i).getDesc() + tasks.get(i).getEnd() + tasks.get(i).getStart());
 		}
 		
-		System.out.println(tasks.toString());
+		// System.out.println(tasks.toString());
 	
 	}
 	
