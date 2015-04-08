@@ -29,37 +29,6 @@
 	-fx-border-radius: 4;
 	-fx-background-radius: 4;
 }
-/*
-.button {
-	-fx-padding: 8 15 15 15;
-	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 20px;
-	-fx-font-weight: bold;
-	-fx-background-color: rgb(165, 217, 243);
-	-fx-background-radius: 7;
-	-fx-min-height: 50;
-	-fx-pref-width: 180;
-	-fx-border-color: rgb(30,30,30);
-	-fx-border-width: 0;
-	-fx-border-radius: 7;
-	-fx-effect: dropshadow(three-pass-box, #696969, 0,0,2,2);
-
-} 
-* */
-
-/*
- .button {
-    -fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-background-color: rgb(165, 217, 243);
-    -fx-min-height: 50;
-    -fx-pref-width: 180;    
-    -fx-background-radius: 5;
-    -fx-border-width: 0;
-    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,.25),0,0,1,1);
-} 
-*/
 
 .button {
 	-fx-padding: 8 15 15 15;

@@ -25,7 +25,7 @@ public class DBFunctions {
 	 * @param endTime
 	 * @param desc
 	 */
-	//TODO Remove startTime from the method signature and make start time off that local function we talking about in meeting.
+	
 	public static void addTask(String title, long endTime,
 			String desc, int priority) {
 
@@ -60,7 +60,6 @@ public class DBFunctions {
 			// If exception, print stack trace
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -113,7 +112,6 @@ public class DBFunctions {
 			// If exception, print stack trace
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -155,7 +153,6 @@ public class DBFunctions {
 			// If exception, print stack trace
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -244,10 +241,8 @@ public class DBFunctions {
 			// If exception, print stack trace
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -317,10 +312,8 @@ public ArrayList<Task> viewAll() {
 			// If exception, print stack trace
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

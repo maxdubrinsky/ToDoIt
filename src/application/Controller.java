@@ -86,7 +86,6 @@ public class Controller {
 		System.out.println(title);
 		System.out.println(endT);
 		System.out.println(desc);
-		// TODO Waiting on proper method signature.
 		DBFunctions.addTask(title, endT, desc, Integer.parseInt(priority));
 
 		// System.out.println("Hi");
@@ -144,12 +143,6 @@ public class Controller {
 			eMonth = "12";
 			break;
 		}
-
-		// Convert priority to a two digit number
-		// TODO
-		// NO NEED TO CONVERT, METHOD TAKES AN INT
-		// NO NEED TO CONVERT, METHOD TAKES AN INT
-		// NO NEED TO CONVERT, METHOD TAKES AN INT
 
 		// Convert time to 24 Hour format from 12 Hour
 		if (eAMPM.equals("PM") && !eHour.equals("12")) {
