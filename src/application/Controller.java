@@ -93,7 +93,7 @@ public class Controller {
 		
 	}
 
-	public void modifyTask(Task toChange, String title, String desc,
+	public static void modifyTask(Task toChange, String title, String desc,
 			String priority, String eYear, String eMonth, String eDate,
 			String eHour, String eMin, String eAMPM) {
 

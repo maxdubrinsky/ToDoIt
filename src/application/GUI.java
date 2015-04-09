@@ -346,9 +346,9 @@ public class GUI extends Application {
 				else {
 					status.setText("Please Fill All Required Inputs!");
 				}
-//				synchronized(taskUpdateThread) {
-//					notify();
-//				}
+				//				synchronized(taskUpdateThread) {
+				//					notify();
+				//				}
 			}
 		});
 
@@ -448,7 +448,7 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
-		
+
 		ArrayList<String> taskListString = new ArrayList<String>();
 
 		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
@@ -540,6 +540,39 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(update, clear);
 
+
+		update.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Task taskToUpdate = new Task();
+				String toUpdate = list.getSelectionModel().getSelectedItem();
+				taskToUpdate = findMatchingTask(toUpdate);
+				Controller.modifyTask(taskToUpdate, taskTitleBox.getText(), textArea.getText(), priortyComboBox.getValue(), taskEndTimeYear.getText(), 
+						endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
+						taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
+						);
+
+			}
+		});
+
+		clear.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				list.getSelectionModel().clearSelection();
+				taskTitleBox.clear();
+				textArea.clear();
+				priortyComboBox.getSelectionModel().clearSelection();
+				taskEndTimeYear.clear();
+				endTimeMonthComboBox.getSelectionModel().clearSelection();
+				taskEndTimeDate.clear();
+				taskEndTimeHour.clear();
+				taskEndTimeMin.clear();
+				endTimeAmPmComboBox.getSelectionModel().clearSelection();
+			}
+		});
+
+
+
 		vbox.getChildren().addAll(editTask, list, taskTitleAndPriorty, hBoxTitleAndPriority, textAreaTitle, textArea, hboxEndDateAndTimeTitle, 
 				hboxStartAndEndDate, hboxButtons);
 
@@ -574,13 +607,13 @@ public class GUI extends Application {
 		list.setItems(items);
 		list.setMinHeight(250);
 		list.setMaxHeight(250);
-		
+
 		Label viewTaskDiscTitle = new Label("Task Discription:");
 
 		// Add a text box for description
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);  
-		
+
 		list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -591,7 +624,7 @@ public class GUI extends Application {
 
 		});
 
-	  
+
 
 		// The upcoming task label at top
 		vbox.getChildren().addAll(viewTaskTitle, list, viewTaskDiscTitle, textArea);
@@ -612,7 +645,7 @@ public class GUI extends Application {
 		vbox.getChildren().add(new Label("Upcoming Tasks:"));
 
 		// This is the list view with filler tasks
-		
+
 
 		list.getStyleClass().addAll("pane", "listview");
 
