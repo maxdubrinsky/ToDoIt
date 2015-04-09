@@ -26,11 +26,9 @@ public class GUI extends Application {
 	boolean isATaskWindowOpen = false;
 	boolean isTaskCompleted = false;
 
-	private ArrayList<Task> upcommingTasks;
-
-	private void updateTasksList() {
-		upcommingTasks = Controller.upcomingTasks();
-	}
+	private final ArrayList<Task> upcommingTasks = new ArrayList<Task>();
+	private final ListView<String> list = new ListView<String>();
+	private Thread taskUpdateThread;
 
 
 	/**
@@ -305,7 +303,7 @@ public class GUI extends Application {
 		taskEndTimeMin.setMinWidth(64);
 		addTextLimiter(taskEndTimeMin, 2);
 
-		ComboBox<String> endTimeAmPmComboBox = new ComboBox();
+		ComboBox<String> endTimeAmPmComboBox = new ComboBox<String>();
 		endTimeAmPmComboBox.getItems().addAll(
 				"AM", "PM"
 				);
@@ -321,7 +319,6 @@ public class GUI extends Application {
 
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
-			//TODO
 			@Override
 			public void handle(ActionEvent e) {
 				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty()) && isTaskCompleted == false) {
@@ -349,11 +346,13 @@ public class GUI extends Application {
 				else {
 					status.setText("Please Fill All Required Inputs!");
 				}
+//				synchronized(taskUpdateThread) {
+//					notify();
+//				}
 			}
 		});
 
 		clear.setOnAction(new EventHandler<ActionEvent>() {
-			//TODO
 			@Override
 			public void handle(ActionEvent e) {
 				taskTitleBox.clear();
@@ -388,10 +387,6 @@ public class GUI extends Application {
 
 		list.getStyleClass().addAll("pane", "listview");
 
-		// Get upcoming task arraylist
-		updateTasksList();
-
-		//TODO make this work with up coming tasks
 		ArrayList<String> taskListString = new ArrayList<String>();
 
 		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
@@ -413,15 +408,17 @@ public class GUI extends Application {
 		hboxButtons.getChildren().addAll(remove,deselect);
 
 		remove.setOnAction(new EventHandler<ActionEvent>() {
-			//TODO
 			@Override
 			public void handle(ActionEvent e) {
-				Controller.deleteTask(findMatchingTask (list.getSelectionModel().getSelectedItem()));
+				String toRemove = list.getSelectionModel().getSelectedItem();
+				Controller.deleteTask(findMatchingTask (toRemove));
+				items.remove(toRemove);
+				list.setItems(items);
+				vbox.requestLayout();
 			}
 		});
 
 		deselect.setOnAction(new EventHandler<ActionEvent>() {
-			//TODO
 			@Override
 			public void handle(ActionEvent e) {
 				list.getSelectionModel().clearSelection();
@@ -451,7 +448,7 @@ public class GUI extends Application {
 		ListView<String> list = new ListView<String>();
 
 		list.getStyleClass().addAll("pane", "listview");
-		//TODO make this work with up coming tasks
+		
 		// This is the populated lists.
 		ObservableList<String> items =FXCollections.observableArrayList (
 				"Task One", "Task Two", "Task Three", "Task Four");
@@ -496,7 +493,7 @@ public class GUI extends Application {
 		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
 
 
-		ComboBox<String> endTimeMonthComboBox = new ComboBox();
+		ComboBox<String> endTimeMonthComboBox = new ComboBox<String>();
 		endTimeMonthComboBox.getItems().addAll(
 				"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 				);
@@ -522,7 +519,7 @@ public class GUI extends Application {
 		taskEndTimeMin.setMinWidth(64);
 		addTextLimiter(taskEndTimeMin, 2);
 
-		ComboBox<String> endTimeAmPmComboBox = new ComboBox();
+		ComboBox<String> endTimeAmPmComboBox = new ComboBox<String>();
 		endTimeAmPmComboBox.getItems().addAll(
 				"AM", "PM"
 				);
@@ -565,7 +562,6 @@ public class GUI extends Application {
 		list.getStyleClass().addAll("pane", "listview");
 
 		// This is the populated lists.
-		//TODO make this work with up coming tasks
 		ObservableList<String> items =FXCollections.observableArrayList (
 				"Task One", "Task Two", "Task Three", "Task Four");
 
@@ -598,20 +594,44 @@ public class GUI extends Application {
 		vbox.getChildren().add(new Label("Upcoming Tasks:"));
 
 		// This is the list view with filler tasks
-		ListView<String> list = new ListView<String>();
+		
 
 		list.getStyleClass().addAll("pane", "listview");
 
-		// Get upcoming task arraylist
-		updateTasksList();
-
-		//TODO make this work with up coming tasks
 		ArrayList<String> taskListString = new ArrayList<String>();
 
 		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
 
 		// This is the populated lists
 		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
+
+		taskUpdateThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				synchronized (this) {
+					while (true) {
+						upcommingTasks.clear();
+						upcommingTasks.addAll(Controller.upcomingTasks());
+						ObservableList<String> taskStrings = FXCollections
+								.observableArrayList();
+						for (Task t : upcommingTasks)
+							taskStrings.add(t.toString());
+						list.setItems(taskStrings);
+						vbox.requestLayout();
+						try {
+							synchronized (this) {
+								wait(1000);
+							}
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+
+		});
+		taskUpdateThread.start();
 
 		list.setItems(items);
 		// Add to Vbox
@@ -723,7 +743,6 @@ public class GUI extends Application {
 
 		hbox.getChildren().add(new Label(theMonth.toString() + " " + theDay + " " + theYear));
 
-
 		return hbox;
 	}
 
@@ -731,14 +750,12 @@ public class GUI extends Application {
 	public Task findMatchingTask (String stringToMatch) {
 
 		Task matchingTask = new Task();
-		updateTasksList();
 
 		for (Task aTask : upcommingTasks) {
 			if (stringToMatch.equals(aTask.toString())){
 				matchingTask = aTask;
 			}
 		}
-
 		return matchingTask;
 	}
 
@@ -755,6 +772,13 @@ public class GUI extends Application {
 			}
 
 		});
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void stop() throws Exception {
+		taskUpdateThread.stop();
+		super.stop();
 	}
 
 	public static void main(String[] args) {
