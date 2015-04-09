@@ -449,9 +449,12 @@ public class GUI extends Application {
 
 		list.getStyleClass().addAll("pane", "listview");
 		
-		// This is the populated lists.
-		ObservableList<String> items =FXCollections.observableArrayList (
-				"Task One", "Task Two", "Task Three", "Task Four");
+		ArrayList<String> taskListString = new ArrayList<String>();
+
+		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+
+		// This is the populated lists
+		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
 
 		list.setItems(items);
 		list.setMinHeight(200);
@@ -561,19 +564,34 @@ public class GUI extends Application {
 
 		list.getStyleClass().addAll("pane", "listview");
 
-		// This is the populated lists.
-		ObservableList<String> items =FXCollections.observableArrayList (
-				"Task One", "Task Two", "Task Three", "Task Four");
+		ArrayList<String> taskListString = new ArrayList<String>();
+
+		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+
+		// This is the populated lists
+		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
 
 		list.setItems(items);
 		list.setMinHeight(250);
 		list.setMaxHeight(250);
-
+		
 		Label viewTaskDiscTitle = new Label("Task Discription:");
 
 		// Add a text box for description
 		TextArea textArea = new TextArea();
-		textArea.setPrefRowCount(5);    
+		textArea.setPrefRowCount(5);  
+		
+		list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observalable,
+					String oldval, String newval) {
+				textArea.setText(findMatchingTask(newval).getDesc());	
+			}
+
+		});
+
+	  
 
 		// The upcoming task label at top
 		vbox.getChildren().addAll(viewTaskTitle, list, viewTaskDiscTitle, textArea);

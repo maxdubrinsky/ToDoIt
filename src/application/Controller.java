@@ -82,13 +82,8 @@ public class Controller {
 
 		endT = Long.parseLong(concatEndT);
 
-		System.out.println("Controller Print Statement");
-		System.out.println(title);
-		System.out.println(endT);
-		System.out.println(desc);
 		DBFunctions.addTask(title, endT, desc, Integer.parseInt(priority));
 
-		// System.out.println("Hi");
 	}
 
 	

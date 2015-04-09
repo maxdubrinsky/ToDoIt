@@ -227,8 +227,8 @@ public class DBFunctions {
 				tasks.add(t);
 			}
 			
-			System.out.println(tasks.toString());
-			
+//			System.out.println(tasks.toString());
+//			
 			return tasks;
 
 		} catch (ClientProtocolException e) {
