@@ -15,13 +15,15 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 
 /**
- * This class is the GUI of the TODOIT application. It uses javafx to make a working GUI.
+ * This class is the GUI of the TODOIT application. It uses javafx to make a
+ * working GUI.
  * 
- * @author Bryan Ehrke
- * Spring 2015
+ * @author Bryan Ehrke Spring 2015
  *
  */
 public class GUI extends Application {
+	// Change this to activate the print lines
+	private boolean debug = false;
 
 	boolean isATaskWindowOpen = false;
 	boolean isTaskCompleted = false;
@@ -30,11 +32,12 @@ public class GUI extends Application {
 	private final ListView<String> list = new ListView<String>();
 	private Thread taskUpdateThread;
 
-
 	/**
-	 * This is the start method that starts the primary stage for the GUI to use. AKA the main window.
+	 * This is the start method that starts the primary stage for the GUI to
+	 * use. AKA the main window.
 	 * 
-	 * @param primaryStage is the primary stage being used to start.
+	 * @param primaryStage
+	 *            is the primary stage being used to start.
 	 */
 	@Override
 	public void start(Stage primaryStage) {
@@ -48,8 +51,9 @@ public class GUI extends Application {
 			gui.setBottom(addHBoxPrimary());
 			gui.setRight(addFlowPanePrimary());
 
-			//Makes use of the css sheet
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			// Makes use of the css sheet
+			scene.getStylesheets().add(
+					getClass().getResource("application.css").toExternalForm());
 
 			// Setting up the arguments and setting for your main stage
 			primaryStage.setScene(scene);
@@ -59,19 +63,19 @@ public class GUI extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.show();
 
-
-
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
-	 * This starts another scene that is triggered by a button in the main scene. 
-	 * This controls the AddTask Window.
+	 * This starts another scene that is triggered by a button in the main
+	 * scene. This controls the AddTask Window.
 	 * 
-	 * @param addTaskStage is the scene to be started.
+	 * @param addTaskStage
+	 *            is the scene to be started.
 	 */
-	public void startAddTask(Stage addTaskStage){
+	public void startAddTask(Stage addTaskStage) {
 		try {
 
 			// Sets up the add task manager frame
@@ -82,7 +86,8 @@ public class GUI extends Application {
 			gui.setCenter(addVBoxAddTask());
 
 			// Makes the frame use the css sheet
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(
+					getClass().getResource("application.css").toExternalForm());
 
 			// Sets the scene for the frame
 			addTaskStage.setScene(scene);
@@ -90,27 +95,27 @@ public class GUI extends Application {
 			addTaskStage.setWidth(500);
 			addTaskStage.setHeight(400);
 			addTaskStage.setResizable(false);
-			addTaskStage.show();   
+			addTaskStage.show();
 
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
 				}
-			});  
+			});
 
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * This starts another scene that is triggered by a button in the main scene. 
-	 * This controls the RemoveTask Window.
+	 * This starts another scene that is triggered by a button in the main
+	 * scene. This controls the RemoveTask Window.
 	 * 
-	 * @param addRemoveStage is the scene to be started.
+	 * @param addRemoveStage
+	 *            is the scene to be started.
 	 */
-	public void startRemoveTask(Stage addRemoveStage){
+	public void startRemoveTask(Stage addRemoveStage) {
 		try {
 
 			// Sets up the add task manager frame
@@ -120,7 +125,8 @@ public class GUI extends Application {
 			gui.setCenter(addVBoxRemoveTask());
 
 			// Makes the frame use the css sheet
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(
+					getClass().getResource("application.css").toExternalForm());
 
 			// Sets the scene for the frame
 			addRemoveStage.setScene(scene);
@@ -134,21 +140,21 @@ public class GUI extends Application {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
 				}
-			});  
+			});
 
-
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * This starts another scene that is triggered by a button in the main scene. 
-	 * This controls the EditTask Window.
+	 * This starts another scene that is triggered by a button in the main
+	 * scene. This controls the EditTask Window.
 	 * 
-	 * @param addEditStage is the Stage to be started.
+	 * @param addEditStage
+	 *            is the Stage to be started.
 	 */
-	public void startEditTask(Stage addEditStage){
+	public void startEditTask(Stage addEditStage) {
 		try {
 
 			// Sets up the add task manager frame
@@ -158,7 +164,8 @@ public class GUI extends Application {
 			gui.setCenter(addVBoxEditTask());
 
 			// Makes the frame use the css sheet
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(
+					getClass().getResource("application.css").toExternalForm());
 
 			// Sets the scene for the frame
 			addEditStage.setScene(scene);
@@ -172,19 +179,19 @@ public class GUI extends Application {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
 				}
-			});  
+			});
 
-
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
 	 * 
-	 * @param addViewStage is the stage to be started.
+	 * @param addViewStage
+	 *            is the stage to be started.
 	 */
-	public void startViewTask(Stage addViewStage){
+	public void startViewTask(Stage addViewStage) {
 		try {
 
 			// Sets up the add task manager frame
@@ -194,7 +201,8 @@ public class GUI extends Application {
 			gui.setCenter(addVBoxViewTask());
 
 			// Makes the frame use the css sheet
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(
+					getClass().getResource("application.css").toExternalForm());
 
 			// Sets the scene for the frame
 			addViewStage.setScene(scene);
@@ -208,22 +216,19 @@ public class GUI extends Application {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
 				}
-			});  
+			});
 
-
-
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-
 	/**
 	 * This method is used to add a VBox in the Add Task GUI
+	 * 
 	 * @return VBox required for VBox
 	 */
 	public VBox addVBoxAddTask() {
-
 
 		VBox vbox = new VBox(8);
 		vbox.setPadding(new Insets(6));
@@ -231,14 +236,13 @@ public class GUI extends Application {
 
 		vbox.getStyleClass().addAll("pane", "vboxaddtask");
 
-		Label taskTitleAndPriorty = new Label("Task Title                               Task Priorty");
+		Label taskTitleAndPriorty = new Label(
+				"Task Title                               Task Priorty");
 		Label textAreaTitle = new Label("Task Discription");
-
 
 		// Add a text field for the title and priorty combo box in a h box
 		HBox hBoxTitleAndPriority = new HBox();
 		hBoxTitleAndPriority.setSpacing(12);
-
 
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
@@ -246,42 +250,38 @@ public class GUI extends Application {
 		addTextLimiter(taskTitleBox, 50);
 
 		ComboBox<String> priortyComboBox = new ComboBox<String>();
-		priortyComboBox.getItems().addAll(
-				"1","2","3","4","5","6","7","8","9","10"
-				);
+		priortyComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7",
+				"8", "9", "10");
 
-		hBoxTitleAndPriority.getChildren().addAll(taskTitleBox, priortyComboBox);
+		hBoxTitleAndPriority.getChildren()
+				.addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
-
 
 		// Add a text box for description
 		TextArea textArea = new TextArea();
-		textArea.setPrefRowCount(5);    
-
-
+		textArea.setPrefRowCount(5);
 
 		// This is all HBox for the buttons submit and clear
 		HBox hboxButtons = new HBox();
 		hboxButtons.setAlignment(Pos.CENTER);
 		hboxButtons.setSpacing(12);
 
-
 		Button submit = new Button("Submit");
 		Button clear = new Button("Clear");
 
-		hboxButtons.getChildren().addAll(submit,clear);
+		hboxButtons.getChildren().addAll(submit, clear);
 		// End
 
 		// This is the HBox for the start time
-		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
+		Label hboxEndDateAndTimeTitle = new Label(
+				"End Date                                      End Time");
 		HBox hBoxEndDate = new HBox();
 		hBoxEndDate.setAlignment(Pos.BASELINE_LEFT);
 		hBoxEndDate.setSpacing(12);
 
 		ComboBox<String> endTimeMonthComboBox = new ComboBox<String>();
-		endTimeMonthComboBox.getItems().addAll(
-				"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
-				);
+		endTimeMonthComboBox.getItems().addAll("Jan", "Feb", "Mar", "Apr",
+				"May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 
 		TextField taskEndTimeDate = new TextField();
 		taskEndTimeDate.setMaxWidth(40);
@@ -304,29 +304,33 @@ public class GUI extends Application {
 		addTextLimiter(taskEndTimeMin, 2);
 
 		ComboBox<String> endTimeAmPmComboBox = new ComboBox<String>();
-		endTimeAmPmComboBox.getItems().addAll(
-				"AM", "PM"
-				);
+		endTimeAmPmComboBox.getItems().addAll("AM", "PM");
 
-		hBoxEndDate.getChildren().addAll(endTimeMonthComboBox, taskEndTimeDate, taskEndTimeYear, taskEndTimeHour, taskEndTimeMin, endTimeAmPmComboBox);
+		hBoxEndDate.getChildren().addAll(endTimeMonthComboBox, taskEndTimeDate,
+				taskEndTimeYear, taskEndTimeHour, taskEndTimeMin,
+				endTimeAmPmComboBox);
 
-
-		// Make a new label for the 
+		// Make a new label for the
 		Label status = new Label();
 
-		vbox.getChildren().addAll(taskTitleAndPriorty, hBoxTitleAndPriority, textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate, hboxButtons);
-
-
+		vbox.getChildren().addAll(taskTitleAndPriorty, hBoxTitleAndPriority,
+				textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate,
+				hboxButtons);
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty()) && isTaskCompleted == false) {
+				if ((taskTitleBox.getText() != null && !taskTitleBox.getText()
+						.isEmpty()) && isTaskCompleted == false) {
 
-					Controller.addTask(taskTitleBox.getText(), textArea.getText(), priortyComboBox.getValue(), taskEndTimeYear.getText(), 
-							endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
-							taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
-							);
+					Controller.addTask(taskTitleBox.getText(),
+							textArea.getText(), priortyComboBox.getValue(),
+							taskEndTimeYear.getText(),
+							endTimeMonthComboBox.getValue(),
+							taskEndTimeDate.getText(),
+							taskEndTimeHour.getText(),
+							taskEndTimeMin.getText(),
+							endTimeAmPmComboBox.getValue());
 
 					isTaskCompleted = true;
 					isATaskWindowOpen = false;
@@ -342,13 +346,12 @@ public class GUI extends Application {
 					Stage stage = (Stage) source.getScene().getWindow();
 					stage.close();
 
-				} 
-				else {
+				} else {
 					status.setText("Please Fill All Required Inputs!");
 				}
-				//				synchronized(taskUpdateThread) {
-				//					notify();
-				//				}
+				// synchronized(taskUpdateThread) {
+				// notify();
+				// }
 			}
 		});
 
@@ -366,7 +369,6 @@ public class GUI extends Application {
 				endTimeAmPmComboBox.getSelectionModel().clearSelection();
 			}
 		});
-
 
 		return vbox;
 	}
@@ -389,10 +391,12 @@ public class GUI extends Application {
 
 		ArrayList<String> taskListString = new ArrayList<String>();
 
-		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+		for (int i = 0; i < upcommingTasks.size(); i++)
+			taskListString.add(upcommingTasks.get(i).toString());
 
 		// This is the populated lists
-		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
+		ObservableList<String> items = FXCollections
+				.observableArrayList(taskListString);
 
 		list.setItems(items);
 
@@ -401,17 +405,16 @@ public class GUI extends Application {
 		hboxButtons.setAlignment(Pos.CENTER);
 		hboxButtons.setSpacing(12);
 
-
 		Button remove = new Button("Remove Task");
 		Button deselect = new Button("Deselect");
 
-		hboxButtons.getChildren().addAll(remove,deselect);
+		hboxButtons.getChildren().addAll(remove, deselect);
 
 		remove.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				String toRemove = list.getSelectionModel().getSelectedItem();
-				Controller.deleteTask(findMatchingTask (toRemove));
+				Controller.deleteTask(findMatchingTask(toRemove));
 				items.remove(toRemove);
 				list.setItems(items);
 				vbox.requestLayout();
@@ -425,17 +428,15 @@ public class GUI extends Application {
 			}
 		});
 
-
 		vbox.getChildren().addAll(removeTask, list, hboxButtons);
 
 		return vbox;
 	}
 
-
 	public VBox addVBoxEditTask() {
 		// Set up Vbox
 		VBox vbox = new VBox();
-		//BLAZE IT
+		// BLAZE IT
 		vbox.setPadding(new Insets(12));
 		vbox.setSpacing(8);
 
@@ -451,20 +452,22 @@ public class GUI extends Application {
 
 		ArrayList<String> taskListString = new ArrayList<String>();
 
-		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+		for (int i = 0; i < upcommingTasks.size(); i++)
+			taskListString.add(upcommingTasks.get(i).toString());
 
 		// This is the populated lists
-		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
+		ObservableList<String> items = FXCollections
+				.observableArrayList(taskListString);
 
 		list.setItems(items);
 		list.setMinHeight(200);
 		list.setMaxHeight(200);
 
 		// Add a text field for the title and priorty combo box in a h box
-		Label taskTitleAndPriorty = new Label("Task Title                               Task Priorty");
+		Label taskTitleAndPriorty = new Label(
+				"Task Title                               Task Priorty");
 		HBox hBoxTitleAndPriority = new HBox();
 		hBoxTitleAndPriority.setSpacing(12);
-
 
 		TextField taskTitleBox = new TextField();
 		taskTitleBox.setMaxWidth(300);
@@ -472,34 +475,30 @@ public class GUI extends Application {
 		addTextLimiter(taskTitleBox, 50);
 
 		ComboBox<String> priortyComboBox = new ComboBox<String>();
-		priortyComboBox.getItems().addAll(
-				"1","2","3","4","5","6","7","8","9","10"
-				);
+		priortyComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7",
+				"8", "9", "10");
 
-		hBoxTitleAndPriority.getChildren().addAll(taskTitleBox, priortyComboBox);
+		hBoxTitleAndPriority.getChildren()
+				.addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
-
-
 
 		// Add a text box for description
 		Label textAreaTitle = new Label("Task Description");
 		TextArea textArea = new TextArea();
-		textArea.setPrefRowCount(5);    
+		textArea.setPrefRowCount(5);
 
-
-		// This is the HBox for the  end time
+		// This is the HBox for the end time
 		HBox hboxStartAndEndDate = new HBox();
 		hboxStartAndEndDate.setAlignment(Pos.BASELINE_LEFT);
 		hboxStartAndEndDate.setSpacing(12);
 
 		// This is the Label for the Date Input for the user
-		Label hboxEndDateAndTimeTitle = new Label("End Date                                      End Time");
-
+		Label hboxEndDateAndTimeTitle = new Label(
+				"End Date                                      End Time");
 
 		ComboBox<String> endTimeMonthComboBox = new ComboBox<String>();
-		endTimeMonthComboBox.getItems().addAll(
-				"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-				);
+		endTimeMonthComboBox.getItems().addAll("Jan", "Feb", "Mar", "Apr",
+				"May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 
 		TextField taskEndTimeDate = new TextField();
 		taskEndTimeDate.setMaxWidth(40);
@@ -510,7 +509,6 @@ public class GUI extends Application {
 		taskEndTimeYear.setMaxWidth(80);
 		taskEndTimeYear.setMinWidth(80);
 		addTextLimiter(taskEndTimeYear, 4);
-
 
 		TextField taskEndTimeHour = new TextField();
 		taskEndTimeHour.setMaxWidth(64);
@@ -523,11 +521,10 @@ public class GUI extends Application {
 		addTextLimiter(taskEndTimeMin, 2);
 
 		ComboBox<String> endTimeAmPmComboBox = new ComboBox<String>();
-		endTimeAmPmComboBox.getItems().addAll(
-				"AM", "PM"
-				);
+		endTimeAmPmComboBox.getItems().addAll("AM", "PM");
 
-		hboxStartAndEndDate.getChildren().addAll(endTimeMonthComboBox, taskEndTimeDate, taskEndTimeYear, taskEndTimeHour,
+		hboxStartAndEndDate.getChildren().addAll(endTimeMonthComboBox,
+				taskEndTimeDate, taskEndTimeYear, taskEndTimeHour,
 				taskEndTimeMin, endTimeAmPmComboBox);
 
 		// This is all HBox for the buttons update and clear
@@ -540,17 +537,19 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(update, clear);
 
-
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				Task taskToUpdate = new Task();
 				String toUpdate = list.getSelectionModel().getSelectedItem();
 				taskToUpdate = findMatchingTask(toUpdate);
-				Controller.modifyTask(taskToUpdate, taskTitleBox.getText(), textArea.getText(), priortyComboBox.getValue(), taskEndTimeYear.getText(), 
-						endTimeMonthComboBox.getValue(), taskEndTimeDate.getText(), taskEndTimeHour.getText(), 
-						taskEndTimeMin.getText(), endTimeAmPmComboBox.getValue()
-						);
+				Controller.modifyTask(taskToUpdate, taskTitleBox.getText(),
+						textArea.getText(), priortyComboBox.getValue(),
+						taskEndTimeYear.getText(),
+						endTimeMonthComboBox.getValue(),
+						taskEndTimeDate.getText(), taskEndTimeHour.getText(),
+						taskEndTimeMin.getText(),
+						endTimeAmPmComboBox.getValue());
 
 			}
 		});
@@ -571,10 +570,9 @@ public class GUI extends Application {
 			}
 		});
 
-
-
-		vbox.getChildren().addAll(editTask, list, taskTitleAndPriorty, hBoxTitleAndPriority, textAreaTitle, textArea, hboxEndDateAndTimeTitle, 
-				hboxStartAndEndDate, hboxButtons);
+		vbox.getChildren().addAll(editTask, list, taskTitleAndPriorty,
+				hBoxTitleAndPriority, textAreaTitle, textArea,
+				hboxEndDateAndTimeTitle, hboxStartAndEndDate, hboxButtons);
 
 		return vbox;
 
@@ -599,10 +597,12 @@ public class GUI extends Application {
 
 		ArrayList<String> taskListString = new ArrayList<String>();
 
-		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+		for (int i = 0; i < upcommingTasks.size(); i++)
+			taskListString.add(upcommingTasks.get(i).toString());
 
 		// This is the populated lists
-		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
+		ObservableList<String> items = FXCollections
+				.observableArrayList(taskListString);
 
 		list.setItems(items);
 		list.setMinHeight(250);
@@ -612,25 +612,27 @@ public class GUI extends Application {
 
 		// Add a text box for description
 		TextArea textArea = new TextArea();
-		textArea.setPrefRowCount(5);  
+		textArea.setPrefRowCount(5);
 
-		list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+		list.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<String>() {
 
-			@Override
-			public void changed(ObservableValue<? extends String> observalable,
-					String oldval, String newval) {
-				textArea.setText(findMatchingTask(newval).getDesc());	
-			}
+					@Override
+					public void changed(
+							ObservableValue<? extends String> observalable,
+							String oldval, String newval) {
+						textArea.setText(findMatchingTask(newval).getDesc());
+					}
 
-		});
-
-
+				});
 
 		// The upcoming task label at top
-		vbox.getChildren().addAll(viewTaskTitle, list, viewTaskDiscTitle, textArea);
+		vbox.getChildren().addAll(viewTaskTitle, list, viewTaskDiscTitle,
+				textArea);
 
 		return vbox;
 	}
+
 	public VBox addVBoxPrimary() {
 
 		// Set up Vbox
@@ -646,37 +648,38 @@ public class GUI extends Application {
 
 		// This is the list view with filler tasks
 
-
 		list.getStyleClass().addAll("pane", "listview");
 
 		ArrayList<String> taskListString = new ArrayList<String>();
 
-		for (int i = 0; i < upcommingTasks.size(); i++) taskListString.add(upcommingTasks.get(i).toString());
+		for (int i = 0; i < upcommingTasks.size(); i++)
+			taskListString.add(upcommingTasks.get(i).toString());
 
 		// This is the populated lists
-		ObservableList<String> items = FXCollections.observableArrayList(taskListString);
+		ObservableList<String> items = FXCollections
+				.observableArrayList(taskListString);
 
 		taskUpdateThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				synchronized (this) {
-					while (true) {
-						upcommingTasks.clear();
-						upcommingTasks.addAll(Controller.upcomingTasks());
-						ObservableList<String> taskStrings = FXCollections
-								.observableArrayList();
-						for (Task t : upcommingTasks)
-							taskStrings.add(t.toString());
-						list.setItems(taskStrings);
-						vbox.requestLayout();
-						try {
-							synchronized (this) {
-								wait(1000);
-							}
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+				while (true) {
+					upcommingTasks.clear();
+					upcommingTasks.addAll(Controller.upcomingTasks());
+					ObservableList<String> taskStrings = FXCollections
+							.observableArrayList();
+					for (Task t : upcommingTasks)
+						taskStrings.add(t.toString());
+					list.setItems(taskStrings);
+					vbox.requestLayout();
+					try {
+						synchronized (this) {
+							if (debug)
+								System.out.println("Thread updating...");
+							wait(1000);
 						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
 			}
@@ -691,9 +694,6 @@ public class GUI extends Application {
 		return vbox;
 	}
 
-
-
-
 	public FlowPane addFlowPanePrimary() {
 
 		// Setting up Flowpane
@@ -701,8 +701,7 @@ public class GUI extends Application {
 		flow.setPadding(new Insets(43, 10, 5, 10));
 		flow.setVgap(12);
 		flow.setHgap(0);
-		flow.setPrefWrapLength(170); 
-
+		flow.setPrefWrapLength(170);
 
 		// This makes the flowpane work with the CSS
 		flow.getStyleClass().addAll("pane", "flow-tile");
@@ -714,9 +713,10 @@ public class GUI extends Application {
 		Button viewTaskBut = new Button("View Task");
 
 		// Add four buttons to the GUI
-		flow.getChildren().addAll(addTaskBut, removeTaskBut, editTaskBut, viewTaskBut);
+		flow.getChildren().addAll(addTaskBut, removeTaskBut, editTaskBut,
+				viewTaskBut);
 
-		// Add the four button listeners 
+		// Add the four button listeners
 		addTaskBut.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -773,7 +773,6 @@ public class GUI extends Application {
 		return flow;
 	}
 
-
 	public HBox addHBoxPrimary() {
 
 		// Setting up HBox
@@ -784,7 +783,6 @@ public class GUI extends Application {
 		// Make HBOX use CSS
 		hbox.getStyleClass().addAll("pane", "hbox");
 
-
 		// Get a rough date stamp for GUI
 		LocalDate currentDate = LocalDate.now();
 
@@ -792,31 +790,33 @@ public class GUI extends Application {
 		int theYear = currentDate.getYear();
 		int theDay = currentDate.getDayOfMonth();
 
-		hbox.getChildren().add(new Label(theMonth.toString() + " " + theDay + " " + theYear));
+		hbox.getChildren().add(
+				new Label(theMonth.toString() + " " + theDay + " " + theYear));
 
 		return hbox;
 	}
 
-
-	public Task findMatchingTask (String stringToMatch) {
+	public Task findMatchingTask(String stringToMatch) {
 
 		Task matchingTask = new Task();
 
 		for (Task aTask : upcommingTasks) {
-			if (stringToMatch.equals(aTask.toString())){
+			if (stringToMatch.equals(aTask.toString())) {
 				matchingTask = aTask;
 			}
 		}
 		return matchingTask;
 	}
 
-	public static void addTextLimiter (final TextField textField, final int maxLength) {
+	public static void addTextLimiter(final TextField textField,
+			final int maxLength) {
 		textField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> oldval,
 					String oldValue, String newValue) {
 				if (textField.getText().length() > maxLength) {
-					String aString = textField.getText().substring(0, maxLength);
+					String aString = textField.getText()
+							.substring(0, maxLength);
 					textField.setText(aString);
 				}
 
@@ -836,4 +836,3 @@ public class GUI extends Application {
 		launch(args);
 	}
 }
-
