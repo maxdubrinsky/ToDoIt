@@ -418,6 +418,21 @@ public class GUI extends Application {
 				items.remove(toRemove);
 				list.setItems(items);
 				vbox.requestLayout();
+				
+				isTaskCompleted = true;
+				isATaskWindowOpen = false;
+
+				// Make a short sleep
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				// Closes the sub window.
+				Node source = (Node) e.getSource();
+				Stage stage = (Stage) source.getScene().getWindow();
+				stage.close();
+				
 			}
 		});
 
@@ -550,6 +565,22 @@ public class GUI extends Application {
 						taskEndTimeDate.getText(), taskEndTimeHour.getText(),
 						taskEndTimeMin.getText(),
 						endTimeAmPmComboBox.getValue());
+				
+				isTaskCompleted = true;
+				isATaskWindowOpen = false;
+
+				// Make a short sleep
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				// Closes the sub window.
+				Node source = (Node) e.getSource();
+				Stage stage = (Stage) source.getScene().getWindow();
+				stage.close();
+				
+				
 
 			}
 		});
