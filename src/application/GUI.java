@@ -2,6 +2,10 @@ package application;
 
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.ExecutorService;
+
+import org.controlsfx.control.Notifications;
 
 import javafx.application.*;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +18,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javafx.util.Duration;
+import javafx.concurrent.*;
 
 /**
  * This class is the GUI of the TODOIT application. It uses javafx to make a
@@ -30,6 +36,8 @@ public class GUI extends Application {
 	private ArrayList<Task> upcommingTasks = new ArrayList<Task>();
 	private ListView<String> list = new ListView<String>();
 	private VBox primaryVBox;
+
+	private Thread notification;
 
 	/**
 	 * This is the start method that starts the primary stage for the GUI to
@@ -61,6 +69,86 @@ public class GUI extends Application {
 			primaryStage.setHeight(600);
 			primaryStage.setResizable(false);
 			primaryStage.show();
+
+			// Make the notification thread
+			notification = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// Create a list to store acknowledged tasks
+					ArrayList<Task> acknowledgedTasks = new ArrayList<Task>();
+					
+					// Run FOREVERRRRRRRRR
+					while (true) {
+						try {
+							// Check to make sure there are upcoming tasks
+							if (!upcommingTasks.isEmpty()) {
+								// Grab the next task (found by taking the next on the 
+								// list compared to the acknowledged ones)
+								Task next = upcommingTasks
+										.get(acknowledgedTasks.size());
+
+								// Check if the task has been acknowledged
+								if (acknowledgedTasks.contains(next)) {
+									Thread.sleep(5000);
+									System.out
+											.println("Notification thread sleeping...");
+									continue;
+								}
+
+								// Start checking dates
+								Calendar calendar = Calendar.getInstance();
+
+								String taskEnd = String.valueOf(next.getEnd());
+								int y = Integer.parseInt(taskEnd
+										.substring(0, 4));
+								int m = Integer.parseInt(taskEnd
+										.substring(5, 7));
+								int d = Integer.parseInt(taskEnd.substring(8,
+										10));
+								int h = Integer.parseInt(taskEnd.substring(11,
+										13));
+								int min = Integer.parseInt(taskEnd.substring(
+										14, 16));
+								
+								// Check if the task is within 30 minutes of completion
+								// Can be tweaked with some fiddling
+								if (y == calendar.get(Calendar.YEAR)
+										&& m == calendar.get(Calendar.MONTH) + 1
+										&& d == calendar
+												.get(Calendar.DAY_OF_MONTH)
+										&& (h - calendar.get(Calendar.HOUR_OF_DAY)) % 25 <= 1
+										&& (min - calendar.get(Calendar.MINUTE)) % 61 <= 30) {
+
+									// Put the notification on the JavaFX Thread Stack of Fun
+									Platform.runLater(new Runnable() {
+										@Override
+										public void run() {
+											Notifications n = Notifications
+													.create();
+											n.title(next.getTitle());
+											n.text(next.getDesc());
+											n.hideAfter(Duration.INDEFINITE);
+											n.showConfirm();
+										}
+									});
+									
+									// Acknowledge me!1!!1!!
+									acknowledgedTasks.add(next);
+								}
+							}
+							
+							// Sleep for a mo'
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+			});
+			// Start the magic
+			notification.setDaemon(true);
+			notification.start();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -255,6 +343,7 @@ public class GUI extends Application {
 		ComboBox<String> priortyComboBox = new ComboBox<String>();
 		priortyComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7",
 				"8", "9", "10");
+		priortyComboBox.getSelectionModel().select(4);
 
 		hBoxTitleAndPriority.getChildren()
 				.addAll(taskTitleBox, priortyComboBox);
@@ -423,7 +512,7 @@ public class GUI extends Application {
 				items.remove(toRemove);
 				list.setItems(items);
 				vbox.requestLayout();
-				
+
 				isTaskCompleted = true;
 				isATaskWindowOpen = false;
 				updateTasks();
@@ -438,7 +527,7 @@ public class GUI extends Application {
 				Node source = (Node) e.getSource();
 				Stage stage = (Stage) source.getScene().getWindow();
 				stage.close();
-				
+
 			}
 		});
 
@@ -572,7 +661,7 @@ public class GUI extends Application {
 						taskEndTimeDate.getText(), taskEndTimeHour.getText(),
 						taskEndTimeMin.getText(),
 						endTimeAmPmComboBox.getValue());
-				
+
 				isTaskCompleted = true;
 				isATaskWindowOpen = false;
 				updateTasks();
@@ -587,8 +676,6 @@ public class GUI extends Application {
 				Node source = (Node) e.getSource();
 				Stage stage = (Stage) source.getScene().getWindow();
 				stage.close();
-				
-				
 
 			}
 		});
@@ -608,45 +695,49 @@ public class GUI extends Application {
 				endTimeAmPmComboBox.getSelectionModel().clearSelection();
 			}
 		});
-		
+
 		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {
 				// Create a temporary task reference
-				Task temp = findMatchingTask(list.getSelectionModel().getSelectedItem());
-				
-				// Start updating the input fields to match the task's existing parameters
+				Task temp = findMatchingTask(list.getSelectionModel()
+						.getSelectedItem());
+
+				// Start updating the input fields to match the task's existing
+				// parameters
 				taskTitleBox.setText(temp.getTitle());
 				textArea.setText(temp.getDesc());
-				priortyComboBox.getSelectionModel().select(temp.getPriority() - 1);
-				
+				priortyComboBox.getSelectionModel().select(
+						temp.getPriority() - 1);
+
 				// Grab a copy of the date for parsing reasons
 				String date = String.valueOf(temp.getEnd());
 				System.out.println(date);
-				taskEndTimeYear.setText(date.substring(0,4));
-				endTimeMonthComboBox.getSelectionModel().select(Integer.parseInt(date.substring(5,7)) - 1);
-				taskEndTimeDate.setText(date.substring(8,10));
-				
+				taskEndTimeYear.setText(date.substring(0, 4));
+				endTimeMonthComboBox.getSelectionModel().select(
+						Integer.parseInt(date.substring(5, 7)) - 1);
+				taskEndTimeDate.setText(date.substring(8, 10));
+
 				// Grab the hour piece of the task
-				int hour = Integer.parseInt(date.substring(11,13));
+				int hour = Integer.parseInt(date.substring(11, 13));
 				endTimeAmPmComboBox.getSelectionModel().select(hour / 12);
-				
+
 				// Parse hour for 12-hour clocks
 				hour = (hour > 12) ? hour - 12 : hour;
 				taskEndTimeHour.setText(Integer.toString(hour));
-				taskEndTimeMin.setText(date.substring(14,16));
-				
+				taskEndTimeMin.setText(date.substring(14, 16));
+
 				// Update the main view
 				vbox.requestLayout();
 			}
-			
+
 		});
 
 		vbox.getChildren().addAll(editTask, list, taskTitleAndPriorty,
 				hBoxTitleAndPriority, textAreaTitle, textArea,
 				hboxEndDateAndTimeTitle, hboxStartAndEndDate, hboxButtons);
-		
+
 		return vbox;
 
 	}
@@ -725,10 +816,10 @@ public class GUI extends Application {
 		list.getStyleClass().addAll("pane", "listview");
 
 		updateTasks();
-		
+
 		// Add to Vbox
 		primaryVBox.getChildren().add(list);
-		
+
 		return primaryVBox;
 	}
 
@@ -836,14 +927,15 @@ public class GUI extends Application {
 
 	private void updateTasks() {
 		upcommingTasks = Controller.upcomingTasks();
-		ObservableList<String> taskStrings = FXCollections.observableArrayList();
+		ObservableList<String> taskStrings = FXCollections
+				.observableArrayList();
 		for (Task t : upcommingTasks)
 			taskStrings.add(t.toString());
 		list.setItems(taskStrings);
 		primaryVBox.requestLayout();
 		System.out.println("Tasks updated");
 	}
-	
+
 	public Task findMatchingTask(String stringToMatch) {
 
 		Task matchingTask = new Task();
@@ -871,6 +963,13 @@ public class GUI extends Application {
 			}
 
 		});
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void stop() throws Exception {
+		notification.stop();
+		super.stop();
 	}
 
 	public static void main(String[] args) {
