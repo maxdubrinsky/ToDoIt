@@ -82,7 +82,7 @@ public class Controller {
 
 		endT = Long.parseLong(concatEndT);
 
-		DBFunctions.addTask(title, endT, desc, Integer.parseInt(priority));
+		DBFunctions.addTask(title.replace("'", "''"), endT, desc.replace("'", "''"), Integer.parseInt(priority));
 
 	}
 
@@ -165,8 +165,9 @@ public class Controller {
 		String concatEndT = eYear + eMonth + eDate + eHour + eMin + "00";
 
 		endT = Long.parseLong(concatEndT);
+		
 
-		 db.modifyTask(toChange.getID(), title, endT, desc, Integer.parseInt(priority));
+		 db.modifyTask(toChange.getID(), title.replace("'", "''"), endT, desc.replace("'", "''"), Integer.parseInt(priority));
 
 	}
 
