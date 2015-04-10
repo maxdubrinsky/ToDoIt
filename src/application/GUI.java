@@ -15,6 +15,7 @@ import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
@@ -413,9 +414,15 @@ public class GUI extends Application {
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if ((taskTitleBox.getText() != null && !taskTitleBox.getText()
-						.isEmpty()) && isTaskCompleted == false) {
-
+				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())
+						&& (!taskEndTimeYear.getText().isEmpty() && taskEndTimeYear.getText() != null)
+						&& (!taskEndTimeDate.getText().isEmpty() && taskEndTimeDate.getText() != null)
+						&& (!taskEndTimeHour.getText().isEmpty() && taskEndTimeHour.getText() != null)
+						&& (!taskEndTimeMin.getText().isEmpty() && taskEndTimeMin.getText() != null)
+						&& endTimeAmPmComboBox.getValue() != null
+						&& endTimeMonthComboBox.getValue() != null
+						&& !isTaskCompleted) {
+					
 					Controller.addTask(taskTitleBox.getText(),
 							textArea.getText(), priortyComboBox.getValue(),
 							taskEndTimeYear.getText(),
@@ -441,7 +448,12 @@ public class GUI extends Application {
 					stage.close();
 
 				} else {
-					status.setText("Please Fill All Required Inputs!");
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Missing Parameters");
+					alert.setHeaderText("Input Error");
+					alert.setContentText("Your task is missing some input. Please correct and resubmit.");
+					alert.setResizable(false);
+					alert.showAndWait();
 				}
 				// synchronized(taskUpdateThread) {
 				// notify();
