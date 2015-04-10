@@ -77,7 +77,7 @@ public class GUI extends Application {
 				public void run() {
 					// Create a list to store acknowledged tasks
 					ArrayList<Task> acknowledgedTasks = new ArrayList<Task>();
-					
+
 					// Run FOREVERRRRRRRRR
 					while (true) {
 						try {
@@ -92,7 +92,7 @@ public class GUI extends Application {
 								if (acknowledgedTasks.contains(next)) {
 									Thread.sleep(5000);
 									System.out
-											.println("Notification thread sleeping...");
+									.println("Notification thread sleeping...");
 									continue;
 								}
 
@@ -110,13 +110,13 @@ public class GUI extends Application {
 										13));
 								int min = Integer.parseInt(taskEnd.substring(
 										14, 16));
-								
+
 								// Check if the task is within 30 minutes of completion
 								// Can be tweaked with some fiddling
 								if (y == calendar.get(Calendar.YEAR)
 										&& m == calendar.get(Calendar.MONTH) + 1
 										&& d == calendar
-												.get(Calendar.DAY_OF_MONTH)
+										.get(Calendar.DAY_OF_MONTH)
 										&& (h - calendar.get(Calendar.HOUR_OF_DAY)) % 25 <= 1
 										&& (min - calendar.get(Calendar.MINUTE)) % 61 <= 30) {
 
@@ -132,12 +132,12 @@ public class GUI extends Application {
 											n.showConfirm();
 										}
 									});
-									
+
 									// Acknowledge me!1!!1!!
 									acknowledgedTasks.add(next);
 								}
 							}
-							
+
 							// Sleep for a mo'
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {
@@ -347,7 +347,7 @@ public class GUI extends Application {
 		priortyComboBox.getSelectionModel().select(4);
 
 		hBoxTitleAndPriority.getChildren()
-				.addAll(taskTitleBox, priortyComboBox);
+		.addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
 
 		// Add a text box for description
@@ -422,7 +422,7 @@ public class GUI extends Application {
 						&& endTimeAmPmComboBox.getValue() != null
 						&& endTimeMonthComboBox.getValue() != null
 						&& !isTaskCompleted) {
-					
+
 					Controller.addTask(taskTitleBox.getText(),
 							textArea.getText(), priortyComboBox.getValue(),
 							taskEndTimeYear.getText(),
@@ -601,7 +601,7 @@ public class GUI extends Application {
 				"8", "9", "10");
 
 		hBoxTitleAndPriority.getChildren()
-				.addAll(taskTitleBox, priortyComboBox);
+		.addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
 
 		// Add a text box for description
@@ -663,31 +663,51 @@ public class GUI extends Application {
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				Task taskToUpdate = new Task();
-				String toUpdate = list.getSelectionModel().getSelectedItem();
-				taskToUpdate = findMatchingTask(toUpdate);
-				Controller.modifyTask(taskToUpdate, taskTitleBox.getText(),
-						textArea.getText(), priortyComboBox.getValue(),
-						taskEndTimeYear.getText(),
-						endTimeMonthComboBox.getValue(),
-						taskEndTimeDate.getText(), taskEndTimeHour.getText(),
-						taskEndTimeMin.getText(),
-						endTimeAmPmComboBox.getValue());
+				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())
+						&& (!taskEndTimeYear.getText().isEmpty() && taskEndTimeYear.getText() != null)
+						&& (!taskEndTimeDate.getText().isEmpty() && taskEndTimeDate.getText() != null)
+						&& (!taskEndTimeHour.getText().isEmpty() && taskEndTimeHour.getText() != null)
+						&& (!taskEndTimeMin.getText().isEmpty() && taskEndTimeMin.getText() != null)
+						&& (textArea.getText() != null && !textArea.getText().isEmpty())
+						&& endTimeAmPmComboBox.getValue() != null
+						&& endTimeMonthComboBox.getValue() != null
+						&& !isTaskCompleted) {
 
-				isTaskCompleted = true;
-				isATaskWindowOpen = false;
-				updateTasks();
+					Task taskToUpdate = new Task();
+					String toUpdate = list.getSelectionModel().getSelectedItem();
+					taskToUpdate = findMatchingTask(toUpdate);
+					Controller.modifyTask(taskToUpdate, taskTitleBox.getText(),
+							textArea.getText(), priortyComboBox.getValue(),
+							taskEndTimeYear.getText(),
+							endTimeMonthComboBox.getValue(),
+							taskEndTimeDate.getText(), taskEndTimeHour.getText(),
+							taskEndTimeMin.getText(),
+							endTimeAmPmComboBox.getValue());
 
-				// Make a short sleep
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+					isTaskCompleted = true;
+					isATaskWindowOpen = false;
+					updateTasks();
+
+					// Make a short sleep
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					// Closes the sub window.
+					Node source = (Node) e.getSource();
+					Stage stage = (Stage) source.getScene().getWindow();
+					stage.close();
+
+				} 
+				else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Missing Parameters");
+					alert.setHeaderText("Input Error");
+					alert.setContentText("Your task is missing some input. Please correct and resubmit.");
+					alert.setResizable(false);
+					alert.showAndWait();
 				}
-				// Closes the sub window.
-				Node source = (Node) e.getSource();
-				Stage stage = (Stage) source.getScene().getWindow();
-				stage.close();
 
 			}
 		});
@@ -792,16 +812,16 @@ public class GUI extends Application {
 		textArea.setWrapText(true);
 
 		list.getSelectionModel().selectedItemProperty()
-				.addListener(new ChangeListener<String>() {
+		.addListener(new ChangeListener<String>() {
 
-					@Override
-					public void changed(
-							ObservableValue<? extends String> observalable,
-							String oldval, String newval) {
-						textArea.setText(findMatchingTask(newval).getDesc());
-					}
+			@Override
+			public void changed(
+					ObservableValue<? extends String> observalable,
+					String oldval, String newval) {
+				textArea.setText(findMatchingTask(newval).getDesc());
+			}
 
-				});
+		});
 
 		// The upcoming task label at top
 		vbox.getChildren().addAll(viewTaskTitle, list, viewTaskDiscTitle,
