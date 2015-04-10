@@ -12,7 +12,12 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.*;
 
-
+/**
+ * Provides an interface between the controller and the Database
+ * 
+ * @author Greg Johnson
+ *
+ */
 
 public class DBFunctions {
 
@@ -251,6 +256,11 @@ public class DBFunctions {
 
 	}
 	
+/**
+ * Returns a list of all of the upcoming tasks, not just the next 8
+ * 
+ * @return tasks - the ArrayList of all upcoming tasks
+ */
 public ArrayList<Task> viewAll() {
 		
 		try {
@@ -321,6 +331,7 @@ public ArrayList<Task> viewAll() {
 		return null;
 
 	}
+
 
 	/**
 	 * default constructor
