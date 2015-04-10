@@ -263,6 +263,7 @@ public class GUI extends Application {
 		// Add a text box for description
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);
+		textArea.setWrapText(true);
 
 		// This is all HBox for the buttons submit and clear
 		HBox hboxButtons = new HBox();
@@ -506,6 +507,7 @@ public class GUI extends Application {
 		Label textAreaTitle = new Label("Task Description");
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);
+		textArea.setWrapText(true);
 
 		// This is the HBox for the end time
 		HBox hboxStartAndEndDate = new HBox();
@@ -684,6 +686,7 @@ public class GUI extends Application {
 		// Add a text box for description
 		TextArea textArea = new TextArea();
 		textArea.setPrefRowCount(5);
+		textArea.setWrapText(true);
 
 		list.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<String>() {
