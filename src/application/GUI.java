@@ -11,6 +11,7 @@ import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
@@ -22,15 +23,13 @@ import javafx.stage.*;
  *
  */
 public class GUI extends Application {
-	// Change this to activate the print lines
-	private boolean debug = false;
 
 	boolean isATaskWindowOpen = false;
 	boolean isTaskCompleted = false;
 
-	private final ArrayList<Task> upcommingTasks = new ArrayList<Task>();
-	private final ListView<String> list = new ListView<String>();
-	private Thread taskUpdateThread;
+	private ArrayList<Task> upcommingTasks = new ArrayList<Task>();
+	private ListView<String> list = new ListView<String>();
+	private VBox primaryVBox;
 
 	/**
 	 * This is the start method that starts the primary stage for the GUI to
@@ -100,6 +99,7 @@ public class GUI extends Application {
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
+					updateTasks();
 				}
 			});
 
@@ -139,6 +139,7 @@ public class GUI extends Application {
 			addRemoveStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
+					updateTasks();
 				}
 			});
 
@@ -178,6 +179,7 @@ public class GUI extends Application {
 			addEditStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
+					updateTasks();
 				}
 			});
 
@@ -215,6 +217,7 @@ public class GUI extends Application {
 			addViewStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
+					updateTasks();
 				}
 			});
 
@@ -334,6 +337,7 @@ public class GUI extends Application {
 
 					isTaskCompleted = true;
 					isATaskWindowOpen = false;
+					updateTasks();
 
 					// Make a short sleep
 					try {
@@ -421,6 +425,7 @@ public class GUI extends Application {
 				
 				isTaskCompleted = true;
 				isATaskWindowOpen = false;
+				updateTasks();
 
 				// Make a short sleep
 				try {
@@ -568,6 +573,7 @@ public class GUI extends Application {
 				
 				isTaskCompleted = true;
 				isATaskWindowOpen = false;
+				updateTasks();
 
 				// Make a short sleep
 				try {
@@ -600,11 +606,45 @@ public class GUI extends Application {
 				endTimeAmPmComboBox.getSelectionModel().clearSelection();
 			}
 		});
+		
+		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// Create a temporary task reference
+				Task temp = findMatchingTask(list.getSelectionModel().getSelectedItem());
+				
+				// Start updating the input fields to match the task's existing parameters
+				taskTitleBox.setText(temp.getTitle());
+				textArea.setText(temp.getDesc());
+				priortyComboBox.getSelectionModel().select(temp.getPriority() - 1);
+				
+				// Grab a copy of the date for parsing reasons
+				String date = String.valueOf(temp.getEnd());
+				System.out.println(date);
+				taskEndTimeYear.setText(date.substring(0,4));
+				endTimeMonthComboBox.getSelectionModel().select(Integer.parseInt(date.substring(5,7)) - 1);
+				taskEndTimeDate.setText(date.substring(8,10));
+				
+				// Grab the hour piece of the task
+				int hour = Integer.parseInt(date.substring(11,13));
+				endTimeAmPmComboBox.getSelectionModel().select(hour / 12);
+				
+				// Parse hour for 12-hour clocks
+				hour = (hour > 12) ? hour - 12 : hour;
+				taskEndTimeHour.setText(Integer.toString(hour));
+				taskEndTimeMin.setText(date.substring(14,16));
+				
+				// Update the main view
+				vbox.requestLayout();
+			}
+			
+		});
 
 		vbox.getChildren().addAll(editTask, list, taskTitleAndPriorty,
 				hBoxTitleAndPriority, textAreaTitle, textArea,
 				hboxEndDateAndTimeTitle, hboxStartAndEndDate, hboxButtons);
-
+		
 		return vbox;
 
 	}
@@ -667,62 +707,26 @@ public class GUI extends Application {
 	public VBox addVBoxPrimary() {
 
 		// Set up Vbox
-		VBox vbox = new VBox();
-		vbox.setPadding(new Insets(12));
-		vbox.setSpacing(8);
+		primaryVBox = new VBox();
+		primaryVBox.setPadding(new Insets(12));
+		primaryVBox.setSpacing(8);
 
 		// Make Vbox use the Css sheet
-		vbox.getStyleClass().addAll("pane", "vbox");
+		primaryVBox.getStyleClass().addAll("pane", "vbox");
 
 		// The upcoming task label at top
-		vbox.getChildren().add(new Label("Upcoming Tasks:"));
+		primaryVBox.getChildren().add(new Label("Upcoming Tasks:"));
 
 		// This is the list view with filler tasks
 
 		list.getStyleClass().addAll("pane", "listview");
 
-		ArrayList<String> taskListString = new ArrayList<String>();
-
-		for (int i = 0; i < upcommingTasks.size(); i++)
-			taskListString.add(upcommingTasks.get(i).toString());
-
-		// This is the populated lists
-		ObservableList<String> items = FXCollections
-				.observableArrayList(taskListString);
-
-		taskUpdateThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				while (true) {
-					upcommingTasks.clear();
-					upcommingTasks.addAll(Controller.upcomingTasks());
-					ObservableList<String> taskStrings = FXCollections
-							.observableArrayList();
-					for (Task t : upcommingTasks)
-						taskStrings.add(t.toString());
-					list.setItems(taskStrings);
-					vbox.requestLayout();
-					try {
-						synchronized (this) {
-							if (debug)
-								System.out.println("Thread updating...");
-							wait(1000);
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-		});
-		taskUpdateThread.start();
-
-		list.setItems(items);
+		updateTasks();
+		
 		// Add to Vbox
-		vbox.getChildren().add(list);
-
-		return vbox;
+		primaryVBox.getChildren().add(list);
+		
+		return primaryVBox;
 	}
 
 	public FlowPane addFlowPanePrimary() {
@@ -827,6 +831,16 @@ public class GUI extends Application {
 		return hbox;
 	}
 
+	private void updateTasks() {
+		upcommingTasks = Controller.upcomingTasks();
+		ObservableList<String> taskStrings = FXCollections.observableArrayList();
+		for (Task t : upcommingTasks)
+			taskStrings.add(t.toString());
+		list.setItems(taskStrings);
+		primaryVBox.requestLayout();
+		System.out.println("Tasks updated");
+	}
+	
 	public Task findMatchingTask(String stringToMatch) {
 
 		Task matchingTask = new Task();
@@ -854,13 +868,6 @@ public class GUI extends Application {
 			}
 
 		});
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void stop() throws Exception {
-		taskUpdateThread.stop();
-		super.stop();
 	}
 
 	public static void main(String[] args) {

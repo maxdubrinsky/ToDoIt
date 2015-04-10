@@ -13,13 +13,13 @@
 
 .vbox {
 	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 20px;
+	-fx-font-size: 16px;
 	-fx-font-weight: bold;
 }
 
 .hbox {
 	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 48px;
+	-fx-font-size: 36px;
 	-fx-font-weight: bold;
 }
 
@@ -33,7 +33,7 @@
 .button {
 	-fx-padding: 8 15 15 15;
     -fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-    -fx-font-size: 20px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-background-color: rgb(165, 217, 243);
     -fx-min-height: 50;
@@ -60,25 +60,25 @@
 
 .vboxaddtask {
 	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 16px;
+	-fx-font-size: 14px;
 	-fx-font-weight: bold;
 } 
 
 .vboxremovetask {
 	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 16px;
+	-fx-font-size: 14px;
 	-fx-font-weight: bold;
 }
 
 .vboxedittask {
 	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 16px;
+	-fx-font-size: 14px;
 	-fx-font-weight: bold;
 }
 
 .vboxviewtask{
 	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
-	-fx-font-size: 16px;
+	-fx-font-size: 14px;
 	-fx-font-weight: bold;
 	
 }
