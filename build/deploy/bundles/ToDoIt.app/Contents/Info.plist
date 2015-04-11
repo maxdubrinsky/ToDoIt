@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+ <dict>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.7.4</string>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>English</string>
+  <key>CFBundleAllowMixedLocalizations</key>
+  <true/>
+  <key>CFBundleExecutable</key>
+  <string>ToDoIt</string>
+  <key>CFBundleIconFile</key>
+  <string>ToDoIt.icns</string>
+  <key>CFBundleIdentifier</key>
+  <string>fxApplication</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>ToDoIt</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>1.0</string>
+  <key>CFBundleSignature</key>
+  <string>????</string>
+  <!-- See http://developer.apple.com/library/mac/#releasenotes/General/SubmittingToMacAppStore/_index.html
+       for list of AppStore categories -->
+  <key>LSApplicationCategoryType</key>
+  <string>Unknown</string>
+  <key>CFBundleVersion</key>
+  <string>100</string>
+  <key>NSHumanReadableCopyright</key>
+  <string>Copyright (C) 2015</string>
+  <key>JVMRuntime</key>
+  <string>jdk1.8.0_20.jdk</string>
+  <key>JVMMainClassName</key>
+  <string>application.GUI</string>
+  <key>JVMAppClasspath</key>
+  <string>ToDoIt.jar libs/commons-codec-1.9.jar libs/commons-logging-1.2.jar libs/controlsfx-8.20.8.jar libs/fluent-hc-4.4.jar libs/httpclient-4.4.jar libs/httpclient-cache-4.4.jar libs/httpclient-win-4.4.jar libs/httpcore-4.4.jar libs/httpmime-4.4.jar libs/jna-4.1.0.jar libs/jna-platform-4.1.0.jar libs/junit.jar libs/openjfx-dialogs-1.0.2.jar libs/org.hamcrest.core_1.3.0.v201303031735.jar libs/org.json-20120521.jar</string>
+  <key>JVMMainJarName</key>
+  <string>ToDoIt.jar</string>
+  <key>JVMPreferencesID</key>
+  <string>fxapplication</string>
+  <key>JVMOptions</key>
+  <array>
+
+  </array>
+  <key>JVMUserOptions</key>
+    <dict>
+
+    </dict>
+  <key>NSHighResolutionCapable</key>
+  <string>true</string>
+ </dict>
+</plist>

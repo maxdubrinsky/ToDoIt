@@ -3,7 +3,6 @@ package application;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutorService;
 
 import org.controlsfx.control.Notifications;
 
@@ -16,11 +15,11 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import javafx.util.Duration;
-import javafx.concurrent.*;
 
 /**
  * This class is the GUI of the TODOIT application. It uses javafx to make a
@@ -69,6 +68,7 @@ public class GUI extends Application {
 			primaryStage.setWidth(600);
 			primaryStage.setHeight(600);
 			primaryStage.setResizable(false);
+			primaryStage.getIcons().add(new Image("file:logo.png"));
 			primaryStage.show();
 
 			// Make the notification thread
@@ -183,6 +183,7 @@ public class GUI extends Application {
 			addTaskStage.setWidth(500);
 			addTaskStage.setHeight(400);
 			addTaskStage.setResizable(false);
+			addTaskStage.getIcons().add(new Image("file:logo.png"));
 			addTaskStage.show();
 
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -223,6 +224,7 @@ public class GUI extends Application {
 			addRemoveStage.setWidth(500);
 			addRemoveStage.setHeight(400);
 			addRemoveStage.setResizable(false);
+			addRemoveStage.getIcons().add(new Image("file:logo.png"));
 			addRemoveStage.show();
 
 			addRemoveStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -263,6 +265,7 @@ public class GUI extends Application {
 			addEditStage.setWidth(500);
 			addEditStage.setHeight(600);
 			addEditStage.setResizable(false);
+			addEditStage.getIcons().add(new Image("file:logo.png"));
 			addEditStage.show();
 
 			addEditStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -301,6 +304,7 @@ public class GUI extends Application {
 			addViewStage.setWidth(500);
 			addViewStage.setHeight(500);
 			addViewStage.setResizable(false);
+			addViewStage.getIcons().add(new Image("file:logo.png"));
 			addViewStage.show();
 
 			addViewStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -403,9 +407,6 @@ public class GUI extends Application {
 		hBoxEndDate.getChildren().addAll(endTimeMonthComboBox, taskEndTimeDate,
 				taskEndTimeYear, taskEndTimeHour, taskEndTimeMin,
 				endTimeAmPmComboBox);
-
-		// Make a new label for the
-		Label status = new Label();
 
 		vbox.getChildren().addAll(taskTitleAndPriorty, hBoxTitleAndPriority,
 				textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate,

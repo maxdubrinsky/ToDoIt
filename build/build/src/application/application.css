@@ -1,0 +1,85 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+
+.root {
+	
+	-fx-background-color: rgb(240,240,235);
+}
+
+.flow-tile {
+
+}
+
+.vbox {
+	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+	-fx-font-size: 16px;
+	-fx-font-weight: bold;
+}
+
+.hbox {
+	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+	-fx-font-size: 36px;
+	-fx-font-weight: bold;
+}
+
+.listview{
+	-fx-border-style: solid;
+	-fx-border-width: 1;
+	-fx-border-radius: 4;
+	-fx-background-radius: 4;
+}
+
+.button {
+	-fx-padding: 8 15 15 15;
+    -fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: rgb(165, 217, 243);
+    -fx-min-height: 50;
+    -fx-pref-width: 180;
+        -fx-background-radius: 5;
+    -fx-border-color: rgb(153,153,153);
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,.25),5,0,0,0);
+}
+
+.button:hover{
+	-fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #6FA0BA 0%, #6FA0BA 100%),
+		#6FA0BA
+        #6FA0BA,
+        radial-gradient(center 50% 50%, radius 100%, #6FA0BA, #6FA0BA);
+}
+
+.button:pressed {
+	-fx-padding: 10 15 13 15;
+
+}
+
+.vboxaddtask {
+	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+} 
+
+.vboxremovetask {
+	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+}
+
+.vboxedittask {
+	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+}
+
+.vboxviewtask{
+	-fx-font-family: "Lucida Sans", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+	
+}
+

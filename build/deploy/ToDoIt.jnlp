@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ToDoIt.jnlp">
+  <information>
+    <title>ToDoIt</title>
+    <vendor>BGM Development</vendor>
+    <description>Sample JavaFX 2.0 application.</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <jfx:javafx-runtime version="8.0+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+  </resources>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="ToDoIt.jar" size="30986" download="eager" />
+    <jar href="libs/commons-codec-1.9.jar" size="263965" download="eager" />
+    <jar href="libs/commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="libs/controlsfx-8.20.8.jar" size="957666" download="eager" />
+    <jar href="libs/fluent-hc-4.4.jar" size="30818" download="eager" />
+    <jar href="libs/httpclient-4.4.jar" size="719304" download="eager" />
+    <jar href="libs/httpclient-cache-4.4.jar" size="158963" download="eager" />
+    <jar href="libs/httpclient-win-4.4.jar" size="17361" download="eager" />
+    <jar href="libs/httpcore-4.4.jar" size="321639" download="eager" />
+    <jar href="libs/httpmime-4.4.jar" size="40627" download="eager" />
+    <jar href="libs/jna-4.1.0.jar" size="914597" download="eager" />
+    <jar href="libs/jna-platform-4.1.0.jar" size="1464423" download="eager" />
+    <jar href="libs/junit.jar" size="245039" download="eager" />
+    <jar href="libs/openjfx-dialogs-1.0.2.jar" size="148557" download="eager" />
+    <jar href="libs/org.hamcrest.core_1.3.0.v201303031735.jar" size="55802" download="eager" />
+    <jar href="libs/org.json-20120521.jar" size="40375" download="eager" />
+  </resources>
+  <applet-desc  width="0" height="0" main-class="com.javafx.main.NoJavaFXFallback"  name="ToDoIt" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="0" height="0" main-class="application.GUI"  name="ToDoIt" />
+  <update check="background"/>
+</jnlp>
