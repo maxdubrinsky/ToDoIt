@@ -26,6 +26,8 @@ import javafx.util.Duration;
  * working GUI.
  * 
  * @author Bryan Ehrke Spring 2015
+ * @author Max D. Helped with thread support and Error Boxes.
+ * 
  *
  */
 public class GUI extends Application {
@@ -186,6 +188,7 @@ public class GUI extends Application {
 			addTaskStage.getIcons().add(new Image("file:logo.png"));
 			addTaskStage.show();
 
+			
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
@@ -281,6 +284,7 @@ public class GUI extends Application {
 	}
 
 	/**
+	 * This starts the view task window triggered by a button in the main window.
 	 * 
 	 * @param addViewStage
 	 *            is the stage to be started.
@@ -326,12 +330,15 @@ public class GUI extends Application {
 	 */
 	public VBox addVBoxAddTask() {
 
+		// Sets up VBOX
 		VBox vbox = new VBox(8);
 		vbox.setPadding(new Insets(6));
 		vbox.setSpacing(8);
 
+		// Makes use of Css sheet
 		vbox.getStyleClass().addAll("pane", "vboxaddtask");
 
+		
 		Label taskTitleAndPriorty = new Label(
 				"Task Title                               Task Priorty");
 		Label textAreaTitle = new Label("Task Discription");
@@ -370,7 +377,7 @@ public class GUI extends Application {
 		hboxButtons.getChildren().addAll(submit, clear);
 		// End
 
-		// This is the HBox for the start time
+		// This is the HBox for the end time and title
 		Label hboxEndDateAndTimeTitle = new Label(
 				"End Date                                      End Time");
 		HBox hBoxEndDate = new HBox();
@@ -412,6 +419,8 @@ public class GUI extends Application {
 				textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate,
 				hboxButtons);
 
+		// This checks for faulty input then also submits the input to the database via the controller. 
+		// If faulty input is found a error box is sent.
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -449,6 +458,7 @@ public class GUI extends Application {
 					stage.close();
 
 				} else {
+					// Alert Box setup
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Missing Parameters");
 					alert.setHeaderText("Input Error");
@@ -462,6 +472,7 @@ public class GUI extends Application {
 			}
 		});
 
+		// Clears all the text fields when button is pushed
 		clear.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -480,6 +491,11 @@ public class GUI extends Application {
 		return vbox;
 	}
 
+	/**
+	 * This is elements for the sub window for Remove Task. All inside a VBOX.
+	 * 
+	 * @return VBox containing all the remove task elements.
+	 */
 	public VBox addVBoxRemoveTask() {
 		// Set up Vbox
 		VBox vbox = new VBox();
@@ -556,6 +572,11 @@ public class GUI extends Application {
 		return vbox;
 	}
 
+	/**
+	 * This is the VBox for the Edit Task window. Which is the all of the window.
+	 * 
+	 * @return VBOX returns a VBOX with such inside elements
+	 */
 	public VBox addVBoxEditTask() {
 		// Set up Vbox
 		VBox vbox = new VBox();
@@ -661,6 +682,8 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(update, clear);
 
+		// Checks for faulty input and updates the task to the database via controller
+		// If faulty an error box is sent.
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -701,6 +724,7 @@ public class GUI extends Application {
 					stage.close();
 
 				} 
+				// Alert Box setup
 				else {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Missing Parameters");
@@ -712,7 +736,7 @@ public class GUI extends Application {
 
 			}
 		});
-
+		// Clears all text fields when button is pushed
 		clear.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -729,6 +753,7 @@ public class GUI extends Application {
 			}
 		});
 
+		// Checks the selected list element
 		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -775,6 +800,11 @@ public class GUI extends Application {
 
 	}
 
+	/**
+	 * This is the VBox that has all the needed elements for View Task Window. 
+	 * 
+	 * @return VBOX which is a VBox that has all the elements needed for View Task.
+	 */
 	public VBox addVBoxViewTask() {
 
 		// Set up Vbox
@@ -831,6 +861,11 @@ public class GUI extends Application {
 		return vbox;
 	}
 
+	/**
+	 * This contrains the primary VBOX used in the main window. It has a Label and a list pane. 
+	 * 
+	 * @return VBOX that contains a label and list pane on main window.
+	 */
 	public VBox addVBoxPrimary() {
 
 		// Set up Vbox
@@ -856,6 +891,11 @@ public class GUI extends Application {
 		return primaryVBox;
 	}
 
+	/**
+	 * This flow pane holds the four buttons in the main window.
+	 * 
+	 * @return FlowPane returns a flow pane with four buttons on it.
+	 */
 	public FlowPane addFlowPanePrimary() {
 
 		// Setting up Flowpane
@@ -935,6 +975,11 @@ public class GUI extends Application {
 		return flow;
 	}
 
+	/**
+	 * This Hbox holds the date at the bottom of the window.
+	 * 
+	 * @return HBOX this Hbox contains the data at the bottom on the main window.
+	 */
 	public HBox addHBoxPrimary() {
 
 		// Setting up HBox
@@ -958,6 +1003,11 @@ public class GUI extends Application {
 		return hbox;
 	}
 
+	/**
+	 *
+	 * This method updates the list of tasks that the GUI uses. Then sets them.
+	 *
+	 */
 	private void updateTasks() {
 		upcommingTasks = Controller.upcomingTasks();
 		ObservableList<String> taskStrings = FXCollections
@@ -969,6 +1019,13 @@ public class GUI extends Application {
 		System.out.println("Tasks updated");
 	}
 
+	/**
+	 * This finds a matching task based on the String passed into the method.
+	 * 
+	 * @param stringToMatch is the string used to find its matching Task object.
+	 * 
+	 * @return Task is the task that is matched with the string.
+	 */
 	public Task findMatchingTask(String stringToMatch) {
 
 		Task matchingTask = new Task();
@@ -981,6 +1038,13 @@ public class GUI extends Application {
 		return matchingTask;
 	}
 
+	/**
+	 * This method limited a given text field by the given character amount.
+	 * 
+	 * @param textField is the field to be limited.
+	 * 
+	 * @param maxLength is the max length to be limited by. 
+	 */
 	public static void addTextLimiter(final TextField textField,
 			final int maxLength) {
 		textField.textProperty().addListener(new ChangeListener<String>() {
