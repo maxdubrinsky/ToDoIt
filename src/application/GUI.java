@@ -343,7 +343,7 @@ public class GUI extends Application {
 
 		Label taskTitleAndPriorty = new Label(
 				"Task Title                        Task Priorty");
-		Label textAreaTitle = new Label("Task Discription");
+		Label textAreaTitle = new Label("Task Description");
 
 		// Add a text field for the title and priorty combo box in a h box
 		HBox hBoxTitleAndPriority = new HBox();
