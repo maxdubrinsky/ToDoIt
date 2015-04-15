@@ -340,7 +340,7 @@ public class GUI extends Application {
 
 		
 		Label taskTitleAndPriorty = new Label(
-				"Task Title                               Task Priorty");
+				"Task Title                        Task Priorty");
 		Label textAreaTitle = new Label("Task Discription");
 
 		// Add a text field for the title and priorty combo box in a h box
@@ -609,7 +609,7 @@ public class GUI extends Application {
 
 		// Add a text field for the title and priorty combo box in a h box
 		Label taskTitleAndPriorty = new Label(
-				"Task Title                               Task Priorty");
+				"Task Title                        Task Priorty");
 		HBox hBoxTitleAndPriority = new HBox();
 		hBoxTitleAndPriority.setSpacing(12);
 
