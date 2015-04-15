@@ -85,16 +85,16 @@ public class GUI extends Application {
 						try {
 							// Check to make sure there are upcoming tasks
 							if (!upcommingTasks.isEmpty()) {
-								// Grab the next task (found by taking the next on the 
+								// Grab the next task (found by taking the next
+								// on the
 								// list compared to the acknowledged ones)
-								Task next = upcommingTasks
-										.get(acknowledgedTasks.size());
+								Task next = upcommingTasks.get(0);
 
 								// Check if the task has been acknowledged
 								if (acknowledgedTasks.contains(next)) {
 									Thread.sleep(5000);
 									System.out
-									.println("Notification thread sleeping...");
+											.println("Notification thread sleeping...");
 									continue;
 								}
 
@@ -113,16 +113,19 @@ public class GUI extends Application {
 								int min = Integer.parseInt(taskEnd.substring(
 										14, 16));
 
-								// Check if the task is within 30 minutes of completion
+								// Check if the task is within 30 minutes of
+								// completion
 								// Can be tweaked with some fiddling
 								if (y == calendar.get(Calendar.YEAR)
 										&& m == calendar.get(Calendar.MONTH) + 1
 										&& d == calendar
-										.get(Calendar.DAY_OF_MONTH)
-										&& (h - calendar.get(Calendar.HOUR_OF_DAY)) % 25 <= 1
+												.get(Calendar.DAY_OF_MONTH)
+										&& (h - calendar
+												.get(Calendar.HOUR_OF_DAY)) % 25 <= 1
 										&& (min - calendar.get(Calendar.MINUTE)) % 61 <= 30) {
 
-									// Put the notification on the JavaFX Thread Stack of Fun
+									// Put the notification on the JavaFX Thread
+									// Stack of Fun
 									Platform.runLater(new Runnable() {
 										@Override
 										public void run() {
@@ -188,7 +191,6 @@ public class GUI extends Application {
 			addTaskStage.getIcons().add(new Image("file:logo.png"));
 			addTaskStage.show();
 
-			
 			addTaskStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					isATaskWindowOpen = false;
@@ -284,7 +286,8 @@ public class GUI extends Application {
 	}
 
 	/**
-	 * This starts the view task window triggered by a button in the main window.
+	 * This starts the view task window triggered by a button in the main
+	 * window.
 	 * 
 	 * @param addViewStage
 	 *            is the stage to be started.
@@ -338,7 +341,6 @@ public class GUI extends Application {
 		// Makes use of Css sheet
 		vbox.getStyleClass().addAll("pane", "vboxaddtask");
 
-		
 		Label taskTitleAndPriorty = new Label(
 				"Task Title                        Task Priorty");
 		Label textAreaTitle = new Label("Task Discription");
@@ -358,7 +360,7 @@ public class GUI extends Application {
 		priortyComboBox.getSelectionModel().select(4);
 
 		hBoxTitleAndPriority.getChildren()
-		.addAll(taskTitleBox, priortyComboBox);
+				.addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
 
 		// Add a text box for description
@@ -419,16 +421,22 @@ public class GUI extends Application {
 				textAreaTitle, textArea, hboxEndDateAndTimeTitle, hBoxEndDate,
 				hboxButtons);
 
-		// This checks for faulty input then also submits the input to the database via the controller. 
+		// This checks for faulty input then also submits the input to the
+		// database via the controller.
 		// If faulty input is found a error box is sent.
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())
-						&& (!taskEndTimeYear.getText().isEmpty() && taskEndTimeYear.getText() != null)
-						&& (!taskEndTimeDate.getText().isEmpty() && taskEndTimeDate.getText() != null)
-						&& (!taskEndTimeHour.getText().isEmpty() && taskEndTimeHour.getText() != null)
-						&& (!taskEndTimeMin.getText().isEmpty() && taskEndTimeMin.getText() != null)
+				if ((taskTitleBox.getText() != null && !taskTitleBox.getText()
+						.isEmpty())
+						&& (!taskEndTimeYear.getText().isEmpty() && taskEndTimeYear
+								.getText() != null)
+						&& (!taskEndTimeDate.getText().isEmpty() && taskEndTimeDate
+								.getText() != null)
+						&& (!taskEndTimeHour.getText().isEmpty() && taskEndTimeHour
+								.getText() != null)
+						&& (!taskEndTimeMin.getText().isEmpty() && taskEndTimeMin
+								.getText() != null)
 						&& endTimeAmPmComboBox.getValue() != null
 						&& endTimeMonthComboBox.getValue() != null
 						&& !isTaskCompleted) {
@@ -573,7 +581,8 @@ public class GUI extends Application {
 	}
 
 	/**
-	 * This is the VBox for the Edit Task window. Which is the all of the window.
+	 * This is the VBox for the Edit Task window. Which is the all of the
+	 * window.
 	 * 
 	 * @return VBOX returns a VBOX with such inside elements
 	 */
@@ -623,7 +632,7 @@ public class GUI extends Application {
 				"8", "9", "10");
 
 		hBoxTitleAndPriority.getChildren()
-		.addAll(taskTitleBox, priortyComboBox);
+				.addAll(taskTitleBox, priortyComboBox);
 		// End Hbox
 
 		// Add a text box for description
@@ -682,29 +691,38 @@ public class GUI extends Application {
 
 		hboxButtons.getChildren().addAll(update, clear);
 
-		// Checks for faulty input and updates the task to the database via controller
+		// Checks for faulty input and updates the task to the database via
+		// controller
 		// If faulty an error box is sent.
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if ((taskTitleBox.getText() != null && !taskTitleBox.getText().isEmpty())
-						&& (!taskEndTimeYear.getText().isEmpty() && taskEndTimeYear.getText() != null)
-						&& (!taskEndTimeDate.getText().isEmpty() && taskEndTimeDate.getText() != null)
-						&& (!taskEndTimeHour.getText().isEmpty() && taskEndTimeHour.getText() != null)
-						&& (!taskEndTimeMin.getText().isEmpty() && taskEndTimeMin.getText() != null)
-						&& (textArea.getText() != null && !textArea.getText().isEmpty())
+				if ((taskTitleBox.getText() != null && !taskTitleBox.getText()
+						.isEmpty())
+						&& (!taskEndTimeYear.getText().isEmpty() && taskEndTimeYear
+								.getText() != null)
+						&& (!taskEndTimeDate.getText().isEmpty() && taskEndTimeDate
+								.getText() != null)
+						&& (!taskEndTimeHour.getText().isEmpty() && taskEndTimeHour
+								.getText() != null)
+						&& (!taskEndTimeMin.getText().isEmpty() && taskEndTimeMin
+								.getText() != null)
+						&& (textArea.getText() != null && !textArea.getText()
+								.isEmpty())
 						&& endTimeAmPmComboBox.getValue() != null
 						&& endTimeMonthComboBox.getValue() != null
 						&& !isTaskCompleted) {
 
 					Task taskToUpdate = new Task();
-					String toUpdate = list.getSelectionModel().getSelectedItem();
+					String toUpdate = list.getSelectionModel()
+							.getSelectedItem();
 					taskToUpdate = findMatchingTask(toUpdate);
 					Controller.modifyTask(taskToUpdate, taskTitleBox.getText(),
 							textArea.getText(), priortyComboBox.getValue(),
 							taskEndTimeYear.getText(),
 							endTimeMonthComboBox.getValue(),
-							taskEndTimeDate.getText(), taskEndTimeHour.getText(),
+							taskEndTimeDate.getText(),
+							taskEndTimeHour.getText(),
 							taskEndTimeMin.getText(),
 							endTimeAmPmComboBox.getValue());
 
@@ -723,7 +741,7 @@ public class GUI extends Application {
 					Stage stage = (Stage) source.getScene().getWindow();
 					stage.close();
 
-				} 
+				}
 				// Alert Box setup
 				else {
 					Alert alert = new Alert(AlertType.ERROR);
@@ -801,9 +819,10 @@ public class GUI extends Application {
 	}
 
 	/**
-	 * This is the VBox that has all the needed elements for View Task Window. 
+	 * This is the VBox that has all the needed elements for View Task Window.
 	 * 
-	 * @return VBOX which is a VBox that has all the elements needed for View Task.
+	 * @return VBOX which is a VBox that has all the elements needed for View
+	 *         Task.
 	 */
 	public VBox addVBoxViewTask() {
 
@@ -843,16 +862,16 @@ public class GUI extends Application {
 		textArea.setWrapText(true);
 
 		list.getSelectionModel().selectedItemProperty()
-		.addListener(new ChangeListener<String>() {
+				.addListener(new ChangeListener<String>() {
 
-			@Override
-			public void changed(
-					ObservableValue<? extends String> observalable,
-					String oldval, String newval) {
-				textArea.setText(findMatchingTask(newval).getDesc());
-			}
+					@Override
+					public void changed(
+							ObservableValue<? extends String> observalable,
+							String oldval, String newval) {
+						textArea.setText(findMatchingTask(newval).getDesc());
+					}
 
-		});
+				});
 
 		// The upcoming task label at top
 		vbox.getChildren().addAll(viewTaskTitle, list, viewTaskDiscTitle,
@@ -862,7 +881,8 @@ public class GUI extends Application {
 	}
 
 	/**
-	 * This contrains the primary VBOX used in the main window. It has a Label and a list pane. 
+	 * This contrains the primary VBOX used in the main window. It has a Label
+	 * and a list pane.
 	 * 
 	 * @return VBOX that contains a label and list pane on main window.
 	 */
@@ -978,7 +998,8 @@ public class GUI extends Application {
 	/**
 	 * This Hbox holds the date at the bottom of the window.
 	 * 
-	 * @return HBOX this Hbox contains the data at the bottom on the main window.
+	 * @return HBOX this Hbox contains the data at the bottom on the main
+	 *         window.
 	 */
 	public HBox addHBoxPrimary() {
 
@@ -1022,7 +1043,8 @@ public class GUI extends Application {
 	/**
 	 * This finds a matching task based on the String passed into the method.
 	 * 
-	 * @param stringToMatch is the string used to find its matching Task object.
+	 * @param stringToMatch
+	 *            is the string used to find its matching Task object.
 	 * 
 	 * @return Task is the task that is matched with the string.
 	 */
@@ -1041,9 +1063,11 @@ public class GUI extends Application {
 	/**
 	 * This method limited a given text field by the given character amount.
 	 * 
-	 * @param textField is the field to be limited.
+	 * @param textField
+	 *            is the field to be limited.
 	 * 
-	 * @param maxLength is the max length to be limited by. 
+	 * @param maxLength
+	 *            is the max length to be limited by.
 	 */
 	public static void addTextLimiter(final TextField textField,
 			final int maxLength) {
